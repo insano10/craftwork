@@ -1,4 +1,0 @@
-function doSomething()
-{
-    return "something";
-}

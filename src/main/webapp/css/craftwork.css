@@ -1,0 +1,38 @@
+.body
+{
+    background-color: #f3f5f7
+}
+
+.spacer
+{
+    height: 20px;
+}
+
+.main-content-div
+{
+    border-radius: 5px;
+    border: 1px solid #dfe0e2;
+    background-color: #ffffff;
+    min-height: 300px;
+    width: 50%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+#instructions
+{
+    border: none;
+    width: 100%;
+    resize: none;
+    min-height: 300px;
+}
+
+#instructions:focus
+{
+    outline: none;
+}
+
+#chart-canvas
+{
+    width:100%;
+}

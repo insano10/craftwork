@@ -19,6 +19,7 @@ module.exports = function(config) {
 
       // list of files to exclude
       exclude: [
+          '**/onLoad.js'
       ],
 
       preprocessors: {
@@ -78,6 +79,7 @@ module.exports = function(config) {
       plugins: [
           'karma-jasmine',
           'karma-chrome-launcher',
+          'karma-phantomjs-launcher',
           'karma-junit-reporter',
           'karma-commonjs'
       ]
