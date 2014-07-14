@@ -17,7 +17,10 @@ require.config({
     // Karma serves files under /base, which is the basePath from your config file
     baseUrl: '/base',
 
-    paths: {"jquery": 'src/test/webapp/js/requireJQuery'},
+    paths: {
+        "jquery":       "src/test/webapp/js/requireJQuery",
+        "keyListener": "src/main/webapp/js/framework/keyListener"
+    },
 
     // dynamically load all test files
     deps: allTestFiles,

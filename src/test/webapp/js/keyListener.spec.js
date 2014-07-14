@@ -1,4 +1,4 @@
-define(["jquery", "src/main/webapp/js/framework/keyListener"], function($, KeyListener)
+define(["jquery", "keyListener"], function($, KeyListener)
 {
     describe("KeyListener", function() {
 

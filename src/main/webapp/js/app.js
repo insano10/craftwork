@@ -2,11 +2,7 @@
 This is the main app entry point from boot.js (loaded by require.js)
  */
 
-define(["jquery",
-        "crochet/chartRenderer",
-        "crochet/chartModel",
-        "framework/keyListener",
-        "framework/instructionEvaluator"],
+define(["jquery", "chartRenderer", "chartModel", "keyListener", "instructionEvaluator"],
         function ($, ChartRenderer, ChartModel, KeyListener, InstructionEvaluator)
 {
     var start = function ()

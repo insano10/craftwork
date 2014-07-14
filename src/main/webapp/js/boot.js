@@ -2,7 +2,11 @@ require(
     {
         paths:
         {
-            "jquery": "requireJQuery"
+            "jquery":               "requireJQuery",
+            "chartRenderer":        "crochet/chartRenderer",
+            "chartModel":           "crochet/chartModel",
+            "instructionEvaluator": "crochet/instructionEvaluator",
+            "keyListener":          "framework/keyListener"
         }
     },
     ["app"],
