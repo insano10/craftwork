@@ -1,8 +1,11 @@
-define(function()
+define(function ()
 {
     function ChartRenderer()
     {
-        var getPixelRatio = function()
+        var MAX_X_POS = 0;
+        var MAX_Y_POS = 0;
+
+        var getPixelRatio = function ()
         {
             var ctx = document.getElementById("chart-canvas").getContext("2d"),
                 dpr = window.devicePixelRatio || 1,
@@ -15,14 +18,19 @@ define(function()
             return dpr / bsr;
         };
 
-        var createHiPPICanvas = function(canvas)
+        var createHiPPICanvas = function ()
         {
+            var canvas = document.getElementById("chart-canvas");
             var pixelRatio = getPixelRatio();
 
-            var fullWidth = canvas.width * pixelRatio;
-            var fullHeight = canvas.height * pixelRatio;
-            canvas.style.width = canvas.width + "px";
-            canvas.style.height = canvas.height + "px";
+            var mainDiv = $(".main-content-div");
+            var currentWidth = mainDiv.width();
+            var currentHeight = mainDiv.height();
+
+            var fullWidth = currentWidth * pixelRatio;
+            var fullHeight = currentHeight * pixelRatio;
+            canvas.style.width = currentWidth + "px";
+            canvas.style.height = currentHeight + "px";
             canvas.width = fullWidth;
             canvas.height = fullHeight;
             canvas.getContext("2d").setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
@@ -32,12 +40,16 @@ define(function()
          PRIVILEGED
          */
 
-        this.initialiseCanvasRatio = function initialiseCanvasRatio()
+        this.initialiseCanvas = function initialiseCanvas()
         {
-            createHiPPICanvas(document.getElementById("chart-canvas"));
+            createHiPPICanvas()
+            ;
+            var chartCanvas = document.getElementById("chart-canvas");
+            MAX_X_POS = chartCanvas.width;
+            MAX_Y_POS = chartCanvas.height;
         };
 
-        this.drawCharacter = function drawCharacter(char)
+        this.renderStitches = function renderStitches(rowStitches)
         {
             var chartCanvas = document.getElementById("chart-canvas");
             var ctx = chartCanvas.getContext("2d");
@@ -45,8 +57,13 @@ define(function()
             ctx.save();
             ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-            ctx.font="40px Georgia";
-            ctx.fillText(char, 50, 50);
+            for (var row in rowStitches)
+            {
+                for (var i = 0; i < rowStitches[row].length; i++)
+                {
+                    rowStitches[row][i].drawToCanvas(ctx, row, i, MAX_X_POS, MAX_Y_POS);
+                }
+            }
 
             ctx.restore();
         };

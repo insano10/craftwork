@@ -14,10 +14,9 @@ define(["jquery", "chartRenderer", "chartModel", "keyListener", "instructionEval
             var chartRenderer = new ChartRenderer();
             var chartModel = new ChartModel(chartRenderer);
             var keyListener = new KeyListener();
-            var instructionEvaluator = new InstructionEvaluator();
+            var instructionEvaluator = new InstructionEvaluator(chartModel);
 
-            chartRenderer.initialiseCanvasRatio();
-            keyListener.addListener(chartModel);
+            chartRenderer.initialiseCanvas();
             keyListener.addListener(instructionEvaluator);
 
             $("#instructions").keypress(function(event){

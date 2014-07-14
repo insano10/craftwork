@@ -6,6 +6,7 @@ require(
             "chartRenderer":        "crochet/chartRenderer",
             "chartModel":           "crochet/chartModel",
             "instructionEvaluator": "crochet/instructionEvaluator",
+            "singleCrochet":        "crochet/elements/singleCrochet",
             "keyListener":          "framework/keyListener"
         }
     },
