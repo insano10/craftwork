@@ -28,7 +28,7 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
         var parseSingleCrochet = function parseSingleCrochet(line)
         {
             //Row 1: 6 sc
-            var myRegexp = /[R|r]ow[\s]+([\d]+):[\s]+([\d]+)[\s]+sc/g;
+            var myRegexp = /[R|r]ow[\s]+([\d]+)[\s]*:[\s]+([\d]+)[\s]+sc/g;
             var match = myRegexp.exec(line);
 
             if(match != null)

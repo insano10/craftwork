@@ -1,11 +1,11 @@
-define(function()
+define(["crochetRow"], function(CrochetRow)
 {
     function ChartModel(chartRenderer)
     {
         /*
         PRIVATE
          */
-        var rowStitches = {};
+        var rows = {};
 
         /*
          PRIVILEGED
@@ -13,23 +13,24 @@ define(function()
 
         this.clear = function clear()
         {
-            rowStitches = {};
+            rows = {};
         };
 
-        this.appendStitchToRow = function appendStitchToRow(stitch, row)
+        this.appendStitchToRow = function appendStitchToRow(stitch, rowNum)
         {
-            console.log("Appending stitch " + stitch.toString() + " to row " + row);
+            console.log("Appending stitch " + stitch.toString() + " to row " + rowNum);
 
-            if(rowStitches[row] == null)
+            if(rows[rowNum] == null)
             {
-                rowStitches[row] = [];
+                rows[rowNum] = new CrochetRow(rowNum);
             }
-            rowStitches[row].push(stitch);
+            rows[rowNum].appendStitch(stitch);
         };
 
         this.redrawChart = function redrawChart()
         {
-            chartRenderer.renderStitches(rowStitches);
+            console.log("rendering rows: " + JSON.stringify(rows));
+            chartRenderer.renderRows(rows);
         };
     }
 

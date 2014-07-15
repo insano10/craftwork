@@ -49,7 +49,7 @@ define(function ()
             MAX_Y_POS = chartCanvas.height;
         };
 
-        this.renderStitches = function renderStitches(rowStitches)
+        this.renderRows = function renderRows(rows)
         {
             var chartCanvas = document.getElementById("chart-canvas");
             var ctx = chartCanvas.getContext("2d");
@@ -57,12 +57,9 @@ define(function ()
             ctx.save();
             ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-            for (var row in rowStitches)
+            for (var rowNum in rows)
             {
-                for (var i = 0; i < rowStitches[row].length; i++)
-                {
-                    rowStitches[row][i].drawToCanvas(ctx, row, i, MAX_X_POS, MAX_Y_POS);
-                }
+                rows[rowNum].drawToCanvas(ctx, MAX_Y_POS);
             }
 
             ctx.restore();

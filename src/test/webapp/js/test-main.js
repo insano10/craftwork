@@ -19,7 +19,8 @@ require.config({
 
     paths: {
         "jquery":       "src/test/webapp/js/requireJQuery",
-        "keyListener": "src/main/webapp/js/framework/keyListener"
+        "keyListener":  "src/main/webapp/js/framework/keyListener",
+        "crochetRow":   "src/main/webapp/js/crochet/elements/crochetRow"
     },
 
     // dynamically load all test files
