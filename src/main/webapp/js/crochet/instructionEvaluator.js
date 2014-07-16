@@ -13,28 +13,50 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
 
             $.each(instructionLines, function(idx, line)
             {
-                evaluateLine(line);
+                parseChain(line);
             });
-        };
-
-        var evaluateLine = function evaluateLine(line)
-        {
-            console.log("evaluating line: " + line);
-            parseSingleCrochet(line);
 
             chartModel.redrawChart();
         };
 
-        var parseSingleCrochet = function parseSingleCrochet(line)
+        var parseChain = function parseChain(line)
         {
-            //Row 1: 6 sc
-            var myRegexp = /[R|r]ow[\s]+([\d]+)[\s]*:[\s]+([\d]+)[\s]+sc/g;
-            var match = myRegexp.exec(line);
+            parseRowNumberAndContinue(line);
+        };
+
+        var parseRowNumberAndContinue = function parseRowNumberAndContinue(line)
+        {
+            //Row 1:
+            var rowRegex = /[R|r]ow[\s]+([\d]+)[\s]*:(.*)/;
+            var match = rowRegex.exec(line);
 
             if(match != null)
             {
                 var rowNum = match[1];
-                var stitchCount = match[2];
+                var restOfLine = match[2];
+
+                parsePhrase(rowNum, restOfLine);
+            }
+            else
+            {
+                console.error("Could not find row number in: " + line);
+            }
+        };
+
+        var parsePhrase = function parsePhrase(rowNum, phrase)
+        {
+            parseSingleCrochet(rowNum, phrase);
+        };
+
+        var parseSingleCrochet = function parseSingleCrochet(rowNum, line)
+        {
+            // 6 sc
+            var myRegexp = /[\s]*([\d]+)[\s]+sc(.*)/;
+            var match = myRegexp.exec(line);
+
+            if(match != null)
+            {
+                var stitchCount = match[1];
 
                 for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
                 {
