@@ -1,6 +1,6 @@
 define(["jquery", "crochetRow"], function($, CrochetRow)
 {
-    describe("Crochet", function() {
+    describe("CrochetRow", function() {
 
         var row;
 

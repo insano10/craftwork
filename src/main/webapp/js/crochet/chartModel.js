@@ -10,7 +10,7 @@ define(["mesh"], function(Mesh)
             mesh.clear();
         };
 
-        this.addStitch = function addStitch(stitch, rowNum, rowIdx)
+        this.addSingleCrochet = function addSingleCrochet(stitch, rowNum, rowIdx)
         {
             mesh.addStitch(stitch, rowNum, rowIdx);
         };

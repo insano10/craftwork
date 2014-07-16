@@ -2,8 +2,11 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
 {
     function InstructionParser(chartModel)
     {
+        var currentRowIndex = 0;
+
         var parseChain = function parseChain(line)
         {
+            currentRowIndex = 0;
             parseRowNumberAndContinue(line);
         };
 
@@ -15,7 +18,7 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
 
             if(match != null)
             {
-                var rowNum = match[1];
+                var rowNum = parseInt(match[1]);
                 var restOfLine = match[2];
 
                 parsePhrase(rowNum, restOfLine);
@@ -29,6 +32,7 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
         var parsePhrase = function parsePhrase(rowNum, phrase)
         {
             console.log("Parsing phrase :" + phrase);
+
             var subPhrases = phrase.split(/[T|t]hen/);
 
             if(subPhrases.length > 1)
@@ -57,7 +61,8 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
 
                 for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
                 {
-                    chartModel.addStitch(new SingleCrochet(), rowNum, rowIdx);
+                    chartModel.addSingleCrochet(new SingleCrochet(), rowNum, currentRowIndex);
+                    currentRowIndex++;
                 }
             }
             else
