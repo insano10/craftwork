@@ -1,48 +1,52 @@
-define(["jquery"], function($)
+define(["jquery"], function ($)
 {
-   function SingleCrochet()
-   {
-       /*
-       PRIVATE
-        */
-       var ICON_SIZE = 13;
-       var icon = null;
+    function SingleCrochet()
+    {
+        var stitchesAbove = [];
+        var stitchesBelow = [];
 
-       var getXOffset = function getXOffset()
-       {
-           return 50;
-       };
+        var ICON_SIZE = 13;
+        var icon = null;
 
-       var getYOffset = function getYOffset()
-       {
-           return 10;
-       };
+        (function constructor()
+        {
+            icon = new Image();
+            icon.src = "../../../../images/sc.png";
+        })();
 
-       /*
-       PRIVILEGED
-        */
+        var getXOffset = function getXOffset()
+        {
+            return 50;
+        };
 
-       this.render = function render(canvasContext, rowNum, rowIndex, maxYPos)
-       {
-           var xpos = rowIndex*ICON_SIZE + getXOffset();
-           var ypos = maxYPos - rowNum*ICON_SIZE - getYOffset();
+        var getYOffset = function getYOffset()
+        {
+            return 10;
+        };
 
-           canvasContext.drawImage(icon, xpos, ypos);
-       };
+        this.connectStitchFromBelow = function connectStitchFromBelow(stitch)
+        {
+            stitchesBelow.push(stitch);
+        };
 
-       this.toString = function toString()
-       {
-        return "SINGLE";
-       };
+        this.connectStitchFromAbove = function connectStitchFromAbove(stitch)
+        {
+            stitchesAbove.push(stitch);
+        };
 
-       this.loadSprites = function loadSprites()
-       {
-           icon = new Image();
-           icon.src = "../../../../images/sc.png";
-       };
+        this.render = function render(canvasContext, rowNum, rowIndex, maxYPos)
+        {
+            var xpos = rowIndex * ICON_SIZE + getXOffset();
+            var ypos = maxYPos - rowNum * ICON_SIZE - getYOffset();
 
-       this.loadSprites();
-   }
+            canvasContext.drawImage(icon, xpos, ypos);
+        };
+
+        this.toString = function toString()
+        {
+            return "SINGLE";
+        };
+    }
 
     return SingleCrochet;
 });
