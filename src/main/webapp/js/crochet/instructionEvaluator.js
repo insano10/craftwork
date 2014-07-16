@@ -36,9 +36,9 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
                 var rowNum = match[1];
                 var stitchCount = match[2];
 
-                for(var count=0 ; count<stitchCount ; count++)
+                for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
                 {
-                    chartModel.appendStitchToRow(new SingleCrochet(), rowNum);
+                    chartModel.addStitch(new SingleCrochet(), rowNum, rowIdx);
                 }
             }
         };

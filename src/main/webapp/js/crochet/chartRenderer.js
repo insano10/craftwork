@@ -42,14 +42,14 @@ define(function ()
 
         this.initialiseCanvas = function initialiseCanvas()
         {
-            createHiPPICanvas()
-            ;
+            createHiPPICanvas();
+
             var chartCanvas = document.getElementById("chart-canvas");
             MAX_X_POS = chartCanvas.width;
             MAX_Y_POS = chartCanvas.height;
         };
 
-        this.renderRows = function renderRows(rows)
+        this.renderMesh = function renderMesh(mesh)
         {
             var chartCanvas = document.getElementById("chart-canvas");
             var ctx = chartCanvas.getContext("2d");
@@ -57,10 +57,7 @@ define(function ()
             ctx.save();
             ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-            for (var rowNum in rows)
-            {
-                rows[rowNum].drawToCanvas(ctx, MAX_Y_POS);
-            }
+            mesh.render(ctx, MAX_Y_POS);
 
             ctx.restore();
         };

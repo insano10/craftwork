@@ -6,12 +6,10 @@ define(["jquery", "keyListener"], function($, KeyListener)
 
         beforeEach(function() {
 
+            stubListener = jasmine.createSpyObj("listener", ["notifyNewInstructionCharacter"]);
+
             keyListener = new KeyListener();
-            stubListener = { notifyNewInstructionCharacter: function(x){} };
             keyListener.addListener(stubListener);
-
-            spyOn(stubListener, "notifyNewInstructionCharacter");
-
         });
 
         it("should notify listeners of a key when pressed", function() {

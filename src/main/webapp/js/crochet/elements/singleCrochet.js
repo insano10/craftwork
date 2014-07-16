@@ -22,7 +22,7 @@ define(["jquery"], function($)
        PRIVILEGED
         */
 
-       this.drawToCanvas = function drawToCanvas(canvasContext, rowNum, rowIndex, maxYPos)
+       this.render = function render(canvasContext, rowNum, rowIndex, maxYPos)
        {
            var xpos = rowIndex*ICON_SIZE + getXOffset();
            var ypos = maxYPos - rowNum*ICON_SIZE - getYOffset();

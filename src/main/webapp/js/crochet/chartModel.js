@@ -1,11 +1,11 @@
-define(["crochetRow"], function(CrochetRow)
+define(["mesh"], function(Mesh)
 {
     function ChartModel(chartRenderer)
     {
         /*
         PRIVATE
          */
-        var rows = {};
+        var mesh = new Mesh();
 
         /*
          PRIVILEGED
@@ -13,24 +13,17 @@ define(["crochetRow"], function(CrochetRow)
 
         this.clear = function clear()
         {
-            rows = {};
+            mesh.clear();
         };
 
-        this.appendStitchToRow = function appendStitchToRow(stitch, rowNum)
+        this.addStitch = function addStitch(stitch, rowNum, rowIdx)
         {
-            console.log("Appending stitch " + stitch.toString() + " to row " + rowNum);
-
-            if(rows[rowNum] == null)
-            {
-                rows[rowNum] = new CrochetRow(rowNum);
-            }
-            rows[rowNum].appendStitch(stitch);
+            mesh.addStitch(stitch, rowNum, rowIdx);
         };
 
         this.redrawChart = function redrawChart()
         {
-            console.log("rendering rows: " + JSON.stringify(rows));
-            chartRenderer.renderRows(rows);
+            chartRenderer.renderMesh(mesh);
         };
     }
 
