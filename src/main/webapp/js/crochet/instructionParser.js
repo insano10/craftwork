@@ -1,24 +1,7 @@
 define(["jquery", "singleCrochet"], function($, SingleCrochet)
 {
-    function InstructionEvaluator(chartModel)
+    function InstructionParser(chartModel)
     {
-        var EVALUATION_DELAY_MS = 1000;
-        var evaluationTimer;
-
-        var evaluateInstructions = function evaluateInstructions()
-        {
-            chartModel.clear();
-
-            var instructionLines = $("#instructions").val().split("\n");
-
-            $.each(instructionLines, function(idx, line)
-            {
-                parseChain(line);
-            });
-
-            chartModel.redrawChart();
-        };
-
         var parseChain = function parseChain(line)
         {
             parseRowNumberAndContinue(line);
@@ -45,14 +28,28 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
 
         var parsePhrase = function parsePhrase(rowNum, phrase)
         {
-            parseSingleCrochet(rowNum, phrase);
+            console.log("Parsing phrase :" + phrase);
+            var subPhrases = phrase.split(/[T|t]hen/);
+
+            if(subPhrases.length > 1)
+            {
+                $.each(subPhrases, function(idx, subPhrase)
+                {
+                    parsePhrase(rowNum, subPhrase);
+                });
+            }
+            else
+            {
+                console.log("No more sub phrases found, parsing sc");
+                parseSingleCrochet(rowNum, phrase);
+            }
         };
 
-        var parseSingleCrochet = function parseSingleCrochet(rowNum, line)
+        var parseSingleCrochet = function parseSingleCrochet(rowNum, phrase)
         {
             // 6 sc
-            var myRegexp = /[\s]*([\d]+)[\s]+sc(.*)/;
-            var match = myRegexp.exec(line);
+            var myRegexp = /[\s]*([\d]+)[\s]*sc[\s]*$/;
+            var match = myRegexp.exec(phrase);
 
             if(match != null)
             {
@@ -63,18 +60,25 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
                     chartModel.addStitch(new SingleCrochet(), rowNum, rowIdx);
                 }
             }
+            else
+            {
+                console.error("Not a valid sc phrase: " + phrase);
+            }
         };
 
-        this.notifyNewInstructionCharacter = function notifyNewInstructionCharacter(keyChar)
+        this.parseInstructions = function parseInstructions(instructionArray)
         {
-            if(evaluationTimer != null)
+            chartModel.clear();
+
+            $.each(instructionArray, function(idx, line)
             {
-                clearTimeout(evaluationTimer);
-            }
-            evaluationTimer = setTimeout(evaluateInstructions, EVALUATION_DELAY_MS);
-        }
+                parseChain(line);
+            });
+
+            chartModel.redrawChart();
+        };
     }
 
-    return InstructionEvaluator;
+    return InstructionParser;
 });
 
