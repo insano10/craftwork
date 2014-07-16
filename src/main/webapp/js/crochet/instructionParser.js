@@ -33,7 +33,7 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
         {
             console.log("Parsing phrase :" + phrase);
 
-            var subPhrases = phrase.split(/[T|t]hen/);
+            var subPhrases = phrase.split(/[T|t]hen|,/);
 
             if(subPhrases.length > 1)
             {
