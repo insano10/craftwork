@@ -43,10 +43,6 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
             }
         };
 
-        /*
-         PRIVILEGED
-         */
-
         this.notifyNewInstructionCharacter = function notifyNewInstructionCharacter(keyChar)
         {
             if(evaluationTimer != null)

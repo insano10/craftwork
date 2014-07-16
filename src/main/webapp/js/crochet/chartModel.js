@@ -2,14 +2,8 @@ define(["mesh"], function(Mesh)
 {
     function ChartModel(chartRenderer)
     {
-        /*
-        PRIVATE
-         */
         var mesh = new Mesh();
 
-        /*
-         PRIVILEGED
-         */
 
         this.clear = function clear()
         {

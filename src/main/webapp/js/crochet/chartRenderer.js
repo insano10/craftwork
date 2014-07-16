@@ -36,10 +36,6 @@ define(function ()
             canvas.getContext("2d").setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
         };
 
-        /*
-         PRIVILEGED
-         */
-
         this.initialiseCanvas = function initialiseCanvas()
         {
             createHiPPICanvas();

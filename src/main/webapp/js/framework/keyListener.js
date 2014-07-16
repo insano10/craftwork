@@ -2,10 +2,6 @@ define(["jquery"], function($)
 {
     function KeyListener(jquery)
     {
-        /*
-         PRIVATE
-         */
-
         var listeners = [];
 
         var notifyListeners = function(keyChar)
@@ -17,9 +13,6 @@ define(["jquery"], function($)
 
         };
 
-        /*
-         PRIVILEGED
-         */
 
         this.addListener = function addListener(listener)
         {
