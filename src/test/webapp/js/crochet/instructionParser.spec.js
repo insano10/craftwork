@@ -59,13 +59,24 @@ define(["jquery", "singleCrochet", "instructionParser"], function($, SingleCroch
             expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 2, 0);
         });
 
-//        it("should parse '2 sc in next sc'", function() {
-//
-//            parser.parseInstructions(["row 1: 2 sc in next sc"]);
-//
-//            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, 0);
-//            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, 1);
-//        });
+        it("should parse '2 sc in next sc'", function() {
+
+            parser.parseInstructions(["row 1: 2 sc in next sc"]);
+
+            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, 0);
+            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, 0);
+        });
+
+        it("should parse '1 sc then 2 sc in next sc then 2 sc'", function() {
+
+            parser.parseInstructions(["row 1: 1 sc then 2 sc in next sc then 2 sc"]);
+
+            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, 0);
+            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, 1);
+            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, 1);
+            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, 2);
+            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, 3);
+        });
 
     });
 });

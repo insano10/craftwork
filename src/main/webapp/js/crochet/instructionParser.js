@@ -45,15 +45,15 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
             else
             {
                 console.log("No more sub phrases found, parsing sc");
-                parseSingleCrochet(rowNum, phrase);
+                parseSimpleStitchOrContinue(rowNum, phrase);
             }
         };
 
-        var parseSingleCrochet = function parseSingleCrochet(rowNum, phrase)
+        var parseSimpleStitchOrContinue = function parseSimpleStitchOrContinue(rowNum, phrase)
         {
             // 6 sc
-            var myRegexp = /[\s]*([\d]+)[\s]*sc[\s]*$/;
-            var match = myRegexp.exec(phrase);
+            var simpleRegex = /[\s]*([\d]+)[\s]*sc[\s]*$/;
+            var match = simpleRegex.exec(phrase);
 
             if(match != null)
             {
@@ -67,7 +67,29 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
             }
             else
             {
-                console.error("Not a valid sc phrase: " + phrase);
+                parseIncreaseOrContinue(rowNum, phrase);
+            }
+        };
+
+        var parseIncreaseOrContinue = function parseIncreaseOrContinue(rowNum, phrase)
+        {
+            // 2 sc in next sc
+            var increaseRegex = /[\s]*([\d]+)[\s]*sc[\s]+in[\s]+[N|n]ext[\s]+sc[\s]*$/;
+            var match = increaseRegex.exec(phrase);
+
+            if(match != null)
+            {
+                var stitchCount = match[1];
+
+                for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
+                {
+                    chartModel.addSingleCrochet(new SingleCrochet(), rowNum, currentRowIndex);
+                }
+                currentRowIndex++;
+            }
+            else
+            {
+                console.error("Not a valid phrase: " + phrase);
             }
         };
 
@@ -77,7 +99,10 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
 
             $.each(instructionArray, function(idx, line)
             {
-                parseChain(line);
+                if(line)
+                {
+                    parseChain(line);
+                }
             });
 
             chartModel.redrawChart();
