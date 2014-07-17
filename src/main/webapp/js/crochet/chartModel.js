@@ -10,9 +10,9 @@ define(["mesh"], function(Mesh)
             mesh.clear();
         };
 
-        this.addSingleCrochet = function addSingleCrochet(stitch, rowNum, rowIdx)
+        this.addSingleCrochet = function addSingleCrochet(stitch, rowNum, connectedToIndices)
         {
-            mesh.addStitch(stitch, rowNum, rowIdx);
+            mesh.addStitch(stitch, rowNum, connectedToIndices);
         };
 
         this.redrawChart = function redrawChart()

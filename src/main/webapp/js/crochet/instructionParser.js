@@ -52,7 +52,7 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
         var parseSimpleStitchOrContinue = function parseSimpleStitchOrContinue(rowNum, phrase)
         {
             // 6 sc
-            var simpleRegex = /[\s]*([\d]+)[\s]*sc[\s]*$/;
+            var simpleRegex = /^[\s]*([\d]+)[\s]*sc[\s]*$/;
             var match = simpleRegex.exec(phrase);
 
             if(match != null)
@@ -61,7 +61,7 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
 
                 for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
                 {
-                    chartModel.addSingleCrochet(new SingleCrochet(), rowNum, currentRowIndex);
+                    chartModel.addSingleCrochet(new SingleCrochet(), rowNum, [currentRowIndex]);
                     currentRowIndex++;
                 }
             }
@@ -83,9 +83,33 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
 
                 for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
                 {
-                    chartModel.addSingleCrochet(new SingleCrochet(), rowNum, currentRowIndex);
+                    chartModel.addSingleCrochet(new SingleCrochet(), rowNum, [currentRowIndex]);
                 }
                 currentRowIndex++;
+            }
+            else
+            {
+                parseDecreaseOrContinue(rowNum, phrase);
+            }
+        };
+
+        var parseDecreaseOrContinue = function parseDecreaseOrContinue(rowNum, phrase)
+        {
+            // 1 sc in next 3 sc
+            var increaseRegex = /[\s]*1[\s]*sc[\s]+in[\s]+[N|n]ext[\s]+([\d]+)[\s]*sc[\s]*$/;
+            var match = increaseRegex.exec(phrase);
+
+            if(match != null)
+            {
+                var stitchCount = match[1];
+
+                var connectToIndices = [];
+                for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
+                {
+                    connectToIndices.push(currentRowIndex);
+                    currentRowIndex++;
+                }
+                chartModel.addSingleCrochet(new SingleCrochet(), rowNum, connectToIndices);
             }
             else
             {
