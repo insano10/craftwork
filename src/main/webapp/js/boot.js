@@ -10,6 +10,7 @@ require(
             "mesh":                 "crochet/mesh",
             "crochetRow":           "crochet/elements/crochetRow",
             "singleCrochet":        "crochet/elements/singleCrochet",
+            "chain":                "crochet/elements/chain",
             "keyListener":          "framework/keyListener"
         }
     },

@@ -1,4 +1,4 @@
-define(["jquery", "singleCrochet"], function($, SingleCrochet)
+define(["jquery", "chain", "singleCrochet"], function($, Chain, SingleCrochet)
 {
     function InstructionParser(chartModel)
     {
@@ -44,7 +44,29 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
             }
             else
             {
-                console.log("No more sub phrases found, parsing sc");
+                console.log("No more sub phrases found, parsing: " + phrase);
+                parseChainOrContinue(rowNum, phrase);
+            }
+        };
+
+        var parseChainOrContinue = function parseChainOrContinue(rowNum, phrase)
+        {
+            // chain 10
+            var chainRegex = /^[\s]*[C|c]hain[\s]+([\d]+)[\s]*$/;
+            var match = chainRegex.exec(phrase);
+
+            if(match != null)
+            {
+                var stitchCount = match[1];
+
+                for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
+                {
+                    chartModel.addChain(new Chain(), rowNum, currentRowIndex);
+                    currentRowIndex++;
+                }
+            }
+            else
+            {
                 parseSimpleStitchOrContinue(rowNum, phrase);
             }
         };
@@ -96,8 +118,8 @@ define(["jquery", "singleCrochet"], function($, SingleCrochet)
         var parseDecreaseOrContinue = function parseDecreaseOrContinue(rowNum, phrase)
         {
             // 1 sc in next 3 sc
-            var increaseRegex = /[\s]*1[\s]*sc[\s]+in[\s]+[N|n]ext[\s]+([\d]+)[\s]*sc[\s]*$/;
-            var match = increaseRegex.exec(phrase);
+            var decreaseRegex = /[\s]*1[\s]*sc[\s]+in[\s]+[N|n]ext[\s]+([\d]+)[\s]*sc[\s]*$/;
+            var match = decreaseRegex.exec(phrase);
 
             if(match != null)
             {

@@ -1,4 +1,4 @@
-define(["jquery", "singleCrochet", "instructionParser"], function($, SingleCrochet, InstructionParser)
+define(["jquery", "instructionParser"], function($, InstructionParser)
 {
     describe("InstructionParser", function() {
 
@@ -7,8 +7,24 @@ define(["jquery", "singleCrochet", "instructionParser"], function($, SingleCroch
 
         beforeEach(function() {
 
-            stubModel = jasmine.createSpyObj("chartModel", ["addSingleCrochet", "clear", "redrawChart"]);
+            stubModel = jasmine.createSpyObj("chartModel", ["addSingleCrochet", "addChain", "clear", "redrawChart"]);
             parser = new InstructionParser(stubModel);
+        });
+
+        it("should parse 'chain 10'", function() {
+
+            parser.parseInstructions(["row 1: chain 10"]);
+
+            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 0);
+            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 1);
+            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 2);
+            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 3);
+            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 4);
+            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 5);
+            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 6);
+            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 7);
+            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 8);
+            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 9);
         });
 
         it("should parse '1 sc'", function() {

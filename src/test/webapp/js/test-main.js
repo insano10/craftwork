@@ -27,7 +27,8 @@ require.config(
             "keyListener":       "src/main/webapp/js/framework/keyListener",
             "instructionParser": "src/main/webapp/js/crochet/instructionParser",
             "crochetRow":        "src/main/webapp/js/crochet/elements/crochetRow",
-            "singleCrochet":     "src/main/webapp/js/crochet/elements/singleCrochet"
+            "singleCrochet":     "src/main/webapp/js/crochet/elements/singleCrochet",
+            "chain":             "src/main/webapp/js/crochet/elements/chain"
         },
 
         // dynamically load all test files
