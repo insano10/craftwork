@@ -1,5 +1,30 @@
 define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
 {
+
+    function SubPhraseParser(parseChain)
+    {
+        this.parse = function parse(phrase, context)
+        {
+            console.log("Parsing phrase :" + phrase);
+
+            var subPhrases = phrase.split(/[T|t]hen|,/);
+
+            if (subPhrases.length > 1)
+            {
+                $.each(subPhrases, function (idx, subPhrase)
+                {
+                    parse(subPhrase, context);
+                });
+            }
+            else
+            {
+                console.log("No more sub phrases found, parsing: " + phrase);
+                parseChain.parse(phrase, context);
+
+            }
+        }
+    }
+
     function ChainStitchParser(chartModel)
     {
         this.parse = function parse(phrase, context)
@@ -55,7 +80,7 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
         this.parse = function parse(phrase, context)
         {
             // 2 sc in next sc
-            var increaseRegex = /[\s]*([\d]+)[\s]*sc[\s]+in[\s]+[N|n]ext[\s]+sc[\s]*$/;
+            var increaseRegex = /^[\s]*([\d]+)[\s]*sc[\s]+in[\s]+[N|n]ext[\s]+sc[\s]*$/;
             var match = increaseRegex.exec(phrase);
 
             if (match != null)
@@ -78,7 +103,7 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
         this.parse = function parse(phrase, context)
         {
             // 1 sc in next 3 sc
-            var decreaseRegex = /[\s]*1[\s]*sc[\s]+in[\s]+[N|n]ext[\s]+([\d]+)[\s]*sc[\s]*$/;
+            var decreaseRegex = /^[\s]*1[\s]*sc[\s]+in[\s]+[N|n]ext[\s]+([\d]+)[\s]*sc[\s]*$/;
             var match = decreaseRegex.exec(phrase);
 
             if (match != null)
@@ -123,9 +148,9 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
             var singleCrochetIncreaseParseLink = new ParseLink(new SingleCrochetIncreaseParser(chartModel), singleCrochetDecreaseParseLink);
             var singleCrochetParseLink = new ParseLink(new SingleCrochetParser(chartModel), singleCrochetIncreaseParseLink);
             var chainParseLink = new ParseLink(new ChainStitchParser(chartModel), singleCrochetParseLink);
-            var headOfChain = chainParseLink;
+            var subPhraseParser = new ParseLink(new SubPhraseParser(chainParseLink), null);
 
-            return headOfChain;
+            return subPhraseParser;
         }
     }
 

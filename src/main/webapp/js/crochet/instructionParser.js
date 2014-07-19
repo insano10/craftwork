@@ -20,32 +20,11 @@ define(["jquery", "chain", "singleCrochet"], function($, Chain, SingleCrochet)
                 var restOfLine = match[2];
 
                 context.rowNum = rowNum;
-                parsePhrase(rowNum, restOfLine, context);
+                parseChain.parse(restOfLine, context);
             }
             else
             {
                 console.error("Could not find row number in: " + line);
-            }
-        };
-
-        var parsePhrase = function parsePhrase(rowNum, phrase, context)
-        {
-            console.log("Parsing phrase :" + phrase);
-
-            var subPhrases = phrase.split(/[T|t]hen|,/);
-
-            if(subPhrases.length > 1)
-            {
-                $.each(subPhrases, function(idx, subPhrase)
-                {
-                    parsePhrase(rowNum, subPhrase, context);
-                });
-            }
-            else
-            {
-                console.log("No more sub phrases found, parsing: " + phrase);
-                parseChain.parse(phrase, context);
-
             }
         };
 
