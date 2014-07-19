@@ -26,9 +26,10 @@ require.config(
             "jquery":            "src/test/webapp/js/requireJQuery",
             "keyListener":       "src/main/webapp/js/framework/keyListener",
             "instructionParser": "src/main/webapp/js/crochet/instructionParser",
+            "parseChainFactory": "src/main/webapp/js/crochet/parseChainFactory",
+            "chain":             "src/main/webapp/js/crochet/elements/chain",
             "crochetRow":        "src/main/webapp/js/crochet/elements/crochetRow",
-            "singleCrochet":     "src/main/webapp/js/crochet/elements/singleCrochet",
-            "chain":             "src/main/webapp/js/crochet/elements/chain"
+            "singleCrochet":     "src/main/webapp/js/crochet/elements/singleCrochet"
         },
 
         // dynamically load all test files

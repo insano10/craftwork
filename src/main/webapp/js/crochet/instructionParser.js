@@ -1,16 +1,14 @@
 define(["jquery", "chain", "singleCrochet"], function($, Chain, SingleCrochet)
 {
-    function InstructionParser(chartModel)
+    function InstructionParser(chartModel, parseChain)
     {
-        var currentRowIndex = 0;
-
-        var parseChain = function parseChain(line)
+        var parse = function parse(line)
         {
-            currentRowIndex = 0;
-            parseRowNumberAndContinue(line);
+            var context = { rowNum: 0, currentRowIndex: 0 };
+            parseRowNumberAndContinue(line, context);
         };
 
-        var parseRowNumberAndContinue = function parseRowNumberAndContinue(line)
+        var parseRowNumberAndContinue = function parseRowNumberAndContinue(line, context)
         {
             //Row 1:
             var rowRegex = /[R|r]ow[\s]+([\d]+)[\s]*:(.*)/;
@@ -21,7 +19,8 @@ define(["jquery", "chain", "singleCrochet"], function($, Chain, SingleCrochet)
                 var rowNum = parseInt(match[1]);
                 var restOfLine = match[2];
 
-                parsePhrase(rowNum, restOfLine);
+                context.rowNum = rowNum;
+                parsePhrase(rowNum, restOfLine, context);
             }
             else
             {
@@ -29,7 +28,7 @@ define(["jquery", "chain", "singleCrochet"], function($, Chain, SingleCrochet)
             }
         };
 
-        var parsePhrase = function parsePhrase(rowNum, phrase)
+        var parsePhrase = function parsePhrase(rowNum, phrase, context)
         {
             console.log("Parsing phrase :" + phrase);
 
@@ -39,103 +38,14 @@ define(["jquery", "chain", "singleCrochet"], function($, Chain, SingleCrochet)
             {
                 $.each(subPhrases, function(idx, subPhrase)
                 {
-                    parsePhrase(rowNum, subPhrase);
+                    parsePhrase(rowNum, subPhrase, context);
                 });
             }
             else
             {
                 console.log("No more sub phrases found, parsing: " + phrase);
-                parseChainOrContinue(rowNum, phrase);
-            }
-        };
+                parseChain.parse(phrase, context);
 
-        var parseChainOrContinue = function parseChainOrContinue(rowNum, phrase)
-        {
-            // chain 10
-            var chainRegex = /^[\s]*[C|c]hain[\s]+([\d]+)[\s]*$/;
-            var match = chainRegex.exec(phrase);
-
-            if(match != null)
-            {
-                var stitchCount = match[1];
-
-                for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
-                {
-                    chartModel.addChain(new Chain(), rowNum, currentRowIndex);
-                    currentRowIndex++;
-                }
-            }
-            else
-            {
-                parseSimpleStitchOrContinue(rowNum, phrase);
-            }
-        };
-
-        var parseSimpleStitchOrContinue = function parseSimpleStitchOrContinue(rowNum, phrase)
-        {
-            // 6 sc
-            var simpleRegex = /^[\s]*([\d]+)[\s]*sc[\s]*$/;
-            var match = simpleRegex.exec(phrase);
-
-            if(match != null)
-            {
-                var stitchCount = match[1];
-
-                for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
-                {
-                    chartModel.addSingleCrochet(new SingleCrochet(), rowNum, [currentRowIndex]);
-                    currentRowIndex++;
-                }
-            }
-            else
-            {
-                parseIncreaseOrContinue(rowNum, phrase);
-            }
-        };
-
-        var parseIncreaseOrContinue = function parseIncreaseOrContinue(rowNum, phrase)
-        {
-            // 2 sc in next sc
-            var increaseRegex = /[\s]*([\d]+)[\s]*sc[\s]+in[\s]+[N|n]ext[\s]+sc[\s]*$/;
-            var match = increaseRegex.exec(phrase);
-
-            if(match != null)
-            {
-                var stitchCount = match[1];
-
-                for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
-                {
-                    chartModel.addSingleCrochet(new SingleCrochet(), rowNum, [currentRowIndex]);
-                }
-                currentRowIndex++;
-            }
-            else
-            {
-                parseDecreaseOrContinue(rowNum, phrase);
-            }
-        };
-
-        var parseDecreaseOrContinue = function parseDecreaseOrContinue(rowNum, phrase)
-        {
-            // 1 sc in next 3 sc
-            var decreaseRegex = /[\s]*1[\s]*sc[\s]+in[\s]+[N|n]ext[\s]+([\d]+)[\s]*sc[\s]*$/;
-            var match = decreaseRegex.exec(phrase);
-
-            if(match != null)
-            {
-                var stitchCount = match[1];
-
-                var connectToIndices = [];
-                for(var rowIdx=0 ; rowIdx<stitchCount ; rowIdx++)
-                {
-                    connectToIndices.push(currentRowIndex);
-                    currentRowIndex++;
-                }
-                chartModel.addSingleCrochet(new SingleCrochet(), rowNum, connectToIndices);
-            }
-            else
-            {
-                console.error("Not a valid phrase: " + phrase);
             }
         };
 
@@ -147,7 +57,7 @@ define(["jquery", "chain", "singleCrochet"], function($, Chain, SingleCrochet)
             {
                 if(line)
                 {
-                    parseChain(line);
+                    parse(line);
                 }
             });
 

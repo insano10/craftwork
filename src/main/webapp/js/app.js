@@ -2,8 +2,8 @@
 This is the main app entry point from boot.js (loaded by require.js)
  */
 
-define(["jquery", "chartRenderer", "chartModel", "instructionParser", "keyListener", "instructionEvaluator"],
-        function ($, ChartRenderer, ChartModel, InstructionParser, KeyListener, InstructionEvaluator)
+define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator"],
+        function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator)
 {
     var start = function ()
     {
@@ -14,7 +14,8 @@ define(["jquery", "chartRenderer", "chartModel", "instructionParser", "keyListen
             var chartRenderer = new ChartRenderer();
             var chartModel = new ChartModel(chartRenderer);
             var keyListener = new KeyListener();
-            var instructionParser = new InstructionParser(chartModel);
+            var parseChain = new ParseChainFactory().createParseChain(chartModel);
+            var instructionParser = new InstructionParser(chartModel, parseChain);
             var instructionEvaluator = new InstructionEvaluator(instructionParser);
 
             chartRenderer.initialiseCanvas();

@@ -1,21 +1,21 @@
 require(
     {
-        paths:
-        {
+        paths: {
             "jquery":               "requireJQuery",
-            "chartRenderer":        "crochet/chartRenderer",
-            "chartModel":           "crochet/chartModel",
-            "instructionParser":    "crochet/instructionParser",
+            "keyListener":          "framework/keyListener",
             "instructionEvaluator": "framework/instructionEvaluator",
+            "chartModel":           "crochet/chartModel",
+            "chartRenderer":        "crochet/chartRenderer",
+            "instructionParser":    "crochet/instructionParser",
             "mesh":                 "crochet/mesh",
-            "crochetRow":           "crochet/elements/crochetRow",
-            "singleCrochet":        "crochet/elements/singleCrochet",
+            "parseChainFactory":    "crochet/parseChainFactory",
             "chain":                "crochet/elements/chain",
-            "keyListener":          "framework/keyListener"
+            "crochetRow":           "crochet/elements/crochetRow",
+            "singleCrochet":        "crochet/elements/singleCrochet"
         }
     },
     ["app"],
-    function(app)
+    function (app)
     {
         app.start();
     }

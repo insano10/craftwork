@@ -1,4 +1,4 @@
-define(["jquery", "instructionParser"], function($, InstructionParser)
+define(["jquery", "parseChainFactory", "instructionParser"], function($, ParseChainFactory, InstructionParser)
 {
     describe("InstructionParser", function() {
 
@@ -8,7 +8,9 @@ define(["jquery", "instructionParser"], function($, InstructionParser)
         beforeEach(function() {
 
             stubModel = jasmine.createSpyObj("chartModel", ["addSingleCrochet", "addChain", "clear", "redrawChart"]);
-            parser = new InstructionParser(stubModel);
+
+            var parseChain = new ParseChainFactory().createParseChain(stubModel);
+            parser = new InstructionParser(stubModel, parseChain);
         });
 
         it("should parse 'chain 10'", function() {
