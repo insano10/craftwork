@@ -1,7 +1,6 @@
 define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 {
     var stubModel;
-    var context;
     var parseChain;
 
     beforeEach(function ()
@@ -15,13 +14,9 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
         it("should parse a chain stitch phrase", function ()
         {
-            var context =
-            {
-                rowNum:          1,
-                currentRowIndex: 0
-            };
+            var context = { rowNum: 0, currentRowIndex: 0 };
 
-            parseChain.parse("chain 5", context);
+            parseChain.parse("row 1: chain 5", context);
 
             expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 0);
             expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1, 1);
@@ -33,13 +28,9 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
         it("should parse a single crochet phrase", function ()
         {
-            var context =
-            {
-                rowNum:          5,
-                currentRowIndex: 3
-            };
+            var context = { rowNum: 4, currentRowIndex: 3 };
 
-            parseChain.parse("2sc", context);
+            parseChain.parse("row 5: 2sc", context);
 
             expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 5, [3]);
             expect(context.currentRowIndex).toEqual(5);
@@ -47,13 +38,9 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
         it("should parse a single crochet increase phrase", function ()
         {
-            var context =
-            {
-                rowNum:          2,
-                currentRowIndex: 10
-            };
+            var context = { rowNum: 1, currentRowIndex: 10 };
 
-            parseChain.parse("3 sc in next sc", context);
+            parseChain.parse("row 2: 3 sc in next sc", context);
 
             expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 2, [10]);
             expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 2, [10]);
@@ -63,13 +50,9 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
         it("should parse a single crochet decrease phrase", function ()
         {
-            var context =
-            {
-                rowNum:          63,
-                currentRowIndex: 42
-            };
+            var context = { rowNum: 62, currentRowIndex: 42 };
 
-            parseChain.parse("1sc in next 2sc", context);
+            parseChain.parse("row 63: 1sc in next 2sc", context);
 
             expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 63, [42, 43]);
             expect(context.currentRowIndex).toEqual(44);
@@ -77,11 +60,7 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
         it("should not parse invalid phrase", function ()
         {
-            var context =
-            {
-                rowNum:          1,
-                currentRowIndex: 0
-            };
+            var context = { rowNum: 0, currentRowIndex: 0 };
 
             parseChain.parse("this is not a valid phrase", context);
 
@@ -90,13 +69,9 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
         it("should parse phrase containing simple, increase and decrease phrases '2sc in next sc then 2sc then 1sc in next 3sc'", function() {
 
-            var context =
-            {
-                rowNum:          1,
-                currentRowIndex: 0
-            };
+            var context = { rowNum: 0, currentRowIndex: 0 };
 
-            parseChain.parse("2sc in next sc then 2sc then 1sc in next 3sc", context);
+            parseChain.parse("row 1: 2sc in next sc then 2sc then 1sc in next 3sc", context);
 
             expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, [0]);
             expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1, [0]);

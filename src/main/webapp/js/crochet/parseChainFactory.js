@@ -1,5 +1,27 @@
 define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
 {
+    function RowNumberParser(parseChain)
+    {
+        this.parse = function parse(phrase, context)
+        {
+            //Row 1:
+            var rowRegex = /[R|r]ow[\s]+([\d]+)[\s]*:(.*)/;
+            var match = rowRegex.exec(phrase);
+
+            if (match != null)
+            {
+                var rowNum = parseInt(match[1]);
+                var restOfLine = match[2];
+
+                context.rowNum = rowNum;
+                parseChain.parse(restOfLine, context);
+            }
+            else
+            {
+                console.error("Could not find row number in: " + phrase);
+            }
+        }
+    }
 
     function SubPhraseParser(parseChain)
     {
@@ -29,8 +51,6 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
     {
         this.parse = function parse(phrase, context)
         {
-            console.log("Parsing chain stitch with context: " + JSON.stringify(context));
-
             // chain 10
             var chainRegex = /^[\s]*[C|c]hain[\s]+([\d]+)[\s]*$/;
             var match = chainRegex.exec(phrase);
@@ -54,8 +74,6 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
     {
         this.parse = function parse(phrase, context)
         {
-            console.log("Parsing single crochet with context: " + JSON.stringify(context));
-
             // 6 sc
             var simpleRegex = /^[\s]*([\d]+)[\s]*sc[\s]*$/;
             var match = simpleRegex.exec(phrase);
@@ -148,9 +166,11 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
             var singleCrochetIncreaseParseLink = new ParseLink(new SingleCrochetIncreaseParser(chartModel), singleCrochetDecreaseParseLink);
             var singleCrochetParseLink = new ParseLink(new SingleCrochetParser(chartModel), singleCrochetIncreaseParseLink);
             var chainParseLink = new ParseLink(new ChainStitchParser(chartModel), singleCrochetParseLink);
-            var subPhraseParser = new ParseLink(new SubPhraseParser(chainParseLink), null);
 
-            return subPhraseParser;
+            var subPhraseParser = new SubPhraseParser(chainParseLink);
+            var rowNumberParser = new RowNumberParser(subPhraseParser);
+
+            return rowNumberParser;
         }
     }
 
