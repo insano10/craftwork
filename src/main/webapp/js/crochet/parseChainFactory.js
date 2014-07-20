@@ -1,4 +1,4 @@
-define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
+define(["jquery", "singleCrochet", "chain", "stitch"], function ($, SingleCrochet, Chain, Stitch)
 {
     function RowNumberParser(parseChain)
     {
@@ -61,7 +61,7 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addChain(new Chain(), context.rowNum);
+                    chartModel.addChain(new Stitch("CHAIN", "chain.png", 13), context.rowNum);
                     context.currentRowIndex++;
                 }
                 return true;
@@ -84,7 +84,7 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addSingleCrochet(new SingleCrochet(), context.rowNum);
+                    chartModel.addSingleCrochet(new Stitch("SINGLE", "sc.png", 13), context.rowNum);
                     context.currentRowIndex++;
                 }
                 return true;

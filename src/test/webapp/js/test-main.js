@@ -29,7 +29,8 @@ require.config(
             "parseChainFactory": "src/main/webapp/js/crochet/parseChainFactory",
             "chain":             "src/main/webapp/js/crochet/elements/chain",
             "crochetRow":        "src/main/webapp/js/crochet/elements/crochetRow",
-            "singleCrochet":     "src/main/webapp/js/crochet/elements/singleCrochet"
+            "singleCrochet":     "src/main/webapp/js/crochet/elements/singleCrochet",
+            "stitch":            "src/main/webapp/js/crochet/elements/stitch"
         },
 
         // dynamically load all test files

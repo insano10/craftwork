@@ -11,7 +11,8 @@ require(
             "parseChainFactory":    "crochet/parseChainFactory",
             "chain":                "crochet/elements/chain",
             "crochetRow":           "crochet/elements/crochetRow",
-            "singleCrochet":        "crochet/elements/singleCrochet"
+            "singleCrochet":        "crochet/elements/singleCrochet",
+            "stitch":               "crochet/elements/stitch"
         }
     },
     ["app"],
