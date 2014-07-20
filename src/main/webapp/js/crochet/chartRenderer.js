@@ -53,7 +53,16 @@ define(function ()
             ctx.save();
             ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-            mesh.render(ctx, MAX_Y_POS);
+            var renderContext =
+            {
+                maxXPos: MAX_X_POS,
+                maxYPos: MAX_Y_POS,
+                currentRenderXPos: 50, //starting offsets
+                currentRenderYPos: MAX_Y_POS - 20,
+                renderDirection: 'R' //'L', 'R', 'U','D'
+            };
+
+            mesh.render(ctx, renderContext);
 
             ctx.restore();
         };

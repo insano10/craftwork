@@ -11,7 +11,7 @@ define(["jquery", "crochetRow"], function($, CrochetRow)
 
         it("should render stitches", function() {
 
-            var ctx = null, maxYPos = 5;
+            var canvasContext = null, renderContext = {renderDirection: 'R'};
 
             var stubStitch1 = jasmine.createSpyObj("stitch", ["render"]);
             var stubStitch2 = jasmine.createSpyObj("stitch", ["render"]);
@@ -21,11 +21,11 @@ define(["jquery", "crochetRow"], function($, CrochetRow)
             row.appendStitch(stubStitch2);
             row.appendStitch(stubStitch3);
 
-            row.render(ctx, maxYPos);
+            row.render(canvasContext, renderContext);
 
-            expect(stubStitch1.render).toHaveBeenCalledWith(ctx, 10, 0, maxYPos);
-            expect(stubStitch2.render).toHaveBeenCalledWith(ctx, 10, 1, maxYPos);
-            expect(stubStitch3.render).toHaveBeenCalledWith(ctx, 10, 2, maxYPos);
+            expect(stubStitch1.render).toHaveBeenCalledWith(canvasContext, renderContext);
+            expect(stubStitch2.render).toHaveBeenCalledWith(canvasContext, renderContext);
+            expect(stubStitch3.render).toHaveBeenCalledWith(canvasContext, renderContext);
         });
 
     });

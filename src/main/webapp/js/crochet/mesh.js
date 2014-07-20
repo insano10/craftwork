@@ -52,11 +52,11 @@ define(["jquery", "crochetRow"], function ($, CrochetRow)
             connectStitchToMesh(stitch, rowNum, connectedToIndices);
         };
 
-        this.render = function render(ctx, maxYPos)
+        this.render = function render(canvasContext, renderContext)
         {
             for (var rowNum in rows)
             {
-                rows[rowNum].render(ctx, maxYPos);
+                rows[rowNum].render(canvasContext, renderContext);
             }
         };
 

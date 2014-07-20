@@ -54,12 +54,26 @@ define(["jquery"], function ($)
             stitchesAbove.push(stitch);
         };
 
-        this.render = function render(canvasContext, rowNum, rowIndex, maxYPos)
+        this.render = function render(canvasContext, renderContext)
         {
-            var xpos = rowIndex * ICON_SIZE + getXOffset();
-            var ypos = maxYPos - rowNum * ICON_SIZE - getYOffset();
+            renderIcon(canvasContext, icon, renderContext.currentRenderXPos, renderContext.currentRenderYPos, 0);
 
-            renderIcon(canvasContext, icon, xpos, ypos, 0);
+            if (renderContext.renderDirection == 'R')
+            {
+                renderContext.currentRenderXPos = renderContext.currentRenderXPos + ICON_SIZE;
+            }
+            if (renderContext.renderDirection == 'L')
+            {
+                renderContext.currentRenderXPos = renderContext.currentRenderXPos - ICON_SIZE;
+            }
+            if (renderContext.renderDirection == 'U')
+            {
+                renderContext.currentRenderYPos = renderContext.currentRenderYPos - ICON_SIZE;
+            }
+            if (renderContext.renderDirection == 'D')
+            {
+                renderContext.currentRenderYPos = renderContext.currentRenderYPos + ICON_SIZE;
+            }
         };
 
         this.toString = function toString()

@@ -4,6 +4,26 @@ define(["jquery"], function ($)
     {
         var stitches = [];
 
+        var getRenderDirection = function getRenderDirection(stitchIndex, maxStitchIndex)
+        {
+            if(stitchIndex == maxStitchIndex)
+            {
+                //start of row: above last stitch on previous row
+                return 'U';
+            }
+
+            if(rowNum%2 !=0)
+            {
+                //odd row: left -> right
+                return 'R';
+            }
+            else
+            {
+                //even row: right -> left
+                return 'L';
+            }
+        };
+
         this.appendStitch = function appendStitch(stitch)
         {
             stitches.push(stitch);
@@ -29,11 +49,13 @@ define(["jquery"], function ($)
             }
         };
 
-        this.render = function render(canvasContext, maxYPos)
+        this.render = function render(canvasContext, renderContext)
         {
             for (var i = 0; i < stitches.length; i++)
             {
-                stitches[i].render(canvasContext, rowNum, i, maxYPos);
+                renderContext.renderDirection = getRenderDirection(i, stitches.length-1);
+
+                stitches[i].render(canvasContext, renderContext);
             }
         }
     }
