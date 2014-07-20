@@ -10,14 +10,14 @@ define(["mesh"], function(Mesh)
             mesh.clear();
         };
 
-        this.addChain = function addChain(stitch, rowNum, rowIdx)
+        this.addChain = function addChain(stitch, rowNum)
         {
-            mesh.addStitch(stitch, rowNum, [rowIdx]);
+            mesh.addStitch(stitch, rowNum);
         };
 
-        this.addSingleCrochet = function addSingleCrochet(stitch, rowNum, connectedToIndices)
+        this.addSingleCrochet = function addSingleCrochet(stitch, rowNum)
         {
-            mesh.addStitch(stitch, rowNum, connectedToIndices);
+            mesh.addStitch(stitch, rowNum);
         };
 
         this.redrawChart = function redrawChart()

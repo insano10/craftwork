@@ -61,7 +61,7 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addChain(new Chain(), context.rowNum, context.currentRowIndex);
+                    chartModel.addChain(new Chain(), context.rowNum);
                     context.currentRowIndex++;
                 }
                 return true;
@@ -84,7 +84,7 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addSingleCrochet(new SingleCrochet(), context.rowNum, [context.currentRowIndex]);
+                    chartModel.addSingleCrochet(new SingleCrochet(), context.rowNum);
                     context.currentRowIndex++;
                 }
                 return true;
@@ -107,7 +107,7 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addSingleCrochet(new SingleCrochet(), context.rowNum, [context.currentRowIndex]);
+                    chartModel.addSingleCrochet(new SingleCrochet(), context.rowNum);
                 }
                 context.currentRowIndex++;
                 return true;
@@ -134,7 +134,7 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
                     connectToIndices.push(context.currentRowIndex);
                     context.currentRowIndex++;
                 }
-                chartModel.addSingleCrochet(new SingleCrochet(), context.rowNum, connectToIndices);
+                chartModel.addSingleCrochet(new SingleCrochet(), context.rowNum);
                 return true;
             }
             return false;
@@ -162,9 +162,9 @@ define(["jquery", "singleCrochet", "chain"], function ($, SingleCrochet, Chain)
     {
         this.createParseChain = function createParseChain(chartModel)
         {
-            var singleCrochetDecreaseParseLink = new ParseLink(new SingleCrochetDecreaseParser(chartModel), null);
-            var singleCrochetIncreaseParseLink = new ParseLink(new SingleCrochetIncreaseParser(chartModel), singleCrochetDecreaseParseLink);
-            var singleCrochetParseLink = new ParseLink(new SingleCrochetParser(chartModel), singleCrochetIncreaseParseLink);
+//            var singleCrochetDecreaseParseLink = new ParseLink(new SingleCrochetDecreaseParser(chartModel), null);
+//            var singleCrochetIncreaseParseLink = new ParseLink(new SingleCrochetIncreaseParser(chartModel), singleCrochetDecreaseParseLink);
+            var singleCrochetParseLink = new ParseLink(new SingleCrochetParser(chartModel), null);
             var chainParseLink = new ParseLink(new ChainStitchParser(chartModel), singleCrochetParseLink);
 
             var subPhraseParser = new SubPhraseParser(chainParseLink);

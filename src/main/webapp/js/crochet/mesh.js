@@ -14,20 +14,17 @@ define(["jquery", "crochetRow"], function ($, CrochetRow)
 
         var addStitchToRow = function addStitchToRow(stitch, row)
         {
-            row.appendStitch(stitch);
+            return row.appendStitch(stitch);
         };
 
-        var connectStitchToMesh = function connectStitchToMesh(stitch, rowNum, connectedToIndices)
+        var connectStitchToMesh = function connectStitchToMesh(stitch, rowNum, rowIndex)
         {
             var rowBelow = rows[rowNum-1];
 
             if(rowBelow != null)
             {
-                $.each(connectedToIndices, function(idx, rowIdx)
-                {
-                    console.log("connecting stitch " + stitch.toString() + " to lower row " + (rowNum-1) + " at index " + rowIdx);
-                    rowBelow.connectStitchFromAbove(stitch, rowIdx);
-                });
+                console.log("connecting stitch " + stitch.toString() + " to lower row " + (rowNum-1) + " at index " + rowIndex);
+                rowBelow.connectStitchFromAbove(stitch, rowIndex);
             }
             else
             {
@@ -43,13 +40,13 @@ define(["jquery", "crochetRow"], function ($, CrochetRow)
             rows = {};
         };
 
-        this.addStitch = function addStitch(stitch, rowNum, connectedToIndices)
+        this.addStitch = function addStitch(stitch, rowNum)
         {
-            console.log("Appending stitch " + stitch.toString() + " to row " + rowNum + " at indices " + connectedToIndices);
+            console.log("Appending stitch " + stitch.toString() + " to row " + rowNum);
 
             ensureRowExists(rowNum);
-            addStitchToRow(stitch, rows[rowNum]);
-            connectStitchToMesh(stitch, rowNum, connectedToIndices);
+            var rowIndex = addStitchToRow(stitch, rows[rowNum]);
+            connectStitchToMesh(stitch, rowNum, rowIndex);
         };
 
         this.render = function render(canvasContext, renderContext)

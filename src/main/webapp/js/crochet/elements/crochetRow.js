@@ -27,6 +27,7 @@ define(["jquery"], function ($)
         this.appendStitch = function appendStitch(stitch)
         {
             stitches.push(stitch);
+            return stitches.length-1;
         };
 
         this.connectStitchFromBelow = function connectStitchFromBelow(stitch, rowIdx)
@@ -34,18 +35,20 @@ define(["jquery"], function ($)
             stitches[rowIdx].connectStitchFromBelow(stitch);
         };
 
-        this.connectStitchFromAbove = function connectStitchFromAbove(stitch, rowIdx)
+        this.connectStitchFromAbove = function connectStitchFromAbove(stitch, rowIdxAbove)
         {
-            var stitchAtIdx = stitches[rowIdx];
+            var indexToAttachTo = stitches.length-1 - rowIdxAbove;
+            var stitchAtIdx = stitches[indexToAttachTo];
 
             if (stitchAtIdx != null)
             {
+                console.log("connected to lower index: " + indexToAttachTo);
                 stitchAtIdx.connectStitchFromAbove(stitch);
                 stitch.connectStitchFromBelow(stitchAtIdx);
             }
             else
             {
-                console.error("Cannot connect stitch " + stitch.toString() + " to row " + rowNum + " index " + rowIdx + " as no stitch exists at that location")
+                console.error("Cannot connect stitch " + stitch.toString() + " to row " + rowNum + " index " + indexToAttachTo + " as no stitch exists at that location")
             }
         };
 
