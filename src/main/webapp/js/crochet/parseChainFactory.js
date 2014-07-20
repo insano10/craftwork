@@ -61,7 +61,7 @@ define(["jquery", "singleCrochet", "chain", "stitch"], function ($, SingleCroche
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addChain(new Stitch("CHAIN", "chain.png", 13), context.rowNum);
+                    chartModel.addChain(new Stitch("CHAIN", 1, "chain.png", 13), context.rowNum);
                     context.currentRowIndex++;
                 }
                 return true;
@@ -84,7 +84,7 @@ define(["jquery", "singleCrochet", "chain", "stitch"], function ($, SingleCroche
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addSingleCrochet(new Stitch("SINGLE", "sc.png", 13), context.rowNum);
+                    chartModel.addSingleCrochet(new Stitch("SINGLE", 1, "sc.png", 13), context.rowNum);
                     context.currentRowIndex++;
                 }
                 return true;
@@ -107,7 +107,7 @@ define(["jquery", "singleCrochet", "chain", "stitch"], function ($, SingleCroche
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addSingleCrochet(new SingleCrochet(), context.rowNum);
+                    chartModel.addSingleCrochet(new Stitch("SINGLE", 1, "sc.png", 13), context.rowNum);
                 }
                 context.currentRowIndex++;
                 return true;
@@ -134,7 +134,7 @@ define(["jquery", "singleCrochet", "chain", "stitch"], function ($, SingleCroche
                     connectToIndices.push(context.currentRowIndex);
                     context.currentRowIndex++;
                 }
-                chartModel.addSingleCrochet(new SingleCrochet(), context.rowNum);
+                chartModel.addSingleCrochet(new Stitch("DECREASE", stitchCount, "sc.png", 13), context.rowNum);
                 return true;
             }
             return false;
@@ -162,9 +162,9 @@ define(["jquery", "singleCrochet", "chain", "stitch"], function ($, SingleCroche
     {
         this.createParseChain = function createParseChain(chartModel)
         {
-//            var singleCrochetDecreaseParseLink = new ParseLink(new SingleCrochetDecreaseParser(chartModel), null);
-//            var singleCrochetIncreaseParseLink = new ParseLink(new SingleCrochetIncreaseParser(chartModel), singleCrochetDecreaseParseLink);
-            var singleCrochetParseLink = new ParseLink(new SingleCrochetParser(chartModel), null);
+//            var singleCrochetIncreaseParseLink = new ParseLink(new SingleCrochetIncreaseParser(chartModel), null);
+            var singleCrochetDecreaseParseLink = new ParseLink(new SingleCrochetDecreaseParser(chartModel), null);
+            var singleCrochetParseLink = new ParseLink(new SingleCrochetParser(chartModel), singleCrochetDecreaseParseLink);
             var chainParseLink = new ParseLink(new ChainStitchParser(chartModel), singleCrochetParseLink);
 
             var subPhraseParser = new SubPhraseParser(chainParseLink);

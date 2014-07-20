@@ -48,7 +48,7 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
             expect(context.currentRowIndex).toEqual(11);
         });
 
-        xit("should parse a single crochet decrease phrase", function ()
+        it("should parse a single crochet decrease phrase", function ()
         {
             var context = { rowNum: 62, currentRowIndex: 42 };
 

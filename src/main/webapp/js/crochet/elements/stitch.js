@@ -1,6 +1,6 @@
 define(["jquery"], function ($)
 {
-    function Stitch(name, imgFile, imgWidth)
+    function Stitch(name, width, imgFile, imgWidth)
     {
         var stitchesAbove = [];
         var stitchesBelow = [];
@@ -32,6 +32,12 @@ define(["jquery"], function ($)
             {
                 console.error("failed to load icon for " + name);
             }
+        };
+
+        this.getWidth = function getWidth()
+        {
+            //should this really be exposed?
+            return parseInt(width);
         };
 
         this.connectStitchFromBelow = function connectStitchFromBelow(stitch)

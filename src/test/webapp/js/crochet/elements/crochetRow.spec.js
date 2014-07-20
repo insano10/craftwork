@@ -13,9 +13,9 @@ define(["jquery", "crochetRow"], function($, CrochetRow)
 
             var canvasContext = null, renderContext = {renderDirection: 'R'};
 
-            var stubStitch1 = jasmine.createSpyObj("stitch", ["render"]);
-            var stubStitch2 = jasmine.createSpyObj("stitch", ["render"]);
-            var stubStitch3 = jasmine.createSpyObj("stitch", ["render"]);
+            var stubStitch1 = jasmine.createSpyObj("stitch", ["render", "getWidth"]);
+            var stubStitch2 = jasmine.createSpyObj("stitch", ["render", "getWidth"]);
+            var stubStitch3 = jasmine.createSpyObj("stitch", ["render", "getWidth"]);
 
             row.appendStitch(stubStitch1);
             row.appendStitch(stubStitch2);
