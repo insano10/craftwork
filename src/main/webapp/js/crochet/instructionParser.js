@@ -1,4 +1,4 @@
-define(["jquery", "chain", "singleCrochet"], function($, Chain, SingleCrochet)
+define(["jquery"], function($)
 {
     function InstructionParser(chartModel, parseChain)
     {

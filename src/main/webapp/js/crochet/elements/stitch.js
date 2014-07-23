@@ -1,9 +1,10 @@
 define(["jquery"], function ($)
 {
-    function Stitch(name, width, imgFile, imgWidth)
+    function Stitch(name, width, imgFile, imgWidth, rowNum, chainConnector, firstOfAGroup)
     {
-        var stitchesAbove = [];
-        var stitchesBelow = [];
+        var previousStitch = null;
+        var nextStitch = null;
+        var stitchAbove = null;
 
         var ICON_SIZE = imgWidth;
         var icon = null;
@@ -34,6 +35,54 @@ define(["jquery"], function ($)
             }
         };
 
+        this.setPreviousStitch = function setPreviousStitch(stitch)
+        {
+            previousStitch = stitch;
+        };
+
+        this.getPreviousStitch = function getPreviousStitch()
+        {
+            return previousStitch;
+        };
+
+        this.setStitchAbove = function setStitchAbove(stitch)
+        {
+            stitchAbove = stitch;
+        };
+
+        this.isAvailableForConnection = function isAvailableForConnection()
+        {
+            return stitchAbove == null;
+        };
+
+        this.isFirstOfAGroup = function isFirstOfAGroup()
+        {
+            return firstOfAGroup;
+        };
+
+        this.connectToChain = function connectToChain(chainTail)
+        {
+            chainConnector(this, chainTail);
+        };
+
+        this.setNextStitch = function setNextStitch(stitch)
+        {
+            if (nextStitch == null)
+            {
+                nextStitch = stitch;
+                stitch.setPreviousStitch(this);
+            }
+            else
+            {
+                console.error("Cannot connect " + stitch.toString() + " to " + this.toString() + " as it is already connected");
+            }
+        };
+
+        this.getRowNum = function getRowNum()
+        {
+            return rowNum;
+        };
+
         this.getWidth = function getWidth()
         {
             //should this really be exposed?
@@ -54,27 +103,35 @@ define(["jquery"], function ($)
         {
             renderIcon(canvasContext, icon, renderContext.currentRenderXPos, renderContext.currentRenderYPos, 0);
 
-            if (renderContext.renderDirection == 'R')
+            if (nextStitch != null)
             {
-                renderContext.currentRenderXPos = renderContext.currentRenderXPos + ICON_SIZE;
-            }
-            if (renderContext.renderDirection == 'L')
-            {
-                renderContext.currentRenderXPos = renderContext.currentRenderXPos - ICON_SIZE;
-            }
-            if (renderContext.renderDirection == 'U')
-            {
-                renderContext.currentRenderYPos = renderContext.currentRenderYPos - ICON_SIZE;
-            }
-            if (renderContext.renderDirection == 'D')
-            {
-                renderContext.currentRenderYPos = renderContext.currentRenderYPos + ICON_SIZE;
+                if (nextStitch.getRowNum() > rowNum)
+                {
+                    renderContext.renderDirection = 'U';
+                    renderContext.currentRenderYPos = renderContext.currentRenderYPos - ICON_SIZE;
+                }
+                else if (nextStitch.getRowNum() == rowNum && rowNum % 2 != 0)
+                {
+                    renderContext.renderDirection = 'R';
+                    renderContext.currentRenderXPos = renderContext.currentRenderXPos + ICON_SIZE;
+                }
+                else if (nextStitch.getRowNum() == rowNum && rowNum % 2 == 0)
+                {
+                    renderContext.renderDirection = 'L';
+                    renderContext.currentRenderXPos = renderContext.currentRenderXPos - ICON_SIZE;
+                }
+                else
+                {
+                    console.error("Cannot work out render direction from " + this.toString() + " to " + nextStitch.toString());
+                }
+
+                nextStitch.render(canvasContext, renderContext);
             }
         };
 
         this.toString = function toString()
         {
-            return name;
+            return name + " [row: " + rowNum + "]";
         };
     }
 

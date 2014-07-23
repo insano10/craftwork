@@ -9,9 +9,7 @@ require(
             "instructionParser":    "crochet/instructionParser",
             "mesh":                 "crochet/mesh",
             "parseChainFactory":    "crochet/parseChainFactory",
-            "chain":                "crochet/elements/chain",
             "crochetRow":           "crochet/elements/crochetRow",
-            "singleCrochet":        "crochet/elements/singleCrochet",
             "stitch":               "crochet/elements/stitch"
         }
     },

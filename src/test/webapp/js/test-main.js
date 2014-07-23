@@ -27,9 +27,7 @@ require.config(
             "keyListener":       "src/main/webapp/js/framework/keyListener",
             "instructionParser": "src/main/webapp/js/crochet/instructionParser",
             "parseChainFactory": "src/main/webapp/js/crochet/parseChainFactory",
-            "chain":             "src/main/webapp/js/crochet/elements/chain",
             "crochetRow":        "src/main/webapp/js/crochet/elements/crochetRow",
-            "singleCrochet":     "src/main/webapp/js/crochet/elements/singleCrochet",
             "stitch":            "src/main/webapp/js/crochet/elements/stitch"
         },
 
