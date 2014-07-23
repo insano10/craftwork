@@ -61,7 +61,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addChain(new SingleStitch("CHAIN", 1, "chain.png", 13, context.rowNum, true));
+                    chartModel.addChain(new SingleStitch(1, "chain.png", 13, context.rowNum, true));
                     context.currentRowIndex++;
                 }
                 return true;
@@ -84,7 +84,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addSingleCrochet(new SingleStitch("SINGLE", 1, "sc.png", 13, context.rowNum, true));
+                    chartModel.addSingleCrochet(new SingleStitch(1, "sc.png", 13, context.rowNum, true));
                     context.currentRowIndex++;
                 }
                 return true;
@@ -109,11 +109,11 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
                 {
                     if(stitchNum == 0)
                     {
-                        chartModel.addSingleCrochet(new IncreaseStitch("INCREASE", 1, "sc.png", 13, context.rowNum, true));
+                        chartModel.addSingleCrochet(new IncreaseStitch(1, "sc.png", 13, context.rowNum, true));
                     }
                     else
                     {
-                        chartModel.addSingleCrochet(new IncreaseStitch("INCREASE", 1, "sc.png", 13, context.rowNum, false));
+                        chartModel.addSingleCrochet(new IncreaseStitch(1, "sc.png", 13, context.rowNum, false));
                     }
                 }
                 context.currentRowIndex++;
@@ -141,7 +141,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
                     connectToIndices.push(context.currentRowIndex);
                     context.currentRowIndex++;
                 }
-                chartModel.addSingleCrochet(new DecreaseStitch("DECREASE", stitchCount, "sc.png", 13, context.rowNum, true));
+                chartModel.addSingleCrochet(new DecreaseStitch(stitchCount, "sc.png", 13, context.rowNum, true));
                 return true;
             }
             return false;

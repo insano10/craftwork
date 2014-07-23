@@ -2,9 +2,9 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 {
    return (function()
     {
-        function DecreaseStitch(name, width, imgFile, imgWidth, rowNum, firstOfAGroup)
+        function DecreaseStitch(width, imgFile, imgWidth, rowNum, firstOfAGroup)
         {
-            BaseStitch.call(this, name, width, imgFile, imgWidth, rowNum, firstOfAGroup);
+            BaseStitch.call(this, width, imgFile, imgWidth, rowNum, firstOfAGroup);
         }
 
         DecreaseStitch.prototype = Object.create(BaseStitch.prototype);
@@ -47,7 +47,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 
         DecreaseStitch.prototype.toString = function toString()
         {
-            return this.name + " [row: " + this.rowNum + "]";
+            return "DECREASE [row: " + this.rowNum + "]";
         };
 
         return DecreaseStitch;

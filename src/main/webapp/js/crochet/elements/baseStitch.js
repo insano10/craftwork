@@ -2,9 +2,8 @@ define(["jquery"], function ($)
 {
     return (function()
     {
-        function Stitch(name, width, imgFile, imgWidth, rowNum, firstOfAGroup)
+        function Stitch(width, imgFile, imgWidth, rowNum, firstOfAGroup)
         {
-            this.name = name;
             this.width = width;
             this.imgFile = imgFile;
             this.imgWidth = imgWidth;
@@ -22,7 +21,6 @@ define(["jquery"], function ($)
         {
             if (!icon.complete && attempts < 10)
             {
-                console.log(name + " not loaded yet, trying again in 100ms");
                 setTimeout(function ()
                 {
                     renderIcon(canvasContext, icon, xPos, yPos, (attempts + 1));
@@ -34,7 +32,7 @@ define(["jquery"], function ($)
             }
             else
             {
-                console.error("failed to load icon for " + name);
+                console.error("failed to load icon " + this.icon.src);
             }
         };
 
@@ -134,7 +132,7 @@ define(["jquery"], function ($)
 
         Stitch.prototype.toString = function toString()
         {
-            return this.name + " [row: " + this.rowNum + "]";
+            console.error("Implementation missing for toString()");
         };
 
         return Stitch;

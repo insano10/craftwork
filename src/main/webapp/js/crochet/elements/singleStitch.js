@@ -2,9 +2,9 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 {
    return (function()
     {
-        function SingleStitch(name, width, imgFile, imgWidth, rowNum, firstOfAGroup)
+        function SingleStitch(width, imgFile, imgWidth, rowNum, firstOfAGroup)
         {
-            BaseStitch.call(this, name, width, imgFile, imgWidth, rowNum, firstOfAGroup);
+            BaseStitch.call(this, width, imgFile, imgWidth, rowNum, firstOfAGroup);
         }
 
         SingleStitch.prototype = Object.create(BaseStitch.prototype);
@@ -41,7 +41,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 
         SingleStitch.prototype.toString = function toString()
         {
-            return this.name + " [row: " + this.rowNum + "]";
+            return "SINGLE [row: " + this.rowNum + "]";
         };
 
         return SingleStitch;
