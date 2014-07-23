@@ -1,107 +1,5 @@
-define(["jquery", "stitch"], function ($, Stitch)
+define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitch"], function ($, BaseStitch, SingleStitch, IncreaseStitch, DecreaseStitch)
 {
-    function SingleStitchConnector(stitchToConnect, chainTail)
-    {
-        var candidateStitch = chainTail;
-
-        while(candidateStitch != null)
-        {
-            if(stitchToConnect.getRowNum() > candidateStitch.getRowNum())
-            {
-                //row below this stitch
-                if(candidateStitch.isAvailableForConnection())
-                {
-                    console.log("Connecting stitch " + stitchToConnect.toString() + " to stitch " + candidateStitch.toString());
-                    candidateStitch.setStitchAbove(stitchToConnect);
-                    break;
-                }
-                else
-                {
-                    console.log("not free, continuing");
-                }
-            }
-            candidateStitch = candidateStitch.getPreviousStitch();
-        }
-
-        if(candidateStitch == null)
-        {
-            console.error("Could not find connecting stitch for " + stitchToConnect.toString());
-        }
-    }
-
-    function DecreaseStitchConnector(stitchToConnect, chainTail)
-    {
-        var candidateStitch = chainTail;
-        var connectionsLeftToMake = stitchToConnect.getWidth();
-
-        while(candidateStitch != null)
-        {
-            if(stitchToConnect.getRowNum() > candidateStitch.getRowNum())
-            {
-                //row below this stitch
-                if(candidateStitch.isAvailableForConnection())
-                {
-                    console.log("Connecting stitch " + stitchToConnect.toString() + " to stitch " + candidateStitch.toString());
-                    candidateStitch.setStitchAbove(stitchToConnect);
-                    connectionsLeftToMake--;
-
-                    if(connectionsLeftToMake <= 0)
-                    {
-                        break;
-                    }
-                }
-                else
-                {
-                    console.log("not free, continuing");
-                }
-            }
-            candidateStitch = candidateStitch.getPreviousStitch();
-        }
-
-        if(candidateStitch == null)
-        {
-            console.error("Could not find connecting stitch for " + stitchToConnect.toString());
-        }
-    }
-
-    function IncreaseStitchConnector(stitchToConnect, chainTail)
-    {
-        var candidateStitch = chainTail;
-
-        while(candidateStitch != null)
-        {
-            if(stitchToConnect.getRowNum() > candidateStitch.getRowNum())
-            {
-                //row below this stitch
-                if(stitchToConnect.isFirstOfAGroup() && candidateStitch.isAvailableForConnection())
-                {
-                    console.log("Connecting primary stitch " + stitchToConnect.toString() + " to stitch " + candidateStitch.toString());
-                    candidateStitch.setStitchAbove(stitchToConnect);
-                    break;
-                }
-                else if(!stitchToConnect.isFirstOfAGroup())
-                {
-                    if(candidateStitch.getPreviousStitch() != null && candidateStitch.getPreviousStitch().isAvailableForConnection())
-                    {
-                        console.log("Connecting secondary stitch " + stitchToConnect.toString() + " to stitch " + candidateStitch.toString());
-                        candidateStitch.setStitchAbove(stitchToConnect);
-                        break;
-                    }
-                }
-                else
-                {
-                    console.log("not free, continuing");
-                }
-            }
-            candidateStitch = candidateStitch.getPreviousStitch();
-        }
-
-        if(candidateStitch == null)
-        {
-            console.error("Could not find connecting stitch for " + stitchToConnect.toString());
-        }
-    }
-
     function RowNumberParser(parseChain)
     {
         this.parse = function parse(phrase, context)
@@ -163,7 +61,7 @@ define(["jquery", "stitch"], function ($, Stitch)
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addChain(new Stitch("CHAIN", 1, "chain.png", 13, context.rowNum, SingleStitchConnector, true));
+                    chartModel.addChain(new SingleStitch("CHAIN", 1, "chain.png", 13, context.rowNum, true));
                     context.currentRowIndex++;
                 }
                 return true;
@@ -186,7 +84,7 @@ define(["jquery", "stitch"], function ($, Stitch)
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addSingleCrochet(new Stitch("SINGLE", 1, "sc.png", 13, context.rowNum, SingleStitchConnector, true));
+                    chartModel.addSingleCrochet(new SingleStitch("SINGLE", 1, "sc.png", 13, context.rowNum, true));
                     context.currentRowIndex++;
                 }
                 return true;
@@ -211,11 +109,11 @@ define(["jquery", "stitch"], function ($, Stitch)
                 {
                     if(stitchNum == 0)
                     {
-                        chartModel.addSingleCrochet(new Stitch("SINGLE", 1, "sc.png", 13, context.rowNum, IncreaseStitchConnector, true));
+                        chartModel.addSingleCrochet(new IncreaseStitch("INCREASE", 1, "sc.png", 13, context.rowNum, true));
                     }
                     else
                     {
-                        chartModel.addSingleCrochet(new Stitch("SINGLE", 1, "sc.png", 13, context.rowNum, IncreaseStitchConnector, false));
+                        chartModel.addSingleCrochet(new IncreaseStitch("INCREASE", 1, "sc.png", 13, context.rowNum, false));
                     }
                 }
                 context.currentRowIndex++;
@@ -243,7 +141,7 @@ define(["jquery", "stitch"], function ($, Stitch)
                     connectToIndices.push(context.currentRowIndex);
                     context.currentRowIndex++;
                 }
-                chartModel.addSingleCrochet(new Stitch("DECREASE", stitchCount, "sc.png", 13, context.rowNum, DecreaseStitchConnector, true));
+                chartModel.addSingleCrochet(new DecreaseStitch("DECREASE", stitchCount, "sc.png", 13, context.rowNum, true));
                 return true;
             }
             return false;

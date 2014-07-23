@@ -1,4 +1,4 @@
-define(["jquery", "crochetRow"], function ($, CrochetRow)
+define(["jquery"], function ($)
 {
     function Mesh()
     {
