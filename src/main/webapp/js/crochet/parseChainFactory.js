@@ -61,7 +61,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addChain(new SingleStitch(1, "chain.png", 13, context.rowNum, true));
+                    chartModel.addChain(new SingleStitch("chain.png", 13, context.rowNum, true));
                     context.currentRowIndex++;
                 }
                 return true;
@@ -84,7 +84,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addSingleCrochet(new SingleStitch(1, "sc.png", 13, context.rowNum, true));
+                    chartModel.addSingleCrochet(new SingleStitch("sc.png", 13, context.rowNum, true));
                     context.currentRowIndex++;
                 }
                 return true;
@@ -109,11 +109,11 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
                 {
                     if(stitchNum == 0)
                     {
-                        chartModel.addSingleCrochet(new IncreaseStitch(1, "sc.png", 13, context.rowNum, true));
+                        chartModel.addSingleCrochet(new IncreaseStitch("sc.png", 13, context.rowNum, true));
                     }
                     else
                     {
-                        chartModel.addSingleCrochet(new IncreaseStitch(1, "sc.png", 13, context.rowNum, false));
+                        chartModel.addSingleCrochet(new IncreaseStitch("sc.png", 13, context.rowNum, false));
                     }
                 }
                 context.currentRowIndex++;

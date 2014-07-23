@@ -2,9 +2,8 @@ define(["jquery"], function ($)
 {
     return (function()
     {
-        function Stitch(width, imgFile, imgWidth, rowNum, firstOfAGroup)
+        function Stitch(imgFile, imgWidth, rowNum, firstOfAGroup)
         {
-            this.width = width;
             this.imgFile = imgFile;
             this.imgWidth = imgWidth;
             this.rowNum = rowNum;
@@ -82,12 +81,6 @@ define(["jquery"], function ($)
         Stitch.prototype.getRowNum = function getRowNum()
         {
             return this.rowNum;
-        };
-
-        Stitch.prototype.getWidth = function getWidth()
-        {
-            //should this really be exposed?
-            return parseInt(this.width);
         };
 
         Stitch.prototype.connectStitchFromBelow = function connectStitchFromBelow(stitch)

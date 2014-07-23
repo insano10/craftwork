@@ -4,7 +4,8 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
     {
         function DecreaseStitch(width, imgFile, imgWidth, rowNum, firstOfAGroup)
         {
-            BaseStitch.call(this, width, imgFile, imgWidth, rowNum, firstOfAGroup);
+            BaseStitch.call(this, imgFile, imgWidth, rowNum, firstOfAGroup);
+            this.width = width;
         }
 
         DecreaseStitch.prototype = Object.create(BaseStitch.prototype);

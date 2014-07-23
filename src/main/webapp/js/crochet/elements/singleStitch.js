@@ -2,9 +2,9 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 {
    return (function()
     {
-        function SingleStitch(width, imgFile, imgWidth, rowNum, firstOfAGroup)
+        function SingleStitch(imgFile, imgWidth, rowNum, firstOfAGroup)
         {
-            BaseStitch.call(this, width, imgFile, imgWidth, rowNum, firstOfAGroup);
+            BaseStitch.call(this, imgFile, imgWidth, rowNum, firstOfAGroup);
         }
 
         SingleStitch.prototype = Object.create(BaseStitch.prototype);
