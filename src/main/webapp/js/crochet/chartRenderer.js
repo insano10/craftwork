@@ -45,7 +45,7 @@ define(function ()
             MAX_Y_POS = chartCanvas.height;
         };
 
-        this.renderMesh = function renderMesh(mesh)
+        this.renderModel = function renderModel(model)
         {
             var chartCanvas = document.getElementById("chart-canvas");
             var ctx = chartCanvas.getContext("2d");
@@ -62,7 +62,7 @@ define(function ()
                 renderDirection: 'R' //'L', 'R', 'U','D'
             };
 
-            mesh.render(ctx, renderContext);
+            model.render(ctx, renderContext);
 
             ctx.restore();
         };

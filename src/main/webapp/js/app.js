@@ -12,10 +12,10 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
             console.log("Initializing!");
 
             var chartRenderer = new ChartRenderer();
-            var chartModel = new ChartModel(chartRenderer);
+            var chartModel = new ChartModel();
             var keyListener = new KeyListener();
             var parseChain = new ParseChainFactory().createParseChain(chartModel);
-            var instructionParser = new InstructionParser(chartModel, parseChain);
+            var instructionParser = new InstructionParser(chartModel, chartRenderer, parseChain);
             var instructionEvaluator = new InstructionEvaluator(instructionParser);
 
             chartRenderer.initialiseCanvas();

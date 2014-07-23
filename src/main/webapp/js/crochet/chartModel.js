@@ -1,28 +1,36 @@
-define(["mesh"], function(Mesh)
+define(["jquery"], function($)
 {
-    function ChartModel(chartRenderer)
+    function ChartModel()
     {
-        var mesh = new Mesh();
-
+        var headStitch = null;
+        var tailStitch = null;
 
         this.clear = function clear()
         {
-            mesh.clear();
+            headStitch = null;
+            tailStitch = null;
         };
 
-        this.addChain = function addChain(stitch, rowNum)
+        this.addStitch = function addStitch(stitch, rowNum)
         {
-            mesh.addStitch(stitch, rowNum);
+            console.log("Appending stitch " + stitch.toString());
+
+            if(headStitch == null)
+            {
+                headStitch = stitch;
+                tailStitch = stitch;
+            }
+            else
+            {
+                tailStitch.setNextStitch(stitch, rowNum);
+                stitch.connectToChain(tailStitch);
+                tailStitch = stitch;
+            }
         };
 
-        this.addSingleCrochet = function addSingleCrochet(stitch, rowNum)
+        this.render = function render(canvasContext, renderContext)
         {
-            mesh.addStitch(stitch, rowNum);
-        };
-
-        this.redrawChart = function redrawChart()
-        {
-            chartRenderer.renderMesh(mesh);
+            headStitch.render(canvasContext, renderContext);
         };
     }
 

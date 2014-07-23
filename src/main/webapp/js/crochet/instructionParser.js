@@ -1,6 +1,6 @@
 define(["jquery"], function($)
 {
-    function InstructionParser(chartModel, parseChain)
+    function InstructionParser(chartModel, chartRenderer, parseChain)
     {
         var parse = function parse(line)
         {
@@ -20,7 +20,7 @@ define(["jquery"], function($)
                 }
             });
 
-            chartModel.redrawChart();
+            chartRenderer.renderModel(chartModel);
         };
     }
 
