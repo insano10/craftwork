@@ -40,7 +40,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
                 candidateStitch = candidateStitch.getPreviousStitch();
             }
 
-            if(candidateStitch == null)
+            if(candidateStitch == null && this.rowNum > 1)
             {
                 console.error("Could not find connecting stitch for " + this.toString());
             }

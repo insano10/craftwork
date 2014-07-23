@@ -22,6 +22,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
                     //row below this stitch
                     if(this.firstOfAGroup && candidateStitch.isAvailableForConnection())
                     {
+                        //connect to the next available stitch
                         console.log("Connecting primary stitch " + this.toString() + " to stitch " + candidateStitch.toString());
                         candidateStitch.setStitchAbove(this);
                         break;
@@ -30,6 +31,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
                     {
                         if(candidateStitch.getPreviousStitch() != null && candidateStitch.getPreviousStitch().isAvailableForConnection())
                         {
+                            //connect to the first stitch that already has stitches connected
                             console.log("Connecting secondary stitch " + this.toString() + " to stitch " + candidateStitch.toString());
                             candidateStitch.setStitchAbove(this);
                             break;
@@ -43,7 +45,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
                 candidateStitch = candidateStitch.getPreviousStitch();
             }
 
-            if(candidateStitch == null)
+            if(candidateStitch == null && this.rowNum > 1)
             {
                 console.error("Could not find connecting stitch for " + this.toString());
             }
