@@ -4,7 +4,8 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
     {
         function IncreaseStitch(imgFile, imgWidth, rowNum, firstOfAGroup)
         {
-            BaseStitch.call(this, imgFile, imgWidth, rowNum, firstOfAGroup);
+            BaseStitch.call(this, imgFile, imgWidth, rowNum);
+            this.firstOfAGroup = firstOfAGroup;
         }
 
         IncreaseStitch.prototype = Object.create(BaseStitch.prototype);
@@ -19,13 +20,13 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
                 if(this.rowNum> candidateStitch.getRowNum())
                 {
                     //row below this stitch
-                    if(this.isFirstOfAGroup() && candidateStitch.isAvailableForConnection())
+                    if(this.firstOfAGroup && candidateStitch.isAvailableForConnection())
                     {
                         console.log("Connecting primary stitch " + this.toString() + " to stitch " + candidateStitch.toString());
                         candidateStitch.setStitchAbove(this);
                         break;
                     }
-                    else if(!this.isFirstOfAGroup())
+                    else if(!this.firstOfAGroup)
                     {
                         if(candidateStitch.getPreviousStitch() != null && candidateStitch.getPreviousStitch().isAvailableForConnection())
                         {

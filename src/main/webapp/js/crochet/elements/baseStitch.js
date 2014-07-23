@@ -2,12 +2,11 @@ define(["jquery"], function ($)
 {
     return (function()
     {
-        function Stitch(imgFile, imgWidth, rowNum, firstOfAGroup)
+        function Stitch(imgFile, imgWidth, rowNum)
         {
             this.imgFile = imgFile;
             this.imgWidth = imgWidth;
             this.rowNum = rowNum;
-            this.firstOfAGroup = firstOfAGroup;
             this.previousStitch = null;
             this.nextStitch = null;
             this.stitchesAbove = null;
@@ -55,11 +54,6 @@ define(["jquery"], function ($)
             return this.stitchAbove == null;
         };
 
-        Stitch.prototype.isFirstOfAGroup = function isFirstOfAGroup()
-        {
-            return this.firstOfAGroup;
-        };
-
         Stitch.prototype.connectToChain = function connectToChain(chainTail)
         {
             console.error("Implementation missing!");
@@ -81,16 +75,6 @@ define(["jquery"], function ($)
         Stitch.prototype.getRowNum = function getRowNum()
         {
             return this.rowNum;
-        };
-
-        Stitch.prototype.connectStitchFromBelow = function connectStitchFromBelow(stitch)
-        {
-            this.stitchesBelow.push(stitch);
-        };
-
-        Stitch.prototype.connectStitchFromAbove = function connectStitchFromAbove(stitch)
-        {
-            this.stitchesAbove.push(stitch);
         };
 
         Stitch.prototype.render = function render(canvasContext, renderContext)
