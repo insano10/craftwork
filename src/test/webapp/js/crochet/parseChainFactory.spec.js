@@ -5,7 +5,7 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
     beforeEach(function ()
     {
-        stubModel = jasmine.createSpyObj("chartModel", ["addSingleCrochet", "addChain", "clear", "redrawChart"]);
+        stubModel = jasmine.createSpyObj("chartModel", ["addStitch", "clear", "redrawChart"]);
         parseChain = new ParseChainFactory().createParseChain(stubModel);
     });
 
@@ -18,11 +18,11 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
             parseChain.parse("row 1: chain 5", context);
 
-            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1);
-            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1);
-            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1);
-            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1);
-            expect(stubModel.addChain).toHaveBeenCalledWith(jasmine.any(Object), 1);
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
             expect(context.currentRowIndex).toEqual(5);
         });
 
@@ -32,7 +32,7 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
             parseChain.parse("row 5: 2sc", context);
 
-            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 5);
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 5}));
             expect(context.currentRowIndex).toEqual(5);
         });
 
@@ -42,9 +42,9 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
             parseChain.parse("row 2: 3 sc in next sc", context);
 
-            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 2);
-            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 2);
-            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 2);
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 2}));
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 2}));
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 2}));
             expect(context.currentRowIndex).toEqual(11);
         });
 
@@ -54,7 +54,7 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
             parseChain.parse("row 63: 1sc in next 2sc", context);
 
-            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 63);
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 63}));
             expect(context.currentRowIndex).toEqual(44);
         });
 
@@ -73,8 +73,8 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
             parseChain.parse("row 1: 2sc in next sc then 2sc then 1sc in next 3sc", context);
 
-            expect(stubModel.addSingleCrochet).toHaveBeenCalledWith(jasmine.any(Object), 1);
-            expect(stubModel.addSingleCrochet.callCount).toEqual(5);
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
+            expect(stubModel.addStitch.callCount).toEqual(5);
         });
 
     });
