@@ -11,6 +11,25 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
         DecreaseStitch.prototype = Object.create(BaseStitch.prototype);
         DecreaseStitch.prototype.constructor = DecreaseStitch;
 
+        var increaseRenderXPosByRequiredOffset = function increaseRenderXPosByRequiredOffset(renderContext, stitchesBelow, rowNum, imgWidth)
+        {
+            //shuffle the render pointer across by 1/2 width for every additional stitch this one is connected to
+
+            if(stitchesBelow > 1)
+            {
+                var additionalXPosRequired = parseInt((stitchesBelow-1) * (imgWidth/2));
+
+                if(rowNum%2 == 0)
+                {
+                    renderContext.currentRenderXPos -= additionalXPosRequired;
+                }
+                else
+                {
+                    renderContext.currentRenderXPos += additionalXPosRequired;
+                }
+            }
+        };
+
         DecreaseStitch.prototype.connectToChain = function connectToChain(chainTail)
         {
             var candidateStitch = chainTail;
@@ -45,6 +64,16 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
             {
                 console.error("Could not find connecting stitch for " + this.toString());
             }
+        };
+
+        DecreaseStitch.prototype.preRender = function preRender(canvasContext, renderContext)
+        {
+            increaseRenderXPosByRequiredOffset(renderContext, this.stitchesBelow.length, this.rowNum, this.imgWidth);
+        };
+
+        DecreaseStitch.prototype.postRender = function postRender(canvasContext, renderContext)
+        {
+            increaseRenderXPosByRequiredOffset(renderContext, this.stitchesBelow.length, this.rowNum, this.imgWidth);
         };
 
         DecreaseStitch.prototype.toString = function toString()

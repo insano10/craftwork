@@ -92,8 +92,20 @@ define(["jquery"], function ($)
             return this.rowNum;
         };
 
+        Stitch.prototype.preRender = function preRender(canvasContext, renderContext)
+        {
+            //No op. Override if required
+        };
+
+        Stitch.prototype.postRender = function postRender(canvasContext, renderContext)
+        {
+            //No op. Override if required
+        };
+
         Stitch.prototype.render = function render(canvasContext, renderContext)
         {
+            this.preRender(canvasContext, renderContext);
+
             renderIcon(canvasContext, this.icon, renderContext.currentRenderXPos, renderContext.currentRenderYPos, 0);
 
             if (this.nextStitch != null)
@@ -117,6 +129,8 @@ define(["jquery"], function ($)
                 {
                     console.error("Cannot work out render direction from " + this.toString() + " to " + this.nextStitch.toString());
                 }
+
+                this.postRender(canvasContext, renderContext);
 
                 this.nextStitch.render(canvasContext, renderContext);
             }
