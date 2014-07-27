@@ -25,6 +25,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
                         //connect to the next available stitch
                         console.log("Connecting primary stitch " + this.toString() + " to stitch " + candidateStitch.toString());
                         candidateStitch.setStitchAbove(this);
+                        this.setStitchBelow(candidateStitch);
                         break;
                     }
                     else if(!this.firstOfAGroup)
@@ -34,6 +35,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
                             //connect to the first stitch that already has stitches connected
                             console.log("Connecting secondary stitch " + this.toString() + " to stitch " + candidateStitch.toString());
                             candidateStitch.setStitchAbove(this);
+                            this.setStitchBelow(candidateStitch);
                             break;
                         }
                     }

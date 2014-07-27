@@ -23,6 +23,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
                     {
                         console.log("Connecting stitch " + this.toString() + " to stitch " + candidateStitch.toString());
                         candidateStitch.setStitchAbove(this);
+                        this.setStitchBelow(candidateStitch);
                         break;
                     }
                     else

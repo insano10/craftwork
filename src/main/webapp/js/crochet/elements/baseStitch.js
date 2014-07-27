@@ -9,8 +9,8 @@ define(["jquery"], function ($)
             this.rowNum = rowNum;
             this.previousStitch = null;
             this.nextStitch = null;
-            this.stitchesAbove = null;
-            this.stitchesBelow = null;
+            this.stitchesAbove = [];
+            this.stitchesBelow = [];
             this.icon = new Image();
             this.icon.src = "../../../../images/" + this.imgFile;
         }
@@ -46,12 +46,27 @@ define(["jquery"], function ($)
 
         Stitch.prototype.setStitchAbove = function setStitchAbove(stitch)
         {
-            this.stitchAbove = stitch;
+            this.stitchesAbove.push(stitch);
+        };
+
+        Stitch.prototype.getStitchesAbove = function getStitchesAbove()
+        {
+            return this.stitchesAbove;
+        };
+
+        Stitch.prototype.setStitchBelow = function setStitchBelow(stitch)
+        {
+            this.stitchesBelow.push(stitch);
+        };
+
+        Stitch.prototype.getStitchesBelow = function getStitchesBelow()
+        {
+            return this.stitchesBelow;
         };
 
         Stitch.prototype.isAvailableForConnection = function isAvailableForConnection()
         {
-            return this.stitchAbove == null;
+            return this.stitchesAbove.length == 0;
         };
 
         Stitch.prototype.connectToChain = function connectToChain(chainTail)
