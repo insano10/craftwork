@@ -5,6 +5,14 @@ define(function ()
         var MAX_X_POS = 0;
         var MAX_Y_POS = 0;
 
+        var arrowStartIcon = new Image();
+        var arrowEndIcon = new Image();
+
+        (function constructor() {
+            arrowStartIcon.src = "../../../images/arrow-right.png";
+            arrowEndIcon.src = "../../../images/arrow-right-hollow.png";
+        })();
+
         var getPixelRatio = function ()
         {
             var ctx = document.getElementById("chart-canvas").getContext("2d"),
@@ -36,6 +44,36 @@ define(function ()
             canvas.getContext("2d").setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
         };
 
+        var renderStartArrow = function renderStartArrow(canvasContext, renderContext)
+        {
+            canvasContext.drawImage(arrowStartIcon, renderContext.currentRenderXPos-15, renderContext.currentRenderYPos);
+        };
+
+        var renderEndArrow = function renderEndArrow(canvasContext, renderContext)
+        {
+            canvasContext.save();
+
+            if(renderContext.renderDirection == 'L')
+            {
+                canvasContext.drawImage(arrowEndIcon, renderContext.currentRenderXPos - 15, renderContext.currentRenderYPos);
+            }
+            else if(renderContext.renderDirection == 'R')
+            {
+                //flip image
+                canvasContext.scale(-1, 1);
+                canvasContext.drawImage(arrowEndIcon, -(renderContext.currentRenderXPos + 30), renderContext.currentRenderYPos);
+            }
+            else if(renderContext.renderDirection == 'U')
+            {
+                //rotate image 90 degrees
+                canvasContext.translate(renderContext.currentRenderXPos, renderContext.currentRenderYPos);
+                canvasContext.rotate(90*Math.PI/180);
+                canvasContext.drawImage(arrowEndIcon, -15, -13);
+            }
+
+            canvasContext.restore();
+        };
+
         this.initialiseCanvas = function initialiseCanvas()
         {
             createHiPPICanvas();
@@ -62,7 +100,11 @@ define(function ()
                 renderDirection: 'R' //'L', 'R', 'U','D'
             };
 
+            renderStartArrow(ctx, renderContext);
+
             model.render(ctx, renderContext);
+
+            renderEndArrow(ctx, renderContext);
 
             ctx.restore();
         };
