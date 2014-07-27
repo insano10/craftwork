@@ -1,4 +1,4 @@
-define(["jquery"], function ($)
+define(["jquery", "stitchUtils"], function ($, StitchUtils)
 {
     return (function()
     {
@@ -94,12 +94,13 @@ define(["jquery"], function ($)
 
         Stitch.prototype.preRender = function preRender(canvasContext, renderContext)
         {
-            //No op. Override if required
+            //leave enough space for all the connecting stitches above
+            renderContext.currentRenderXPos += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesAbove.length, this.rowNum, this.imgWidth);
         };
 
         Stitch.prototype.postRender = function postRender(canvasContext, renderContext)
         {
-            //No op. Override if required
+            renderContext.currentRenderXPos += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesAbove.length, this.rowNum, this.imgWidth);
         };
 
         Stitch.prototype.render = function render(canvasContext, renderContext)

@@ -27,6 +27,7 @@ require.config(
             "keyListener":       "src/main/webapp/js/framework/keyListener",
             "instructionParser": "src/main/webapp/js/crochet/instructionParser",
             "parseChainFactory": "src/main/webapp/js/crochet/parseChainFactory",
+            "stitchUtils":       "src/main/webapp/js/crochet/stitchUtils",
             "baseStitch":        "src/main/webapp/js/crochet/elements/baseStitch",
             "decreaseStitch":    "src/main/webapp/js/crochet/elements/decreaseStitch",
             "increaseStitch":    "src/main/webapp/js/crochet/elements/increaseStitch",

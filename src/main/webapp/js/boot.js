@@ -8,6 +8,7 @@ require(
             "chartRenderer":        "crochet/chartRenderer",
             "instructionParser":    "crochet/instructionParser",
             "parseChainFactory":    "crochet/parseChainFactory",
+            "stitchUtils":          "crochet/stitchUtils",
             "baseStitch":           "crochet/elements/baseStitch",
             "singleStitch":         "crochet/elements/singleStitch",
             "decreaseStitch":       "crochet/elements/decreaseStitch",
