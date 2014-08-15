@@ -46,30 +46,19 @@ define(function ()
 
         var renderStartArrow = function renderStartArrow(canvasContext, renderContext)
         {
-            canvasContext.drawImage(arrowStartIcon, renderContext.currentRenderXPos-15, renderContext.currentRenderYPos);
+            canvasContext.drawImage(arrowStartIcon, renderContext.startRenderXPos-15, renderContext.startRenderYPos);
         };
 
         var renderEndArrow = function renderEndArrow(canvasContext, renderContext)
         {
+            var lastStitch = renderContext.lastRenderedStitch;
+
             canvasContext.save();
 
-            if(renderContext.renderDirection == 'L')
-            {
-                canvasContext.drawImage(arrowEndIcon, renderContext.currentRenderXPos - 15, renderContext.currentRenderYPos);
-            }
-            else if(renderContext.renderDirection == 'R')
-            {
-                //flip image
-                canvasContext.scale(-1, 1);
-                canvasContext.drawImage(arrowEndIcon, -(renderContext.currentRenderXPos + 30), renderContext.currentRenderYPos);
-            }
-            else if(renderContext.renderDirection == 'U')
-            {
-                //rotate image 90 degrees
-                canvasContext.translate(renderContext.currentRenderXPos, renderContext.currentRenderYPos);
-                canvasContext.rotate(90*Math.PI/180);
-                canvasContext.drawImage(arrowEndIcon, -15, -13);
-            }
+            //rotate image 90 degrees
+            canvasContext.translate(lastStitch.getXPos(), lastStitch.getYPos());
+            canvasContext.rotate(90*Math.PI/180);
+            canvasContext.drawImage(arrowEndIcon, -15, -13);
 
             canvasContext.restore();
         };
@@ -93,12 +82,10 @@ define(function ()
 
             var renderContext =
             {
-                maxXPos: MAX_X_POS, 
-                maxYPos: MAX_Y_POS,
-                currentRenderXPos: 50, //starting offsets
-                currentRenderYPos: MAX_Y_POS - 20,
-                renderDirection: 'R', //'L', 'R', 'U','D',
-                stitches: {} //map of previously rendered stitches keyed by id
+                startRenderXPos: 50, //starting offsets
+                startRenderYPos: MAX_Y_POS - 20,
+                stitches: {}, //map of previously rendered stitches keyed by id
+                lastRenderedStitch: null
             };
 
             renderStartArrow(ctx, renderContext);

@@ -1,9 +1,9 @@
 define(["jquery"], function($)
 {
-    function RenderedStitch(xPos, yPos, width)
+    function RenderedStitch(renderPosition, width)
     {
-        this.xPos = xPos;
-        this.yPos = yPos;
+        this.xPos = renderPosition.x;
+        this.yPos = renderPosition.y;
         this.width = width;
 
         this.getXPos = function getXPos()

@@ -9,10 +9,10 @@ define(["jquery"], function ($)
         this.offsetOfFirstStitch = (totalStitches / 2) * stitchWidth;
         this.widthOffset = 0.5 * stitchWidth;
 
-        this.renderConnectionLines = function renderConnectionLines(canvasContext, renderContext, groupIndex, rowNum)
+        this.renderConnectionLines = function renderConnectionLines(canvasContext, renderPosition, groupIndex, rowNum)
         {
-            var xPos = renderContext.currentRenderXPos + (0.5 * stitchWidth);
-            var yPos = renderContext.currentRenderYPos + (0.5 * stitchWidth);
+            var xPos = renderPosition.x + (0.5 * stitchWidth);
+            var yPos = renderPosition.y + (0.5 * stitchWidth);
             var xOffset;
 
             if(rowNum%2 == 0)

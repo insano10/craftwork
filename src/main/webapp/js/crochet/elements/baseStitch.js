@@ -80,14 +80,78 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
         };
 
         //todo: make private
-        Stitch.prototype.preRender = function preRender(canvasContext, renderContext)
+        Stitch.prototype.preRender = function preRender(canvasContext, renderContext, renderPosition)
         {
             //leave enough space for all the connecting stitches above (too simplistic?) - applies to all
-            renderContext.currentRenderXPos += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesAbove.length, this.rowNum, this.imgWidth);
+            var spaceBefore = StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesAbove.length, this.rowNum, this.imgWidth);
+            renderPosition.x += spaceBefore;
+            console.log("space before: " + spaceBefore);
 
+            if (this.previousStitch != null && this.previousStitch.stitchesAbove.length > 1)
+            {
+                var spaceAfter = StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.previousStitch.stitchesAbove.length, this.rowNum, this.imgWidth);
+                renderPosition.x += spaceAfter;
+                console.log("space after: " + spaceAfter);
+            }
+        };
 
-            //applies to single and decrease
-            if (this.getStitchesBelow().length > 0)
+        Stitch.prototype.renderConnectionLines = function renderConnectionLines(canvasContext, renderContext, renderPosition)
+        {
+            var self = this;
+            $.each(this.stitchesBelow, function (idx, stitch)
+            {
+                var renderedStitch = renderContext.stitches[stitch.getId()];
+
+                canvasContext.beginPath();
+
+                canvasContext.moveTo(renderPosition.x + (0.5 * self.imgWidth), renderPosition.y + (0.5 * self.imgWidth));
+                canvasContext.lineTo(renderedStitch.getMidXPos(), renderedStitch.getMidYPos());
+                canvasContext.stroke();
+            });
+        };
+
+        Stitch.prototype.renderIconAndConnections = function renderIconAndConnections(canvasContext, renderContext, icon, attempts, renderPosition)
+        {
+            if (!icon.complete && attempts < 10)
+            {
+                var stitch = this;
+                setTimeout(function ()
+                {
+                    stitch.renderIconAndConnections(canvasContext, renderContext, icon, (attempts + 1), renderPosition);
+                }, 100);
+            }
+            else if (icon.complete)
+            {
+                console.log("drawing icon at " + renderPosition.x + ", " + renderPosition.y);
+                canvasContext.drawImage(icon, renderPosition.x, renderPosition.y);
+
+                //need to wait until the image is rendered otherwise the line can get overwritten
+                this.renderConnectionLines(canvasContext, renderContext, renderPosition);
+            }
+            else
+            {
+                console.error("failed to load icon " + this.icon.src);
+            }
+        };
+
+        Stitch.prototype.getRenderXPos = function getRenderXPos(renderContext)
+        {
+            var xPos = 0;
+
+            if (this.rowNum == 1)
+            {
+                if (this.previousStitch != null)
+                {
+                    var previousRenderInfo = renderContext.stitches[this.previousStitch.getId()];
+
+                    xPos = previousRenderInfo.getXPos() + this.imgWidth;
+                }
+                else
+                {
+                    xPos = renderContext.startRenderXPos;
+                }
+            }
+            else
             {
                 //centre the stitch above stitches below
                 var self = this;
@@ -108,89 +172,53 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                 });
                 console.log(self.toString() + "is sitting between x coordinates " + minXPos + " and " + maxXPos);
 
-
-                renderContext.currentRenderXPos = minXPos + (maxXPos - minXPos) / 2;
+                xPos = minXPos + (maxXPos - minXPos) / 2;
             }
+            return xPos;
         };
 
-        //todo: make private
-        Stitch.prototype.postRender = function postRender(canvasContext, renderContext)
+        Stitch.prototype.getRenderYPos = function getRenderYPos(renderContext)
         {
-            //leave enough space for all the connecting stitches above
-            renderContext.currentRenderXPos += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesAbove.length, this.rowNum, this.imgWidth);
-        };
+            var yPos = 0;
 
-        Stitch.prototype.renderConnectionLines = function renderConnectionLines(canvasContext, renderContext)
-        {
-            var xPos = renderContext.currentRenderXPos;
-            var yPos = renderContext.currentRenderYPos;
-
-            $.each(this.stitchesBelow, function(idx, stitch)
+            if (this.previousStitch != null)
             {
-                var renderedStitch = renderContext.stitches[stitch.getId()];
+                var previousRenderInfo = renderContext.stitches[this.previousStitch.getId()];
 
-                canvasContext.beginPath();
-
-                canvasContext.moveTo(xPos, yPos);
-                canvasContext.lineTo(renderedStitch.getMidXPos(), renderedStitch.getMidYPos());
-                canvasContext.stroke();
-            });
-        };
-
-        Stitch.prototype.renderIconAndConnections = function renderIconAndConnections(canvasContext, renderContext, icon, attempts)
-        {
-            if (!icon.complete && attempts < 10)
-            {
-                var stitch = this;
-                setTimeout(function ()
+                if (this.previousStitch.getRowNum() < this.rowNum)
                 {
-                    stitch.renderIconAndConnections(canvasContext, renderContext, icon, (attempts + 1));
-                }, 100);
-            }
-            else if (icon.complete)
-            {
-                console.log("drawing icon at " + renderContext.currentRenderXPos + ", " + renderContext.currentRenderYPos);
-                canvasContext.drawImage(icon, renderContext.currentRenderXPos, renderContext.currentRenderYPos);
-
-                //need to wait until the image is rendered otherwise the line can get overwritten
-                this.renderConnectionLines(canvasContext, renderContext);
+                    //UP
+                    yPos = previousRenderInfo.getYPos() - this.imgWidth;
+                }
+                else
+                {
+                    yPos = previousRenderInfo.getYPos();
+                }
             }
             else
             {
-                console.error("failed to load icon " + this.icon.src);
+                yPos = renderContext.startRenderYPos;
             }
+            return yPos;
         };
 
         Stitch.prototype.render = function render(canvasContext, renderContext)
         {
-            this.preRender(canvasContext, renderContext);
-            this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0);
-            renderContext.stitches[this.getId()] = new RenderedStitch(renderContext.currentRenderXPos, renderContext.currentRenderYPos, this.imgWidth);
+            var renderPosition = {x: this.getRenderXPos(renderContext), y: this.getRenderYPos(renderContext)};
+
+            console.log("renderX is currently " + renderPosition.x);
+            this.preRender(canvasContext, renderContext, renderPosition);
+            console.log("renderX is now " + renderPosition.x);
+            this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0, renderPosition);
+
+            var renderedStitch = new RenderedStitch(renderPosition, this.imgWidth);
+
+            //todo: encapsulate this in context (make object instead of struct?)
+            renderContext.stitches[this.getId()] = renderedStitch;
+            renderContext.lastRenderedStitch = renderedStitch;
 
             if (this.nextStitch != null)
             {
-                if (this.nextStitch.getRowNum() > this.rowNum)
-                {
-                    renderContext.renderDirection = 'U';
-                    renderContext.currentRenderYPos = renderContext.currentRenderYPos - this.imgWidth;
-                }
-                else if (this.nextStitch.getRowNum() == this.rowNum && this.rowNum % 2 != 0)
-                {
-                    renderContext.renderDirection = 'R';
-                    renderContext.currentRenderXPos = renderContext.currentRenderXPos + this.imgWidth;
-                }
-                else if (this.nextStitch.getRowNum() == this.rowNum && this.rowNum % 2 == 0)
-                {
-                    renderContext.renderDirection = 'L';
-                    renderContext.currentRenderXPos = renderContext.currentRenderXPos - this.imgWidth;
-                }
-                else
-                {
-                    console.error("Cannot work out render direction from " + this.toString() + " to " + this.nextStitch.toString());
-                }
-
-                this.postRender(canvasContext, renderContext);
-
                 this.nextStitch.render(canvasContext, renderContext);
             }
         };
