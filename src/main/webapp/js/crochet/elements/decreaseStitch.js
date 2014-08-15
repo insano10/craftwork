@@ -47,16 +47,6 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
             }
         };
 
-        DecreaseStitch.prototype.preRender = function preRender(canvasContext, renderContext)
-        {
-            renderContext.currentRenderXPos += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesBelow.length, this.rowNum, this.imgWidth);
-        };
-
-        DecreaseStitch.prototype.postRender = function postRender(canvasContext, renderContext)
-        {
-            renderContext.currentRenderXPos += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesBelow.length, this.rowNum, this.imgWidth);
-        };
-
         DecreaseStitch.prototype.toString = function toString()
         {
             return "DECREASE [id: " + this.getId() + ", row: " + this.rowNum + "]";

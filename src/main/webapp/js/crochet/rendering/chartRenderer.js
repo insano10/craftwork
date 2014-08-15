@@ -93,7 +93,7 @@ define(function ()
 
             var renderContext =
             {
-                maxXPos: MAX_X_POS,
+                maxXPos: MAX_X_POS, 
                 maxYPos: MAX_Y_POS,
                 currentRenderXPos: 50, //starting offsets
                 currentRenderYPos: MAX_Y_POS - 20,

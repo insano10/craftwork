@@ -1,4 +1,4 @@
-define(["jquery", "baseStitch"], function ($, BaseStitch)
+define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchUtils)
 {
    return (function()
     {
@@ -57,9 +57,23 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
             }
         };
 
-        IncreaseStitch.prototype.renderConnectionLines = function renderConnectionLines(canvasContext, renderXPos, renderYPos, numConnections, stitchWidth)
+        //todo: replace this with a render strategy
+        IncreaseStitch.prototype.preRender = function preRender(canvasContext, renderContext)
         {
-            this.group.renderConnectionLines(canvasContext, renderXPos, renderYPos, this.groupIndex, this.getRowNum());
+            //leave enough space for all the connecting stitches above (too simplistic?) - applies to all
+            renderContext.currentRenderXPos += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesAbove.length, this.rowNum, this.imgWidth);
+
+            //there can only be one stitch below for an increase
+            var idOfStitchBelow = this.getStitchesBelow()[0].getId();
+            var connectionXPos = renderContext.stitches[idOfStitchBelow].getXPos();
+
+            console.log(this.toString() + "is sitting above x coordinate " + connectionXPos);
+            renderContext.currentRenderXPos = this.group.calculateRenderXPos(this.groupIndex, this.rowNum, connectionXPos);
+        };
+
+        IncreaseStitch.prototype.renderConnectionLines = function renderConnectionLines(canvasContext, renderContext)
+        {
+            this.group.renderConnectionLines(canvasContext, renderContext, this.groupIndex, this.getRowNum());
         };
 
         IncreaseStitch.prototype.toString = function toString()

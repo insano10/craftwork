@@ -14,6 +14,16 @@ define(["jquery"], function($)
         this.getYPos = function getYPos()
         {
             return this.yPos;
+        };
+
+        this.getMidXPos = function getMidXPos()
+        {
+            return this.xPos + (0.5 * this.width);
+        };
+
+        this.getMidYPos = function getMidYPos()
+        {
+            return this.yPos + (0.5 * this.width);
         }
     }
 

@@ -7,23 +7,23 @@ define(["jquery"], function ($)
     function IncreaseGroup(totalStitches, stitchWidth)
     {
         this.offsetOfFirstStitch = (totalStitches / 2) * stitchWidth;
-        this.connectionOffset = 0.5 * stitchWidth;
+        this.widthOffset = 0.5 * stitchWidth;
 
-        this.renderConnectionLines = function renderConnectionLines(canvasContext, renderXPos, renderYPos, groupIndex, rowNum)
+        this.renderConnectionLines = function renderConnectionLines(canvasContext, renderContext, groupIndex, rowNum)
         {
-            var xPos = renderXPos + (0.5 * stitchWidth);
-            var yPos = renderYPos + (0.5 * stitchWidth);
+            var xPos = renderContext.currentRenderXPos + (0.5 * stitchWidth);
+            var yPos = renderContext.currentRenderYPos + (0.5 * stitchWidth);
             var xOffset;
 
             if(rowNum%2 == 0)
             {
                 //right to left
-                xOffset = -this.offsetOfFirstStitch + (groupIndex * stitchWidth)  + this.connectionOffset;
+                xOffset = -this.offsetOfFirstStitch + (groupIndex * stitchWidth)  + this.widthOffset;
             }
             else
             {
                 //left to right
-                xOffset = this.offsetOfFirstStitch - (groupIndex * stitchWidth) - this.connectionOffset;
+                xOffset = this.offsetOfFirstStitch - (groupIndex * stitchWidth) - this.widthOffset;
             }
 
             canvasContext.beginPath();
@@ -32,6 +32,23 @@ define(["jquery"], function ($)
             canvasContext.lineTo(xPos + xOffset, yPos + stitchWidth);
             canvasContext.stroke();
         };
+
+        this.calculateRenderXPos = function calculateRenderXPos(groupIndex, rowNum, centreXPos)
+        {
+            var xPos;
+
+            if(rowNum%2 == 0)
+            {
+                //right to left
+                xPos = centreXPos + this.offsetOfFirstStitch - (groupIndex * stitchWidth) - this.widthOffset;
+            }
+            else
+            {
+                //left to right
+                xPos = centreXPos - this.offsetOfFirstStitch + (groupIndex * stitchWidth) + this.widthOffset;
+            }
+            return xPos;
+        }
     }
 
     return IncreaseGroup;
