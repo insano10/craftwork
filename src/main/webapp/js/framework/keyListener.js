@@ -4,13 +4,12 @@ define(["jquery"], function($)
     {
         var listeners = [];
 
-        var notifyListeners = function(keyChar)
+        var notifyListeners = function()
         {
             $.each(listeners, function(idx, listener)
             {
-                listener.notifyNewInstructionCharacter(keyChar);
+                listener.notifyNewInstructionCharacter();
             });
-
         };
 
 
@@ -21,8 +20,27 @@ define(["jquery"], function($)
 
         this.onKeyPressed = function onKeyPressed(event)
         {
-            var keyPressed = String.fromCharCode(event.which);
-            notifyListeners(keyPressed);
+            notifyListeners();
+        };
+
+        this.onKeyDown = function onKeyDown(event)
+        {
+            //certain key presses are not detected by onKeyPressed but are by onKeyDown
+            if(event.which == 8)
+            {
+                //backspace
+                notifyListeners();
+            }
+            else if(event.which == 90 && event.ctrlKey && event.shiftKey)
+            {
+                //ctrl+shift+z - redo
+                notifyListeners();
+            }
+            else if(event.which == 90 && event.ctrlKey && !event.shiftKey)
+            {
+                //ctrl+x - undo
+                notifyListeners();
+            }
         };
     }
 
