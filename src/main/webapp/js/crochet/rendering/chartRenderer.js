@@ -97,7 +97,8 @@ define(function ()
                 maxYPos: MAX_Y_POS,
                 currentRenderXPos: 50, //starting offsets
                 currentRenderYPos: MAX_Y_POS - 20,
-                renderDirection: 'R' //'L', 'R', 'U','D'
+                renderDirection: 'R', //'L', 'R', 'U','D',
+                stitches: {} //map of previously rendered stitches keyed by id
             };
 
             renderStartArrow(ctx, renderContext);

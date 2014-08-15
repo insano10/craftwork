@@ -42,7 +42,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 
         SingleStitch.prototype.toString = function toString()
         {
-            return "SINGLE [row: " + this.rowNum + "]";
+            return "SINGLE [id: " + this.getId() + ", row: " + this.rowNum + "]";
         };
 
         return SingleStitch;

@@ -59,7 +59,7 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
 
         DecreaseStitch.prototype.toString = function toString()
         {
-            return "DECREASE [row: " + this.rowNum + "]";
+            return "DECREASE [id: " + this.getId() + ", row: " + this.rowNum + "]";
         };
 
         return DecreaseStitch;

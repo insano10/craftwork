@@ -1,9 +1,10 @@
-define(["jquery", "stitchUtils"], function ($, StitchUtils)
+define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, RenderedStitch)
 {
     return (function()
     {
         function Stitch(imgFile, imgWidth, rowNum)
         {
+            this.id = StitchUtils.generateId();
             this.imgFile = imgFile;
             this.imgWidth = imgWidth;
             this.rowNum = rowNum;
@@ -14,6 +15,11 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
             this.icon = new Image();
             this.icon.src = "../../../../images/" + this.imgFile;
         }
+
+        Stitch.prototype.getId = function getId()
+        {
+            return this.id;
+        };
 
         Stitch.prototype.setPreviousStitch = function setPreviousStitch(stitch)
         {
@@ -154,9 +160,8 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
         Stitch.prototype.render = function render(canvasContext, renderContext)
         {
             this.preRender(canvasContext, renderContext);
-
-            console.log("rendering " + this.toString() + " at " + renderContext.currentRenderXPos + ", " + renderContext.currentRenderYPos);
             this.renderIconAndConnections(canvasContext, renderContext.currentRenderXPos, renderContext.currentRenderYPos, this.icon, 0, this.stitchesBelow.length, this.imgWidth);
+            renderContext.stitches[this.getId()] = new RenderedStitch(renderContext.currentRenderXPos, renderContext.currentRenderYPos, this.imgWidth);
 
             if (this.nextStitch != null)
             {

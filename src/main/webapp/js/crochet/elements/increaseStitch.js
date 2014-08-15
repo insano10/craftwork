@@ -64,7 +64,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 
         IncreaseStitch.prototype.toString = function toString()
         {
-            return "INCREASE [row: " + this.rowNum + "]";
+            return "INCREASE [id: " + this.getId() + ", row: " + this.rowNum + "]";
         };
 
         return IncreaseStitch;

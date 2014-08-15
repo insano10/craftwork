@@ -28,6 +28,7 @@ require.config(
             "instructionParser": "src/main/webapp/js/crochet/instructionParser",
             "parseChainFactory": "src/main/webapp/js/crochet/parseChainFactory",
             "stitchUtils":       "src/main/webapp/js/crochet/stitchUtils",
+            "renderedStitch":    "src/main/webapp/js/crochet/rendering/renderedStitch",
             "baseStitch":        "src/main/webapp/js/crochet/elements/baseStitch",
             "decreaseStitch":    "src/main/webapp/js/crochet/elements/decreaseStitch",
             "increaseStitch":    "src/main/webapp/js/crochet/elements/increaseStitch",
