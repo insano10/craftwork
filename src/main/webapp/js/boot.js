@@ -12,7 +12,8 @@ require(
             "baseStitch":           "crochet/elements/baseStitch",
             "singleStitch":         "crochet/elements/singleStitch",
             "decreaseStitch":       "crochet/elements/decreaseStitch",
-            "increaseStitch":       "crochet/elements/increaseStitch"
+            "increaseStitch":       "crochet/elements/increaseStitch",
+            "increaseGroup":        "crochet/elements/increaseGroup"
         }
     },
     ["app"],

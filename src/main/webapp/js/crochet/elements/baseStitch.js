@@ -15,25 +15,6 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
             this.icon.src = "../../../../images/" + this.imgFile;
         }
 
-        var renderIcon = function renderIcon(canvasContext, icon, xPos, yPos, attempts)
-        {
-            if (!icon.complete && attempts < 10)
-            {
-                setTimeout(function ()
-                {
-                    renderIcon(canvasContext, icon, xPos, yPos, (attempts + 1));
-                }, 100);
-            }
-            else if (icon.complete)
-            {
-                canvasContext.drawImage(icon, xPos, yPos);
-            }
-            else
-            {
-                console.error("failed to load icon " + this.icon.src);
-            }
-        };
-
         Stitch.prototype.setPreviousStitch = function setPreviousStitch(stitch)
         {
             this.previousStitch = stitch;
@@ -103,11 +84,79 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
             renderContext.currentRenderXPos += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesAbove.length, this.rowNum, this.imgWidth);
         };
 
+        Stitch.prototype.renderConnectionLines = function renderConnectionLines(canvasContext, renderXPos, renderYPos, numConnections, stitchWidth)
+        {
+            if(numConnections > 0)
+            {
+                var xPos = renderXPos + (0.5 * stitchWidth);
+                var yPos = renderYPos + (0.5 * stitchWidth);
+
+                var xOffset = -(stitchWidth * numConnections/2) + (0.5 * stitchWidth);
+
+                for(var i=0 ; i<numConnections ; i++)
+                {
+                    canvasContext.beginPath();
+
+                    canvasContext.moveTo(xPos, yPos);
+                    canvasContext.lineTo(xPos + xOffset, yPos + stitchWidth);
+                    canvasContext.stroke();
+
+                    xOffset += stitchWidth;
+                }
+            }
+        };
+
+        Stitch.prototype.renderConnectionLines = function renderConnectionLines(canvasContext, renderXPos, renderYPos, numConnections, stitchWidth)
+        {
+            if(numConnections > 0)
+            {
+                var xPos = renderXPos + (0.5 * stitchWidth);
+                var yPos = renderYPos + (0.5 * stitchWidth);
+
+                var xOffset = -(stitchWidth * numConnections/2) + (0.5 * stitchWidth);
+
+                for(var i=0 ; i<numConnections ; i++)
+                {
+                    canvasContext.beginPath();
+
+                    canvasContext.moveTo(xPos, yPos);
+                    canvasContext.lineTo(xPos + xOffset, yPos + stitchWidth);
+                    canvasContext.stroke();
+
+                    xOffset += stitchWidth;
+                }
+            }
+        };
+
+        Stitch.prototype.renderIconAndConnections = function renderIconAndConnections(canvasContext, xPos, yPos, icon, attempts, numConnections, stitchWidth)
+        {
+            if (!icon.complete && attempts < 10)
+            {
+                var stitch = this;
+                setTimeout(function ()
+                {
+                    stitch.renderIconAndConnections(canvasContext, xPos, yPos, icon, (attempts + 1), numConnections, stitchWidth);
+                }, 100);
+            }
+            else if (icon.complete)
+            {
+                canvasContext.drawImage(icon, xPos, yPos);
+
+                //need to wait until the image is rendered otherwise the line can get overwritten
+                this.renderConnectionLines(canvasContext, xPos, yPos, numConnections, stitchWidth);
+            }
+            else
+            {
+                console.error("failed to load icon " + this.icon.src);
+            }
+        };
+
         Stitch.prototype.render = function render(canvasContext, renderContext)
         {
             this.preRender(canvasContext, renderContext);
 
-            renderIcon(canvasContext, this.icon, renderContext.currentRenderXPos, renderContext.currentRenderYPos, 0);
+            console.log("rendering " + this.toString() + " at " + renderContext.currentRenderXPos + ", " + renderContext.currentRenderYPos);
+            this.renderIconAndConnections(canvasContext, renderContext.currentRenderXPos, renderContext.currentRenderYPos, this.icon, 0, this.stitchesBelow.length, this.imgWidth);
 
             if (this.nextStitch != null)
             {

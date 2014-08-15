@@ -2,10 +2,14 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 {
    return (function()
     {
-        function IncreaseStitch(imgFile, imgWidth, rowNum, firstOfAGroup)
+        /*
+            Increase stitch is a stitch attached to the same lower stitch as another
+         */
+        function IncreaseStitch(imgFile, imgWidth, rowNum, groupIndex, group)
         {
             BaseStitch.call(this, imgFile, imgWidth, rowNum);
-            this.firstOfAGroup = firstOfAGroup;
+            this.groupIndex = groupIndex;
+            this.group = group;
         }
 
         IncreaseStitch.prototype = Object.create(BaseStitch.prototype);
@@ -20,7 +24,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
                 if(this.rowNum> candidateStitch.getRowNum())
                 {
                     //row below this stitch
-                    if(this.firstOfAGroup && candidateStitch.isAvailableForConnection())
+                    if(this.groupIndex == 0 && candidateStitch.isAvailableForConnection())
                     {
                         //connect to the next available stitch
                         console.log("Connecting primary stitch " + this.toString() + " to stitch " + candidateStitch.toString());
@@ -28,7 +32,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
                         this.setStitchBelow(candidateStitch);
                         break;
                     }
-                    else if(!this.firstOfAGroup)
+                    else if(this.groupIndex > 0)
                     {
                         if(candidateStitch.getPreviousStitch() != null && candidateStitch.getPreviousStitch().isAvailableForConnection())
                         {
@@ -51,6 +55,11 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
             {
                 console.error("Could not find connecting stitch for " + this.toString());
             }
+        };
+
+        IncreaseStitch.prototype.renderConnectionLines = function renderConnectionLines(canvasContext, renderXPos, renderYPos, numConnections, stitchWidth)
+        {
+            this.group.renderConnectionLines(canvasContext, renderXPos, renderYPos, this.groupIndex, this.getRowNum());
         };
 
         IncreaseStitch.prototype.toString = function toString()

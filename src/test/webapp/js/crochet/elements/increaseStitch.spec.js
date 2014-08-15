@@ -1,4 +1,4 @@
-define(["jquery", "increaseStitch", "singleStitch" ], function ($, IncreaseStitch, SingleStitch)
+define(["jquery", "increaseStitch", "increaseGroup", "singleStitch" ], function ($, IncreaseStitch, IncreaseGroup, SingleStitch)
 {
 
     describe("IncreaseStitch", function ()
@@ -21,11 +21,12 @@ define(["jquery", "increaseStitch", "singleStitch" ], function ($, IncreaseStitc
 
         it("should connect multiple stitches to the same stich", function ()
         {
-            var primaryIncrease = new IncreaseStitch("sc.png", 13, 2, true);
-            var increase2 = new IncreaseStitch("sc.png", 13, 2, false);
-            var increase3 = new IncreaseStitch("sc.png", 13, 2, false);
+            var group = new IncreaseGroup(3, 13);
+            var increase1 = new IncreaseStitch("sc.png", 13, 2, 0, group);
+            var increase2 = new IncreaseStitch("sc.png", 13, 2, 1, group);
+            var increase3 = new IncreaseStitch("sc.png", 13, 2, 2, group);
 
-            primaryIncrease.connectToChain(tailOfChain);
+            increase1.connectToChain(tailOfChain);
             increase2.connectToChain(tailOfChain);
             increase3.connectToChain(tailOfChain);
 
@@ -34,7 +35,7 @@ define(["jquery", "increaseStitch", "singleStitch" ], function ($, IncreaseStitc
 
             expect(chain[9].getStitchesAbove().length).toEqual(3);
 
-            expect(primaryIncrease.getStitchesBelow().length).toEqual(1);
+            expect(increase1.getStitchesBelow().length).toEqual(1);
             expect(increase2.getStitchesBelow().length).toEqual(1);
             expect(increase3.getStitchesBelow().length).toEqual(1);
         });
