@@ -82,10 +82,15 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
         //todo: make private
         Stitch.prototype.preRender = function preRender(canvasContext, renderContext, renderPosition)
         {
-            //leave enough space for all the connecting stitches above (too simplistic?) - applies to all
-            var spaceBefore = StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesAbove.length, this.rowNum, this.imgWidth);
-            renderPosition.x += spaceBefore;
-            console.log("space before: " + spaceBefore);
+            //only need to shuffle if there is not enough space left already
+            //todo: this doesn't work when the space is left on a row lower than the previous one
+            if (this.stitchesAbove.length > this.stitchesBelow.length)
+            {
+                //leave enough space for all the connecting stitches above (too simplistic?) - applies to all
+                var spaceBefore = StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.stitchesAbove.length, this.rowNum, this.imgWidth);
+                renderPosition.x += spaceBefore;
+                console.log("space before: " + spaceBefore);
+            }
 
             if (this.previousStitch != null && this.previousStitch.stitchesAbove.length > 1)
             {
@@ -137,23 +142,34 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
         Stitch.prototype.getRenderXPos = function getRenderXPos(renderContext)
         {
             var xPos = 0;
+            var xPosRelativeToPreviousStitch = 0;
 
-            if (this.rowNum == 1)
+            //position next to the previous stitch
+            if (this.previousStitch != null)
             {
-                if (this.previousStitch != null)
-                {
-                    var previousRenderInfo = renderContext.stitches[this.previousStitch.getId()];
+                var previousRenderInfo = renderContext.stitches[this.previousStitch.getId()];
 
-                    xPos = previousRenderInfo.getXPos() + this.imgWidth;
+                if (this.previousStitch.rowNum < this.rowNum)
+                {
+                    xPosRelativeToPreviousStitch = previousRenderInfo.getXPos();
+                }
+                else if (this.rowNum % 2 != 0)
+                {
+                    xPosRelativeToPreviousStitch = previousRenderInfo.getXPos() + this.imgWidth;
                 }
                 else
                 {
-                    xPos = renderContext.startRenderXPos;
+                    xPosRelativeToPreviousStitch = previousRenderInfo.getXPos() - this.imgWidth;
                 }
             }
             else
             {
-                //centre the stitch above stitches below
+                xPosRelativeToPreviousStitch = renderContext.startRenderXPos;
+            }
+
+            //centre the stitch above stitches below if possible
+            if (this.getStitchesBelow().length > 0)
+            {
                 var self = this;
                 var minXPos = -1;
                 var maxXPos = -1;
@@ -172,8 +188,22 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                 });
                 console.log(self.toString() + "is sitting between x coordinates " + minXPos + " and " + maxXPos);
 
-                xPos = minXPos + (maxXPos - minXPos) / 2;
+                var centredXPos = minXPos + (maxXPos - minXPos) / 2;
+
+                if (this.rowNum % 2 != 0)
+                {
+                    xPos = Math.max(centredXPos, xPosRelativeToPreviousStitch);
+                }
+                else
+                {
+                    xPos = Math.min(centredXPos, xPosRelativeToPreviousStitch);
+                }
             }
+            else
+            {
+                xPos = xPosRelativeToPreviousStitch;
+            }
+
             return xPos;
         };
 
