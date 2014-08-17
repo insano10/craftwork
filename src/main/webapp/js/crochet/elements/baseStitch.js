@@ -93,6 +93,12 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             return this.rowNum;
         };
 
+        var renderIcon = function renderIcon(canvasContext, icon, renderedStitch)
+        {
+            console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos());
+            canvasContext.drawImage(icon, renderedStitch.getXPos(), renderedStitch.getYPos());
+        };
+
         Stitch.prototype.renderIconAndConnections = function renderIconAndConnections(canvasContext, renderContext, icon, attempts, renderedStitch)
         {
             if (!icon.complete && attempts < 10)
@@ -105,10 +111,7 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             }
             else if (icon.complete)
             {
-                console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos());
-                canvasContext.drawImage(icon, renderedStitch.getXPos(), renderedStitch.getYPos());
-
-                //need to wait until the image is rendered otherwise the line can get overwritten
+                renderIcon(canvasContext, this.icon, renderedStitch);
                 renderConnectionLines(canvasContext, renderContext, renderedStitch, this.stitchesBelow);
             }
             else
