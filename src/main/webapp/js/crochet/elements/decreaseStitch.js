@@ -2,9 +2,9 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
 {
    return (function()
     {
-        function DecreaseStitch(width, imgFile, imgWidth, rowNum)
+        function DecreaseStitch(width, imgFile, imgWidth, imgHeight, rowNum)
         {
-            BaseStitch.call(this, imgFile, imgWidth, rowNum);
+            BaseStitch.call(this, imgFile, imgWidth, imgHeight, rowNum);
             this.width = width;
         }
 

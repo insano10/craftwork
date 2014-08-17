@@ -62,7 +62,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new SingleStitch("chain.png", 13, context.rowNum));
+                    chartModel.addStitch(new SingleStitch("chain.png", 10, 6, context.rowNum));
                     context.currentRowIndex++;
                 }
                 return true;
@@ -85,7 +85,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new SingleStitch("sc.png", 13, context.rowNum));
+                    chartModel.addStitch(new SingleStitch("sc.png", 13, 13, context.rowNum));
                     context.currentRowIndex++;
                 }
                 return true;
@@ -108,7 +108,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
 
                 for (var stitchNum = 0; stitchNum < stitchCount; stitchNum++)
                 {
-                    chartModel.addStitch(new IncreaseStitch("sc.png", 13, context.rowNum, stitchNum));
+                    chartModel.addStitch(new IncreaseStitch("sc.png", 13, 13, context.rowNum, stitchNum));
                 }
                 context.currentRowIndex++;
                 return true;
@@ -135,7 +135,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
                     connectToIndices.push(context.currentRowIndex);
                     context.currentRowIndex++;
                 }
-                chartModel.addStitch(new DecreaseStitch(stitchCount, "sc.png", 13, context.rowNum));
+                chartModel.addStitch(new DecreaseStitch(stitchCount, "sc.png", 13, 13, context.rowNum));
                 return true;
             }
             return false;

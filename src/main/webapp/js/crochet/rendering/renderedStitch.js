@@ -1,11 +1,12 @@
 define(["jquery"], function($)
 {
-    function RenderedStitch(renderPosition, angle, width)
+    function RenderedStitch(renderPosition, angle, width, height)
     {
         this.xPos = renderPosition.x;
         this.yPos = renderPosition.y;
         this.angle = angle; //relative to horizontal where + is clockwise and - is anticlockwise
         this.width = width;
+        this.height = height;
 
         this.getXPos = function getXPos()
         {
@@ -24,7 +25,7 @@ define(["jquery"], function($)
 
         this.getMidYPos = function getMidYPos()
         {
-            return this.yPos + (0.5 * this.width);
+            return this.yPos + (0.5 * this.height);
         };
 
         this.getAngle = function getAngle()

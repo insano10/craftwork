@@ -2,11 +2,12 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
 {
     return (function ()
     {
-        function Stitch(imgFile, imgWidth, rowNum)
+        function Stitch(imgFile, imgWidth, imgHeight, rowNum)
         {
             this.id = StitchUtils.generateId();
             this.imgFile = imgFile;
             this.imgWidth = imgWidth;
+            this.imgHeight = imgHeight;
             this.rowNum = rowNum;
             this.previousStitch = null;
             this.nextStitch = null;
@@ -95,8 +96,15 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
 
         var renderIcon = function renderIcon(canvasContext, icon, renderedStitch)
         {
-            console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos());
-            canvasContext.drawImage(icon, renderedStitch.getXPos(), renderedStitch.getYPos());
+            console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos() + " at angle " + renderedStitch.getAngle());
+
+            canvasContext.save();
+
+            canvasContext.translate(renderedStitch.getXPos(), renderedStitch.getYPos());
+            canvasContext.rotate(renderedStitch.getAngle()*Math.PI/180);
+            canvasContext.drawImage(icon, 0, 0);
+
+            canvasContext.restore();
         };
 
         Stitch.prototype.renderIconAndConnections = function renderIconAndConnections(canvasContext, renderContext, icon, attempts, renderedStitch)
@@ -167,7 +175,7 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                 if (this.previousStitch.getRowNum() < this.rowNum)
                 {
                     //move up
-                    yPos = previousRenderInfo.getYPos() - this.imgWidth;
+                    yPos = previousRenderInfo.getYPos() - this.imgHeight;
                 }
                 else
                 {
@@ -181,7 +189,7 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
         {
             var renderPosition = {x: this.getRenderXPos(renderContext),
                                   y: this.getRenderYPos(renderContext)};
-            var renderedStitch = new RenderedStitch(renderPosition, 0, this.imgWidth);
+            var renderedStitch = new RenderedStitch(renderPosition, 0, this.imgWidth, this.imgHeight);
 
             this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0, renderedStitch);
 

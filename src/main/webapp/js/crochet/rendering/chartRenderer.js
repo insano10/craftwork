@@ -46,7 +46,7 @@ define(["renderContext"], function (RenderContext)
 
         var renderStartArrow = function renderStartArrow(canvasContext, renderContext)
         {
-            canvasContext.drawImage(arrowStartIcon, renderContext.getStartXPos()-15, renderContext.getStartYPos());
+            canvasContext.drawImage(arrowStartIcon, renderContext.getStartXPos()-15, renderContext.getStartYPos()-6);
         };
 
         var renderEndArrow = function renderEndArrow(canvasContext, renderContext)
