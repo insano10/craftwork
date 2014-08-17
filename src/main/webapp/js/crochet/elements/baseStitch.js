@@ -16,6 +16,20 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             this.icon.src = "../../../../images/" + this.imgFile;
         }
 
+        var renderConnectionLines = function renderConnectionLines(canvasContext, renderContext, thisRenderedStitch, stitchesBelow)
+        {
+            $.each(stitchesBelow, function (idx, stitch)
+            {
+                var stitchBelow = renderContext.getRenderedStitchFor(stitch);
+
+                canvasContext.beginPath();
+
+                canvasContext.moveTo(thisRenderedStitch.getMidXPos(), thisRenderedStitch.getMidYPos());
+                canvasContext.lineTo(stitchBelow.getMidXPos(), stitchBelow.getMidYPos());
+                canvasContext.stroke();
+            });
+        };
+
         Stitch.prototype.getId = function getId()
         {
             return this.id;
@@ -79,39 +93,23 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             return this.rowNum;
         };
 
-        //todo: private
-        Stitch.prototype.renderConnectionLines = function renderConnectionLines(canvasContext, renderContext, renderPosition)
-        {
-            var self = this;
-            $.each(this.stitchesBelow, function (idx, stitch)
-            {
-                var renderedStitch = renderContext.getRenderedStitchFor(stitch);
-
-                canvasContext.beginPath();
-
-                canvasContext.moveTo(renderPosition.x + (0.5 * self.imgWidth), renderPosition.y + (0.5 * self.imgWidth));
-                canvasContext.lineTo(renderedStitch.getMidXPos(), renderedStitch.getMidYPos());
-                canvasContext.stroke();
-            });
-        };
-
-        Stitch.prototype.renderIconAndConnections = function renderIconAndConnections(canvasContext, renderContext, icon, attempts, renderPosition)
+        Stitch.prototype.renderIconAndConnections = function renderIconAndConnections(canvasContext, renderContext, icon, attempts, renderedStitch)
         {
             if (!icon.complete && attempts < 10)
             {
                 var stitch = this;
                 setTimeout(function ()
                 {
-                    stitch.renderIconAndConnections(canvasContext, renderContext, icon, (attempts + 1), renderPosition);
+                    stitch.renderIconAndConnections(canvasContext, renderContext, icon, (attempts + 1), renderedStitch);
                 }, 100);
             }
             else if (icon.complete)
             {
-                console.log("drawing icon at " + renderPosition.x + ", " + renderPosition.y);
-                canvasContext.drawImage(icon, renderPosition.x, renderPosition.y);
+                console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos());
+                canvasContext.drawImage(icon, renderedStitch.getXPos(), renderedStitch.getYPos());
 
                 //need to wait until the image is rendered otherwise the line can get overwritten
-                this.renderConnectionLines(canvasContext, renderContext, renderPosition);
+                renderConnectionLines(canvasContext, renderContext, renderedStitch, this.stitchesBelow);
             }
             else
             {
@@ -178,12 +176,14 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
 
         Stitch.prototype.render = function render(canvasContext, renderContext)
         {
-            var renderPosition = {x: this.getRenderXPos(renderContext), y: this.getRenderYPos(renderContext)};
+            var renderPosition = {x: this.getRenderXPos(renderContext),
+                                  y: this.getRenderYPos(renderContext)};
+            var renderedStitch = new RenderedStitch(renderPosition, 0, this.imgWidth);
 
-            this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0, renderPosition);
+            this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0, renderedStitch);
 
-            var renderedStitch = new RenderedStitch(renderPosition, this.imgWidth);
             renderContext.addRenderedStitch(this.getId(), renderedStitch);
+
 
             if (this.nextStitch != null)
             {
