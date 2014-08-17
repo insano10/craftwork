@@ -80,7 +80,7 @@ define(["renderContext"], function (RenderContext)
             ctx.save();
             ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-            var renderContext = new RenderContext(50, MAX_Y_POS - 20);
+            var renderContext = new RenderContext(50, MAX_Y_POS - 50);
 
             renderStartArrow(ctx, renderContext);
 

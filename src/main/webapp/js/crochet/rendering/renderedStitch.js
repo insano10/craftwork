@@ -32,6 +32,17 @@ define(["jquery"], function($)
         {
             return this.angle;
         };
+
+        this.getYRotationLength = function getYRotationLength()
+        {
+            return this.width * Math.sin(this.angle*Math.PI/180); //using SOH
+        };
+
+        this.getXRotationLength = function getXRotationLength()
+        {
+            var xOffsetDueToRotation = (this.width * Math.cos(this.angle*Math.PI/180)); //using CAH
+            return this.width - xOffsetDueToRotation;
+        }
     }
 
     return RenderedStitch;

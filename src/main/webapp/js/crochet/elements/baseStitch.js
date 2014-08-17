@@ -145,15 +145,20 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                     //above previous stitch
                     xPos = previousRenderInfo.getXPos();
                 }
-                else if (this.rowNum % 2 != 0)
-                {
-                    //to the right
-                    xPos = previousRenderInfo.getXPos() + this.imgWidth;
-                }
                 else
                 {
-                    //to the left
-                    xPos = previousRenderInfo.getXPos() - this.imgWidth;
+                    var xOffsetForAngle = previousRenderInfo.getXRotationLength();
+
+                    if (this.rowNum % 2 != 0)
+                    {
+                        //to the right
+                        xPos = previousRenderInfo.getXPos() + this.imgWidth - xOffsetForAngle;
+                    }
+                    else
+                    {
+                        //to the left
+                        xPos = previousRenderInfo.getXPos() - this.imgWidth + xOffsetForAngle;
+                    }
                 }
             }
 
@@ -179,7 +184,8 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                 }
                 else
                 {
-                    yPos = previousRenderInfo.getYPos();
+                    var yOffsetForAngle = previousRenderInfo.getYRotationLength();
+                    yPos = previousRenderInfo.getYPos() + yOffsetForAngle;
                 }
             }
             return yPos;
