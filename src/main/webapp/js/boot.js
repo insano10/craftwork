@@ -6,6 +6,7 @@ require(
             "instructionEvaluator": "framework/instructionEvaluator",
             "chartRenderer":        "crochet/rendering/chartRenderer",
             "renderedStitch":       "crochet/rendering/renderedStitch",
+            "renderContext":        "crochet/rendering/renderContext",
             "chartModel":           "crochet/chartModel",
             "instructionParser":    "crochet/instructionParser",
             "parseChainFactory":    "crochet/parseChainFactory",

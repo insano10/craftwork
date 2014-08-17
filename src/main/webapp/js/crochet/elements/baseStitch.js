@@ -79,12 +79,13 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             return this.rowNum;
         };
 
+        //todo: private
         Stitch.prototype.renderConnectionLines = function renderConnectionLines(canvasContext, renderContext, renderPosition)
         {
             var self = this;
             $.each(this.stitchesBelow, function (idx, stitch)
             {
-                var renderedStitch = renderContext.stitches[stitch.getId()];
+                var renderedStitch = renderContext.getRenderedStitchFor(stitch);
 
                 canvasContext.beginPath();
 
@@ -122,14 +123,13 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
         {
             var xPos = 0;
 
-            //position next to the previous stitch
             if (this.previousStitch == null)
             {
-                xPos = renderContext.startRenderXPos;
+                xPos = renderContext.getStartXPos();
             }
             else
             {
-                var previousRenderInfo = renderContext.stitches[this.previousStitch.getId()];
+                var previousRenderInfo = renderContext.getRenderedStitchFor(this.previousStitch);
 
                 if (this.previousStitch.rowNum < this.rowNum)
                 {
@@ -157,11 +157,11 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
 
             if (this.previousStitch == null)
             {
-                yPos = renderContext.startRenderYPos;
+                yPos = renderContext.getStartYPos();
             }
             else
             {
-                var previousRenderInfo = renderContext.stitches[this.previousStitch.getId()];
+                var previousRenderInfo = renderContext.getRenderedStitchFor(this.previousStitch);
 
                 if (this.previousStitch.getRowNum() < this.rowNum)
                 {
@@ -183,10 +183,7 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0, renderPosition);
 
             var renderedStitch = new RenderedStitch(renderPosition, this.imgWidth);
-
-            //todo: encapsulate this in context (make object instead of struct?)
-            renderContext.stitches[this.getId()] = renderedStitch;
-            renderContext.lastRenderedStitch = renderedStitch;
+            renderContext.addRenderedStitch(this.getId(), renderedStitch);
 
             if (this.nextStitch != null)
             {

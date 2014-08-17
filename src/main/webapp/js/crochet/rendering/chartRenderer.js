@@ -1,4 +1,4 @@
-define(function ()
+define(["renderContext"], function (RenderContext)
 {
     function ChartRenderer()
     {
@@ -46,12 +46,12 @@ define(function ()
 
         var renderStartArrow = function renderStartArrow(canvasContext, renderContext)
         {
-            canvasContext.drawImage(arrowStartIcon, renderContext.startRenderXPos-15, renderContext.startRenderYPos);
+            canvasContext.drawImage(arrowStartIcon, renderContext.getStartXPos()-15, renderContext.getStartYPos());
         };
 
         var renderEndArrow = function renderEndArrow(canvasContext, renderContext)
         {
-            var lastStitch = renderContext.lastRenderedStitch;
+            var lastStitch = renderContext.getLastRenderedStitch();
 
             canvasContext.save();
 
@@ -80,13 +80,7 @@ define(function ()
             ctx.save();
             ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-            var renderContext =
-            {
-                startRenderXPos: 50, //starting offsets
-                startRenderYPos: MAX_Y_POS - 20,
-                stitches: {}, //map of previously rendered stitches keyed by id
-                lastRenderedStitch: null
-            };
+            var renderContext = new RenderContext(50, MAX_Y_POS - 20);
 
             renderStartArrow(ctx, renderContext);
 
