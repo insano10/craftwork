@@ -1,4 +1,4 @@
-define(["jquery", "increaseStitch", "increaseGroup", "singleStitch" ], function ($, IncreaseStitch, IncreaseGroup, SingleStitch)
+define(["jquery", "increaseStitch", "singleStitch" ], function ($, IncreaseStitch, SingleStitch)
 {
 
     describe("IncreaseStitch", function ()
@@ -21,10 +21,9 @@ define(["jquery", "increaseStitch", "increaseGroup", "singleStitch" ], function 
 
         it("should connect multiple stitches to the same stich", function ()
         {
-            var group = new IncreaseGroup(3, 13);
-            var increase1 = new IncreaseStitch("sc.png", 13, 2, 0, group);
-            var increase2 = new IncreaseStitch("sc.png", 13, 2, 1, group);
-            var increase3 = new IncreaseStitch("sc.png", 13, 2, 2, group);
+            var increase1 = new IncreaseStitch("sc.png", 13, 2, 0);
+            var increase2 = new IncreaseStitch("sc.png", 13, 2, 1);
+            var increase3 = new IncreaseStitch("sc.png", 13, 2, 2);
 
             increase1.connectToChain(tailOfChain);
             increase2.connectToChain(tailOfChain);

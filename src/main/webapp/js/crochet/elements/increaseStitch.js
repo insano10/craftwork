@@ -5,11 +5,10 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
         /*
             Increase stitch is a stitch attached to the same lower stitch as another
          */
-        function IncreaseStitch(imgFile, imgWidth, rowNum, groupIndex, group)
+        function IncreaseStitch(imgFile, imgWidth, rowNum, groupIndex)
         {
             BaseStitch.call(this, imgFile, imgWidth, rowNum);
             this.groupIndex = groupIndex;
-            this.group = group;
         }
 
         IncreaseStitch.prototype = Object.create(BaseStitch.prototype);
@@ -55,22 +54,6 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
             {
                 console.error("Could not find connecting stitch for " + this.toString());
             }
-        };
-
-        //todo: replace this with a render strategy
-        IncreaseStitch.prototype.preRender = function preRender(canvasContext, renderContext, renderPosition)
-        {
-            //there can only be one stitch below for an increase
-            var idOfStitchBelow = this.getStitchesBelow()[0].getId();
-            var connectionXPos = renderContext.stitches[idOfStitchBelow].getXPos();
-
-            console.log(this.toString() + "is sitting above x coordinate " + connectionXPos);
-            renderPosition.x = this.group.calculateRenderXPos(this.groupIndex, this.rowNum, connectionXPos);
-        };
-
-        IncreaseStitch.prototype.renderConnectionLines = function renderConnectionLines(canvasContext, renderContext, renderPosition)
-        {
-            this.group.renderConnectionLines(canvasContext, renderPosition, this.groupIndex, this.getRowNum());
         };
 
         IncreaseStitch.prototype.toString = function toString()

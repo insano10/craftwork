@@ -32,7 +32,6 @@ require.config(
             "baseStitch":        "src/main/webapp/js/crochet/elements/baseStitch",
             "decreaseStitch":    "src/main/webapp/js/crochet/elements/decreaseStitch",
             "increaseStitch":    "src/main/webapp/js/crochet/elements/increaseStitch",
-            "increaseGroup":     "src/main/webapp/js/crochet/elements/increaseGroup",
             "singleStitch":      "src/main/webapp/js/crochet/elements/singleStitch"
         },
 
