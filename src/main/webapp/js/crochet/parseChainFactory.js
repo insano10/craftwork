@@ -62,7 +62,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new SingleStitch("chain.png", 10, 6, context.rowNum));
+                    chartModel.addStitch(new SingleStitch("chain.png", 13, 6, context.rowNum));
                     context.currentRowIndex++;
                 }
                 return true;
