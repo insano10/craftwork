@@ -205,7 +205,24 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             if (lastStitch != null)
             {
                 var angle = renderContext.getRenderedStitchFor(lastStitch).getRenderAngle();
-                console.log("normal stitch, maintaining angle of: " + angle);
+
+                if(lastStitch.getStitchesBelow().length > 1)
+                {
+                    //decrease angle by 10 degrees for each decrease
+                    if(this.rowNum%2 != 0)
+                    {
+                        angle -= (10 * (lastStitch.getStitchesBelow().length - 1));
+                    }
+                    else
+                    {
+                        angle += (10 * (lastStitch.getStitchesBelow().length - 1));
+                    }
+                    console.log("decrease detected, angle is now: " + angle);
+                }
+                else
+                {
+                    console.log("normal stitch, maintaining angle of: " + angle);
+                }
                 return  angle;
             }
             else
