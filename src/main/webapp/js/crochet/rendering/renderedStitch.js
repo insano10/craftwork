@@ -1,10 +1,11 @@
 define(["jquery"], function($)
 {
-    function RenderedStitch(renderPosition, angle, width, height)
+    function RenderedStitch(renderPosition, angle, width, height, rowNum)
     {
         this.xPos = renderPosition.x;
         this.yPos = renderPosition.y;
-        this.angle = angle; //relative to horizontal where + is clockwise and - is anticlockwise
+        this.rowNum = rowNum;
+        this.angle = angle; //relative to horizontal where - is clockwise and + is anticlockwise
         this.width = width;
         this.height = height;
 
@@ -28,7 +29,7 @@ define(["jquery"], function($)
             return this.yPos + (0.5 * this.height);
         };
 
-        this.getAngle = function getAngle()
+        this.getRenderAngle = function getRenderAngle()
         {
             return this.angle;
         };
@@ -42,7 +43,7 @@ define(["jquery"], function($)
         {
             var xOffsetDueToRotation = (this.width * Math.cos(this.angle*Math.PI/180)); //using CAH
             return this.width - xOffsetDueToRotation;
-        }
+        };
     }
 
     return RenderedStitch;

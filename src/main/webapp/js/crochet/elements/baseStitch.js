@@ -96,12 +96,12 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
 
         var renderIcon = function renderIcon(canvasContext, icon, renderedStitch)
         {
-            console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos() + " at angle " + renderedStitch.getAngle());
+            console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos() + " at angle " + renderedStitch.getRenderAngle());
 
             canvasContext.save();
 
             canvasContext.translate(renderedStitch.getXPos(), renderedStitch.getYPos());
-            canvasContext.rotate(renderedStitch.getAngle() * Math.PI / 180);
+            canvasContext.rotate(renderedStitch.getRenderAngle() * Math.PI / 180);
             canvasContext.drawImage(icon, 0, 0);
 
             canvasContext.restore();
@@ -191,29 +191,15 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             return yPos;
         };
 
-        var getAngleOfRotation = function getAngleOfRotation(stitch, renderContext)
+        Stitch.prototype.getAngleOfRotation = function getAngleOfRotation(stitch, renderContext)
         {
-            //todo: this does not work yet :)
             var lastStitch = stitch.getPreviousStitch();
 
             if (lastStitch != null)
             {
-                var angle = renderContext.getRenderedStitchFor(lastStitch).getAngle();
-
-                if(lastStitch.getStitchesBelow().length > 1)
-                {
-                    //increase angle by 10 degrees for each decrease
-                    angle += (10 * (lastStitch.getStitchesBelow().length - 1));
-                    console.log("decrease detected, angle is now: " + angle);
-                }
-                if(lastStitch.getStitchesAbove().length > 1)
-                {
-                    //decrease angle by 10 degrees for each increase
-                    angle -= (10 * (lastStitch.getStitchesAbove().length - 1));
-                    console.log("increase detected, angle is now: " + angle);
-                }
-
-                return angle;
+                var angle = renderContext.getRenderedStitchFor(lastStitch).getRenderAngle();
+                console.log("normal stitch, maintaining angle of: " + angle);
+                return  angle;
             }
             else
             {
@@ -225,9 +211,9 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
         {
             var renderPosition = {x: this.getRenderXPos(renderContext),
                                   y: this.getRenderYPos(renderContext)};
-            var angleOfRotation = getAngleOfRotation(this, renderContext);
+            var angleOfRotation = this.getAngleOfRotation(this, renderContext);
 
-            var renderedStitch = new RenderedStitch(renderPosition, angleOfRotation, this.imgWidth, this.imgHeight);
+            var renderedStitch = new RenderedStitch(renderPosition, angleOfRotation, this.imgWidth, this.imgHeight, this.rowNum);
 
             this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0, renderedStitch);
 
