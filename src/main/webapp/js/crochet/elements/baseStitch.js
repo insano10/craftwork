@@ -100,9 +100,9 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
 
             canvasContext.save();
 
-            canvasContext.translate(renderedStitch.getXPos(), renderedStitch.getYPos());
+            canvasContext.translate(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint());
             canvasContext.rotate(renderedStitch.getRenderAngle() * Math.PI / 180);
-            canvasContext.drawImage(icon, 0, 0);
+            canvasContext.drawImage(icon, renderedStitch.getXRenderPointAfterTranslation(), renderedStitch.getYRenderPointAfterTranslation());
 
             canvasContext.restore();
         };
@@ -185,7 +185,14 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                 else
                 {
                     var yOffsetForAngle = previousRenderInfo.getYRotationLength();
-                    yPos = previousRenderInfo.getYPos() + yOffsetForAngle;
+                    if(this.rowNum%2 != 0)
+                    {
+                        yPos = previousRenderInfo.getYPos() + yOffsetForAngle;
+                    }
+                    else
+                    {
+                        yPos = previousRenderInfo.getYPos() - yOffsetForAngle;
+                    }
                 }
             }
             return yPos;
