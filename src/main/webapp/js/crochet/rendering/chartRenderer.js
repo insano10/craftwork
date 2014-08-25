@@ -23,6 +23,7 @@ define(["renderContext"], function (RenderContext)
                     ctx.oBackingStorePixelRatio ||
                     ctx.backingStorePixelRatio || 1;
 
+            console.log("PIXEL RATIO: " + (dpr / bsr));
             return dpr / bsr;
         };
 
