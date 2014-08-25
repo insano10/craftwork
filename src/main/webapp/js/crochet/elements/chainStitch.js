@@ -1,4 +1,4 @@
-define(["jquery", "singleStitch"], function ($, SingleStitch)
+define(["jquery", "singleStitch", "renderedStitch"], function ($, SingleStitch, RenderedStitch)
 {
    return (function()
     {
@@ -11,11 +11,26 @@ define(["jquery", "singleStitch"], function ($, SingleStitch)
         ChainStitch.prototype.constructor = SingleStitch;
 
 
-        ChainStitch.prototype.notifyStitchAboveRenderingDataUpdated = function notifyStitchAboveRenderingDataUpdated(renderedStitchAbove)
+        ChainStitch.prototype.notifyStitchAboveRenderingDataUpdated = function notifyStitchAboveRenderingDataUpdated(renderedStitchAbove, renderContext)
         {
             if(renderedStitchAbove.getRenderAngle() != 0)
             {
                 console.log("chain stitch is going to be modified as angle above is " + renderedStitchAbove.getRenderAngle());
+
+                var renderPosition =
+                {
+                    x: this.getRenderXPos(renderContext),
+                    y: this.getRenderYPos(renderContext)
+                };
+                var angleOfRotation = renderedStitchAbove.getRenderAngle();
+                var renderedStitch = new RenderedStitch(renderPosition, angleOfRotation, this.imgWidth, this.imgHeight, this.rowNum);
+                renderContext.addRenderedStitch(this.getId(), renderedStitch);
+
+                //update all subsequent stitches as this stitch has changed
+                if (this.nextStitch != null)
+                {
+                    this.nextStitch.populateRenderingData(renderContext, false);
+                }
             }
             else
             {

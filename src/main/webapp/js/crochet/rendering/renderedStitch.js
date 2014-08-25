@@ -8,6 +8,7 @@ define(["jquery"], function($)
         this.angle = angle; //relative to horizontal where - is clockwise and + is anticlockwise
         this.width = width;
         this.height = height;
+        this.halfDiagonalLengthThroughStitch = Math.sqrt(Math.pow(this.height, 2) + Math.pow(this.width, 2)) / 2;
 
         this.getXPos = function getXPos()
         {

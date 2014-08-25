@@ -231,7 +231,7 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             }
         };
 
-        Stitch.prototype.populateRenderingData = function populateRenderingData(renderContext)
+        Stitch.prototype.populateRenderingData = function populateRenderingData(renderContext, notifyStitchesBelow)
         {
             var renderPosition =
             {
@@ -243,14 +243,17 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
 
             renderContext.addRenderedStitch(this.getId(), renderedStitch);
 
-            $.each(this.getStitchesBelow(), function (idx, stitch)
+            if (notifyStitchesBelow)
             {
-                stitch.notifyStitchAboveRenderingDataUpdated(renderedStitch);
-            });
+                $.each(this.getStitchesBelow(), function (idx, stitch)
+                {
+                    stitch.notifyStitchAboveRenderingDataUpdated(renderedStitch, renderContext);
+                });
+            }
 
             if (this.nextStitch != null)
             {
-                this.nextStitch.populateRenderingData(renderContext);
+                this.nextStitch.populateRenderingData(renderContext, notifyStitchesBelow);
             }
         };
 
