@@ -185,7 +185,7 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                 else
                 {
                     var yOffsetForAngle = previousRenderInfo.getYRotationLength();
-                    if(this.rowNum%2 != 0)
+                    if (this.rowNum % 2 != 0)
                     {
                         yPos = previousRenderInfo.getYPos() + yOffsetForAngle;
                     }
@@ -206,10 +206,10 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             {
                 var angle = renderContext.getRenderedStitchFor(lastStitch).getRenderAngle();
 
-                if(lastStitch.getStitchesBelow().length > 1)
+                if (lastStitch.getStitchesBelow().length > 1)
                 {
                     //decrease angle by 10 degrees for each decrease
-                    if(this.rowNum%2 != 0)
+                    if (this.rowNum % 2 != 0)
                     {
                         angle -= (10 * (lastStitch.getStitchesBelow().length - 1));
                     }
@@ -231,18 +231,28 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             }
         };
 
-        Stitch.prototype.render = function render(canvasContext, renderContext)
+        Stitch.prototype.populateRenderingData = function populateRenderingData(renderContext)
         {
-            var renderPosition = {x: this.getRenderXPos(renderContext),
-                                  y: this.getRenderYPos(renderContext)};
+            var renderPosition =
+            {
+                x: this.getRenderXPos(renderContext),
+                y: this.getRenderYPos(renderContext)
+            };
             var angleOfRotation = this.getAngleOfRotation(this, renderContext);
-
             var renderedStitch = new RenderedStitch(renderPosition, angleOfRotation, this.imgWidth, this.imgHeight, this.rowNum);
-
-            this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0, renderedStitch);
 
             renderContext.addRenderedStitch(this.getId(), renderedStitch);
 
+            if (this.nextStitch != null)
+            {
+                this.nextStitch.populateRenderingData(renderContext);
+            }
+        };
+
+        Stitch.prototype.render = function render(canvasContext, renderContext)
+        {
+            var renderedStitch = renderContext.getRenderedStitchFor(this);
+            this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0, renderedStitch);
 
             if (this.nextStitch != null)
             {

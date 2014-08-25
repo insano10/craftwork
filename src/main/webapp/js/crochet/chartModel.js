@@ -30,6 +30,7 @@ define(["jquery"], function($)
 
         this.render = function render(canvasContext, renderContext)
         {
+            headStitch.populateRenderingData(renderContext);
             headStitch.render(canvasContext, renderContext);
         };
     }
