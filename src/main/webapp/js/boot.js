@@ -13,6 +13,7 @@ require(
             "stitchUtils":          "crochet/stitchUtils",
             "baseStitch":           "crochet/elements/baseStitch",
             "singleStitch":         "crochet/elements/singleStitch",
+            "chainStitch":          "crochet/elements/chainStitch",
             "decreaseStitch":       "crochet/elements/decreaseStitch",
             "increaseStitch":       "crochet/elements/increaseStitch"
         }

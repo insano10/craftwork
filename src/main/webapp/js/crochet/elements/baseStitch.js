@@ -243,6 +243,11 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
 
             renderContext.addRenderedStitch(this.getId(), renderedStitch);
 
+            $.each(this.getStitchesBelow(), function (idx, stitch)
+            {
+                stitch.notifyStitchAboveRenderingDataUpdated(renderedStitch);
+            });
+
             if (this.nextStitch != null)
             {
                 this.nextStitch.populateRenderingData(renderContext);
@@ -258,6 +263,11 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             {
                 this.nextStitch.render(canvasContext, renderContext);
             }
+        };
+
+        Stitch.prototype.notifyStitchAboveRenderingDataUpdated = function notifyStitchAboveRenderingDataUpdated(renderedStitchAbove)
+        {
+            //no op by default
         };
 
         Stitch.prototype.toString = function toString()

@@ -1,5 +1,5 @@
-define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitch"],
-    function ($, BaseStitch, SingleStitch, IncreaseStitch, DecreaseStitch)
+define(["jquery", "baseStitch", "singleStitch", "chainStitch", "increaseStitch", "decreaseStitch"],
+    function ($, BaseStitch, SingleStitch, ChainStitch, IncreaseStitch, DecreaseStitch)
 {
     function RowNumberParser(parseChain)
     {
@@ -62,7 +62,7 @@ define(["jquery", "baseStitch", "singleStitch", "increaseStitch", "decreaseStitc
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new SingleStitch("chain.png", 13, 6, context.rowNum));
+                    chartModel.addStitch(new ChainStitch("chain.png", 13, 6, context.rowNum));
                     context.currentRowIndex++;
                 }
                 return true;
