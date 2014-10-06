@@ -187,10 +187,12 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                     var yOffsetForAngle = previousRenderInfo.getYRotationLength();
                     if (this.rowNum % 2 != 0)
                     {
+                        //to the right, angle up
                         yPos = previousRenderInfo.getYPos() + yOffsetForAngle;
                     }
                     else
                     {
+                        //to the left, angle down
                         yPos = previousRenderInfo.getYPos() - yOffsetForAngle;
                     }
                 }
@@ -211,10 +213,12 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                     //decrease angle by 10 degrees for each decrease
                     if (this.rowNum % 2 != 0)
                     {
+                        //to the right
                         angle -= (10 * (lastStitch.getStitchesBelow().length - 1));
                     }
                     else
                     {
+                        //to the left
                         angle += (10 * (lastStitch.getStitchesBelow().length - 1));
                     }
                     console.log("decrease detected, angle is now: " + angle);
@@ -268,9 +272,31 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             }
         };
 
-        Stitch.prototype.notifyStitchAboveRenderingDataUpdated = function notifyStitchAboveRenderingDataUpdated(renderedStitchAbove)
+        Stitch.prototype.notifyStitchAboveRenderingDataUpdated = function notifyStitchAboveRenderingDataUpdated(renderedStitchAbove, renderContext)
         {
-            //no op by default
+            if(renderedStitchAbove.getRenderAngle() != 0)
+            {
+                console.log(this.toString() + " is going to be modified as angle above is " + renderedStitchAbove.getRenderAngle());
+
+                var renderPosition =
+                {
+                    x: this.getRenderXPos(renderContext),
+                    y: this.getRenderYPos(renderContext)
+                };
+                var angleOfRotation = renderedStitchAbove.getRenderAngle();
+                var renderedStitch = new RenderedStitch(renderPosition, angleOfRotation, this.imgWidth, this.imgHeight, this.rowNum);
+                renderContext.addRenderedStitch(this.getId(), renderedStitch);
+
+                //update all subsequent stitches as this stitch has changed
+                if (this.nextStitch != null)
+                {
+                    this.nextStitch.populateRenderingData(renderContext, false);
+                }
+            }
+            else
+            {
+                console.log(this.toString() + " is going to be left alone as angle above is 0");
+            }
         };
 
         Stitch.prototype.toString = function toString()
