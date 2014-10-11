@@ -1,5 +1,5 @@
-define(["jquery", "baseStitch", "singleStitch", "chainStitch", "increaseStitch", "decreaseStitch"],
-    function ($, BaseStitch, SingleStitch, ChainStitch, IncreaseStitch, DecreaseStitch)
+define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", "increaseStitch", "decreaseStitch"],
+    function ($, BaseStitch, SingleStitch, ChainStitch, ChainUpStitch, IncreaseStitch, DecreaseStitch)
 {
     function RowNumberParser(parseChain)
     {
@@ -63,7 +63,6 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "increaseStitch",
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
                     chartModel.addStitch(new ChainStitch("chain.png", 13, 6, context.rowNum));
-                    context.currentRowIndex++;
                 }
                 return true;
             }
@@ -86,7 +85,6 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "increaseStitch",
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
                     chartModel.addStitch(new SingleStitch("sc.png", 13, 13, context.rowNum));
-                    context.currentRowIndex++;
                 }
                 return true;
             }
@@ -110,7 +108,6 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "increaseStitch",
                 {
                     chartModel.addStitch(new IncreaseStitch("sc.png", 13, 13, context.rowNum, stitchNum));
                 }
-                context.currentRowIndex++;
                 return true;
             }
             return false;
@@ -128,14 +125,28 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "increaseStitch",
             if (match != null)
             {
                 var stitchCount = match[1];
+                chartModel.addStitch(new DecreaseStitch(stitchCount, "sc.png", 13, 13, context.rowNum));
+                return true;
+            }
+            return false;
+        }
+    }
 
-                var connectToIndices = [];
+    function ChainUpParser(chartModel)
+    {
+        this.parse = function parse(phrase, context)
+        {
+            // chup 1
+            var chainUpRegex = /^[\s]*chup[\s]*([\d]+)[\s]*$/;
+            var match = chainUpRegex.exec(phrase);
+
+            if(match != null)
+            {
+                var stitchCount = match[1];
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    connectToIndices.push(context.currentRowIndex);
-                    context.currentRowIndex++;
+                    chartModel.addStitch(new ChainUpStitch("chain-up.png", 13, 6, context.rowNum));
                 }
-                chartModel.addStitch(new DecreaseStitch(stitchCount, "sc.png", 13, 13, context.rowNum));
                 return true;
             }
             return false;

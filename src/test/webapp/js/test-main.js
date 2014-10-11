@@ -34,7 +34,8 @@ require.config(
             "decreaseStitch":    "src/main/webapp/js/crochet/elements/decreaseStitch",
             "increaseStitch":    "src/main/webapp/js/crochet/elements/increaseStitch",
             "singleStitch":      "src/main/webapp/js/crochet/elements/singleStitch",
-            "chainStitch":       "src/main/webapp/js/crochet/elements/chainStitch"
+            "chainStitch":       "src/main/webapp/js/crochet/elements/chainStitch",
+            "chainUpStitch":     "src/main/webapp/js/crochet/elements/chainUpStitch"
         },
 
         // dynamically load all test files

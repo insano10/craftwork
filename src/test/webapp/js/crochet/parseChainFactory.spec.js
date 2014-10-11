@@ -14,7 +14,7 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
 
         it("should parse a chain stitch phrase", function ()
         {
-            var context = { rowNum: 0, currentRowIndex: 0 };
+            var context = { rowNum: 0  };
 
             parseChain.parse("row 1: chain 5", context);
 
@@ -23,57 +23,51 @@ define(["jquery", "parseChainFactory", ], function ($, ParseChainFactory)
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
-            expect(context.currentRowIndex).toEqual(5);
         });
 
         it("should parse a single crochet phrase", function ()
         {
-            var context = { rowNum: 4, currentRowIndex: 3 };
+            var context = { rowNum: 4 };
 
             parseChain.parse("row 5: 2sc", context);
 
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 5}));
-            expect(context.currentRowIndex).toEqual(5);
         });
 
-        xit("should parse a single crochet increase phrase", function ()
+        it("should parse a single crochet increase phrase", function ()
         {
-            var context = { rowNum: 1, currentRowIndex: 10 };
+            var context = { rowNum: 1 };
 
             parseChain.parse("row 2: 3 sc in next sc", context);
 
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 2}));
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 2}));
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 2}));
-            expect(context.currentRowIndex).toEqual(11);
         });
 
         it("should parse a single crochet decrease phrase", function ()
         {
-            var context = { rowNum: 62, currentRowIndex: 42 };
+            var context = { rowNum: 62 };
 
             parseChain.parse("row 63: 1sc in next 2sc", context);
 
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 63}));
-            expect(context.currentRowIndex).toEqual(44);
         });
 
         it("should not parse invalid phrase", function ()
         {
-            var context = { rowNum: 0, currentRowIndex: 0 };
+            var context = { rowNum: 0 };
 
             parseChain.parse("this is not a valid phrase", context);
-
-            expect(context.currentRowIndex).toEqual(0);
         });
 
-        xit("should parse phrase containing simple, increase and decrease phrases '2sc in next sc then 2sc then 1sc in next 3sc'", function() {
+        it("should parse phrase containing simple, increase and decrease phrases '2sc in next sc then 2sc then 1sc in next 3sc'", function() {
 
-            var context = { rowNum: 0, currentRowIndex: 0 };
+            var context = { rowNum: 2 };
 
-            parseChain.parse("row 1: 2sc in next sc then 2sc then 1sc in next 3sc", context);
+            parseChain.parse("row 3: 2sc in next sc then 2sc then 1sc in next 3sc", context);
 
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
+            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 3}));
             expect(stubModel.addStitch.callCount).toEqual(5);
         });
 
