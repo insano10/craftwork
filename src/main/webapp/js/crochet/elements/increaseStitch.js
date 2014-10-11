@@ -20,7 +20,7 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
 
             while(candidateStitch != null)
             {
-                if(this.rowNum> candidateStitch.getRowNum())
+                if(this.rowNum > candidateStitch.getRowNum())
                 {
                     //row below this stitch
                     if(this.groupIndex == 0 && candidateStitch.isAvailableForConnection())
