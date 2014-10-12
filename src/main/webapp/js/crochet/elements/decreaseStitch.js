@@ -11,7 +11,7 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
         DecreaseStitch.prototype = Object.create(BaseStitch.prototype);
         DecreaseStitch.prototype.constructor = DecreaseStitch;
 
-        DecreaseStitch.prototype.connectToChain = function connectToChain(chainTail)
+        DecreaseStitch.prototype.connectToRowBelow = function connectToRowBelow(chainTail)
         {
             var candidateStitch = chainTail;
             var connectionsLeftToMake = this.width;

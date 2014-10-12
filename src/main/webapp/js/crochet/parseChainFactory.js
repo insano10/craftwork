@@ -145,7 +145,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
                 var stitchCount = match[1];
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new ChainUpStitch("chain-up.png", 13, 6, context.rowNum));
+                    chartModel.addStitch(new ChainUpStitch("chain-up.png", 6, 13, context.rowNum));
                 }
                 return true;
             }
@@ -177,7 +177,8 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
             var singleCrochetIncreaseParseLink = new ParseLink(new SingleCrochetIncreaseParser(chartModel), null);
             var singleCrochetDecreaseParseLink = new ParseLink(new SingleCrochetDecreaseParser(chartModel), singleCrochetIncreaseParseLink);
             var singleCrochetParseLink = new ParseLink(new SingleCrochetParser(chartModel), singleCrochetDecreaseParseLink);
-            var chainParseLink = new ParseLink(new ChainStitchParser(chartModel), singleCrochetParseLink);
+            var chainUpParseLink = new ParseLink(new ChainUpParser(chartModel), singleCrochetParseLink);
+            var chainParseLink = new ParseLink(new ChainStitchParser(chartModel), chainUpParseLink);
 
             var subPhraseParser = new SubPhraseParser(chainParseLink);
             var rowNumberParser = new RowNumberParser(subPhraseParser);

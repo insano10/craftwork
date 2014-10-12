@@ -22,7 +22,7 @@ define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch,
         it("should chain up 1", function ()
         {
             var stitch = new ChainUpStitch("chain-up.png", 13, 13, 2);
-            stitch.connectToChain(tailOfChain);
+            stitch.connectToRowBelow(tailOfChain);
 
             //chain up does not take a connection from the stitch below
             expect(chain[9].isAvailableForConnection()).toBe(true);
@@ -35,9 +35,9 @@ define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch,
             var stitch = new ChainUpStitch("chain-up.png", 13, 13, 2);
             var stitch2 = new ChainUpStitch("chain-up.png", 13, 13, 2);
             var stitch3 = new ChainUpStitch("chain-up.png", 13, 13, 2);
-            stitch.connectToChain(tailOfChain);
-            stitch2.connectToChain(stitch);
-            stitch3.connectToChain(stitch2);
+            stitch.connectToRowBelow(tailOfChain);
+            stitch2.connectToRowBelow(stitch);
+            stitch3.connectToRowBelow(stitch2);
 
             //chain up does not take a connection from the stitch below
             expect(chain[9].isAvailableForConnection()).toBe(true);
@@ -48,11 +48,11 @@ define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch,
         it("should continue with stitches in first link of row after chain up", function ()
         {
             var chainup = new ChainUpStitch("chain-up.png", 13, 13, 2);
-            chainup.connectToChain(tailOfChain);
+            chainup.connectToRowBelow(tailOfChain);
 
             var stitch = new SingleStitch("sc.png", 13, 13, 2);
-            stitch.connectToChain(chainup);
-
+            stitch.connectToRowBelow(chainup);
+x
             expect(chain[9].isAvailableForConnection()).toBe(false);
             expect(chain[9].getStitchesAbove().length).toEqual(1);
             expect(stitch.getStitchesBelow().length).toEqual(1);

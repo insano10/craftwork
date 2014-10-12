@@ -23,7 +23,7 @@ define(["jquery"], function($)
             else
             {
                 tailStitch.setNextStitch(stitch, rowNum);
-                stitch.connectToChain(tailStitch);
+                stitch.connectToRowBelow(tailStitch);
                 tailStitch = stitch;
             }
         };

@@ -10,7 +10,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
         SingleStitch.prototype = Object.create(BaseStitch.prototype);
         SingleStitch.prototype.constructor = SingleStitch;
 
-        SingleStitch.prototype.connectToChain = function connectToChain(chainTail)
+        SingleStitch.prototype.connectToRowBelow = function connectToRowBelow(chainTail)
         {
             var candidateStitch = chainTail;
 

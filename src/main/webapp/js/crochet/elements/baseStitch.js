@@ -71,7 +71,7 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             return this.stitchesAbove.length == 0;
         };
 
-        Stitch.prototype.connectToChain = function connectToChain(chainTail)
+        Stitch.prototype.connectToRowBelow = function connectToRowBelow(chainTail)
         {
             console.error("Implementation missing!");
         };

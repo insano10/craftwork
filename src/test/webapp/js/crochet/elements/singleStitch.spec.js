@@ -22,7 +22,7 @@ define(["jquery", "singleStitch" ], function ($, SingleStitch)
         it("should connect a stitch", function ()
         {
             var stitch = new SingleStitch("sc.png", 13, 13, 2);
-            stitch.connectToChain(tailOfChain);
+            stitch.connectToRowBelow(tailOfChain);
 
             expect(chain[9].isAvailableForConnection()).toBe(false);
             expect(chain[9].getStitchesAbove().length).toEqual(1);

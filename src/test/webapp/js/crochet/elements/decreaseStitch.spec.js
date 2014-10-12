@@ -23,7 +23,7 @@ define(["jquery", "decreaseStitch", "singleStitch" ], function ($, DecreaseStitc
         {
             var stitch = new DecreaseStitch(3, "sc.png", 13, 13, 2);
 
-            stitch.connectToChain(tailOfChain);
+            stitch.connectToRowBelow(tailOfChain);
 
             expect(chain[9].isAvailableForConnection()).toBe(false);
             expect(chain[8].isAvailableForConnection()).toBe(false);

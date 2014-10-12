@@ -25,9 +25,9 @@ define(["jquery", "increaseStitch", "singleStitch" ], function ($, IncreaseStitc
             var increase2 = new IncreaseStitch("sc.png", 13, 13, 2, 1);
             var increase3 = new IncreaseStitch("sc.png", 13, 13, 2, 2);
 
-            increase1.connectToChain(tailOfChain);
-            increase2.connectToChain(tailOfChain);
-            increase3.connectToChain(tailOfChain);
+            increase1.connectToRowBelow(tailOfChain);
+            increase2.connectToRowBelow(tailOfChain);
+            increase3.connectToRowBelow(tailOfChain);
 
             expect(chain[9].isAvailableForConnection()).toBe(false);
             expect(chain[8].isAvailableForConnection()).toBe(true);

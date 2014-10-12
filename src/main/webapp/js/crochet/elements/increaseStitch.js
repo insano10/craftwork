@@ -14,7 +14,7 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
         IncreaseStitch.prototype = Object.create(BaseStitch.prototype);
         IncreaseStitch.prototype.constructor = IncreaseStitch;
 
-        IncreaseStitch.prototype.connectToChain = function connectToChain(chainTail)
+        IncreaseStitch.prototype.connectToRowBelow = function connectToRowBelow(chainTail)
         {
             var candidateStitch = chainTail;
 
