@@ -1,14 +1,14 @@
-define(["jquery", "singleStitch"], function ($, SingleStitch)
+define(["jquery", "baseStitch"], function ($, BaseStitch)
 {
    return (function()
     {
-        function ChainUpStitch(imgFile, imgWidth, imgHeight, rowNum)
+        function ChainUpStitch(rowNum)
         {
-            SingleStitch.call(this, imgFile, imgWidth, imgHeight, rowNum, (2*imgHeight/3));
+            BaseStitch.call(this, "chain-up.png", 6, 13, rowNum, 8);
         }
 
-        ChainUpStitch.prototype = Object.create(SingleStitch.prototype);
-        ChainUpStitch.prototype.constructor = SingleStitch;
+        ChainUpStitch.prototype = Object.create(BaseStitch.prototype);
+        ChainUpStitch.prototype.constructor = ChainUpStitch;
 
         ChainUpStitch.prototype.isAvailableForConnection = function isAvailableForConnection()
         {

@@ -5,9 +5,9 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
         /*
             Increase stitch is a stitch attached to the same lower stitch as another
          */
-        function IncreaseStitch(imgFile, imgWidth, imgHeight, rowNum, groupIndex)
+        function IncreaseStitch(rowNum, groupIndex)
         {
-            BaseStitch.call(this, imgFile, imgWidth, imgHeight, rowNum, 0);
+            BaseStitch.call(this, "sc.png", 13, 13, rowNum, 0);
             this.groupIndex = groupIndex;
         }
 

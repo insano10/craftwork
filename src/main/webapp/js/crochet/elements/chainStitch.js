@@ -1,14 +1,14 @@
-define(["jquery", "singleStitch", "renderedStitch"], function ($, SingleStitch, RenderedStitch)
+define(["jquery", "baseStitch", "renderedStitch"], function ($, BaseStitch, RenderedStitch)
 {
    return (function()
     {
-        function ChainStitch(imgFile, imgWidth, imgHeight, rowNum)
+        function ChainStitch(rowNum)
         {
-            SingleStitch.call(this, imgFile, imgWidth, imgHeight, rowNum, 0);
+            BaseStitch.call(this, "chain.png", 13, 6, rowNum, 0);
         }
 
-        ChainStitch.prototype = Object.create(SingleStitch.prototype);
-        ChainStitch.prototype.constructor = SingleStitch;
+        ChainStitch.prototype = Object.create(BaseStitch.prototype);
+        ChainStitch.prototype.constructor = ChainStitch;
 
         ChainStitch.prototype.notifyStitchAboveRenderingDataUpdated = function notifyStitchAboveRenderingDataUpdated(renderedStitchAbove, renderContext)
         {

@@ -18,16 +18,16 @@ define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch,
         {
             //create a chain of 10 sc
             chain = [];
-            chain.push(new SingleStitch("sc.png", 13, 13, 1));
+            chain.push(new SingleStitch(1));
             for(var i = 1; i<10 ; i++)
             {
-                addStitchToChain(new SingleStitch("sc.png", 13, 13, 1), chain);
+                addStitchToChain(new SingleStitch(1), chain);
             }
         });
 
         it("should chain up 1", function ()
         {
-            var stitch = new ChainUpStitch("chain-up.png", 13, 13, 1);
+            var stitch = new ChainUpStitch(1);
             addStitchToChain(stitch, chain);
 
             //chain up does not take a connection from the stitch below
@@ -38,9 +38,9 @@ define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch,
 
         it("should chain up 3", function ()
         {
-            var stitch = new ChainUpStitch("chain-up.png", 13, 13, 1);
-            var stitch2 = new ChainUpStitch("chain-up.png", 13, 13, 1);
-            var stitch3 = new ChainUpStitch("chain-up.png", 13, 13, 1);
+            var stitch = new ChainUpStitch(1);
+            var stitch2 = new ChainUpStitch(1);
+            var stitch3 = new ChainUpStitch(1);
             addStitchToChain(stitch, chain);
             addStitchToChain(stitch2, chain);
             addStitchToChain(stitch3, chain);
@@ -55,10 +55,10 @@ define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch,
 
         it("should continue with stitches in first link of row after chain up", function ()
         {
-            var chainup = new ChainUpStitch("chain-up.png", 13, 13, 1);
+            var chainup = new ChainUpStitch(1);
             addStitchToChain(chainup, chain);
 
-            var stitch = new SingleStitch("sc.png", 13, 13, 2);
+            var stitch = new SingleStitch(2);
             addStitchToChain(stitch, chain);
 
             expect(chain[9].isAvailableForConnection()).toBe(false);

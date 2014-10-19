@@ -62,7 +62,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new ChainStitch("chain.png", 13, 6, context.rowNum));
+                    chartModel.addStitch(new ChainStitch(context.rowNum));
                 }
                 return true;
             }
@@ -84,7 +84,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new SingleStitch("sc.png", 13, 13, context.rowNum, 0));
+                    chartModel.addStitch(new SingleStitch(context.rowNum, 0));
                 }
                 return true;
             }
@@ -106,7 +106,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
 
                 for (var stitchNum = 0; stitchNum < stitchCount; stitchNum++)
                 {
-                    chartModel.addStitch(new IncreaseStitch("sc.png", 13, 13, context.rowNum, stitchNum));
+                    chartModel.addStitch(new IncreaseStitch(context.rowNum, stitchNum));
                 }
                 return true;
             }
@@ -125,7 +125,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
             if (match != null)
             {
                 var stitchCount = match[1];
-                chartModel.addStitch(new DecreaseStitch(stitchCount, "sc.png", 13, 13, context.rowNum));
+                chartModel.addStitch(new DecreaseStitch(stitchCount, context.rowNum));
                 return true;
             }
             return false;
@@ -145,7 +145,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
                 var stitchCount = match[1];
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new ChainUpStitch("chain-up.png", 6, 13, context.rowNum));
+                    chartModel.addStitch(new ChainUpStitch(context.rowNum));
                 }
                 return true;
             }
