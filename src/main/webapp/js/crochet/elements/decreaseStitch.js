@@ -4,7 +4,7 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
     {
         function DecreaseStitch(width, imgFile, imgWidth, imgHeight, rowNum)
         {
-            BaseStitch.call(this, imgFile, imgWidth, imgHeight, rowNum);
+            BaseStitch.call(this, imgFile, imgWidth, imgHeight, rowNum, 0);
             this.width = width;
         }
 

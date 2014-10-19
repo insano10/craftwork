@@ -1,6 +1,6 @@
 define(["jquery"], function($)
 {
-    function RenderedStitch(renderPosition, angle, width, height, rowNum)
+    function RenderedStitch(renderPosition, angle, width, height, rowNum, renderYOffset)
     {
         this.xPos = renderPosition.x;
         this.yPos = renderPosition.y;
@@ -8,7 +8,7 @@ define(["jquery"], function($)
         this.angle = angle; //relative to horizontal where - is clockwise and + is anticlockwise
         this.width = width;
         this.height = height;
-        this.halfDiagonalLengthThroughStitch = Math.sqrt(Math.pow(this.height, 2) + Math.pow(this.width, 2)) / 2;
+        this.renderYOffset = renderYOffset;
 
         this.getXPos = function getXPos()
         {
@@ -92,6 +92,11 @@ define(["jquery"], function($)
             {
                 return this.getYRotationLength();
             }
+        };
+
+        this.getRenderYOffset = function getRenderYOffset()
+        {
+            return this.renderYOffset;
         }
     }
 

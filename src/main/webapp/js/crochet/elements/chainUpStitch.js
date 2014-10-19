@@ -4,7 +4,7 @@ define(["jquery", "singleStitch"], function ($, SingleStitch)
     {
         function ChainUpStitch(imgFile, imgWidth, imgHeight, rowNum)
         {
-            SingleStitch.call(this, imgFile, imgWidth, imgHeight, rowNum);
+            SingleStitch.call(this, imgFile, imgWidth, imgHeight, rowNum, (2*imgHeight/3));
         }
 
         ChainUpStitch.prototype = Object.create(SingleStitch.prototype);
@@ -21,6 +21,11 @@ define(["jquery", "singleStitch"], function ($, SingleStitch)
             //no op
             //chain up does not count towards connections in the mesh and are only a means of
             //extending upwards at the end of a row
+        };
+
+        ChainUpStitch.prototype.renderRelativeTo = function renderRelativeTo()
+        {
+            return false;
         };
 
         ChainUpStitch.prototype.toString = function toString()

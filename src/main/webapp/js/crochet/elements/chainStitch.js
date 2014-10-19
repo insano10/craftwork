@@ -4,7 +4,7 @@ define(["jquery", "singleStitch", "renderedStitch"], function ($, SingleStitch, 
     {
         function ChainStitch(imgFile, imgWidth, imgHeight, rowNum)
         {
-            SingleStitch.call(this, imgFile, imgWidth, imgHeight, rowNum);
+            SingleStitch.call(this, imgFile, imgWidth, imgHeight, rowNum, 0);
         }
 
         ChainStitch.prototype = Object.create(SingleStitch.prototype);

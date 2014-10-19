@@ -7,7 +7,7 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
          */
         function IncreaseStitch(imgFile, imgWidth, imgHeight, rowNum, groupIndex)
         {
-            BaseStitch.call(this, imgFile, imgWidth, imgHeight, rowNum);
+            BaseStitch.call(this, imgFile, imgWidth, imgHeight, rowNum, 0);
             this.groupIndex = groupIndex;
         }
 
