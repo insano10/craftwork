@@ -75,21 +75,24 @@ define(["renderContext"], function (RenderContext)
 
         this.renderModel = function renderModel(model)
         {
-            var chartCanvas = document.getElementById("chart-canvas");
-            var ctx = chartCanvas.getContext("2d");
+            if(model.requiresRender())
+            {
+                var chartCanvas = document.getElementById("chart-canvas");
+                var ctx = chartCanvas.getContext("2d");
 
-            ctx.save();
-            ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+                ctx.save();
+                ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-            var renderContext = new RenderContext(50, MAX_Y_POS - 100);
+                var renderContext = new RenderContext(50, MAX_Y_POS - 100);
 
-            renderStartArrow(ctx, renderContext);
+                renderStartArrow(ctx, renderContext);
 
-            model.render(ctx, renderContext);
+                model.render(ctx, renderContext);
 
-            renderEndArrow(ctx, renderContext);
+                renderEndArrow(ctx, renderContext);
 
-            ctx.restore();
+                ctx.restore();
+            }
         };
     }
 

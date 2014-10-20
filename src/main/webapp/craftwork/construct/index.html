@@ -3,10 +3,14 @@
     <head>
         <title>Craftwork</title>
 
-        <link href="../../js/lib/bootstrap-3.1.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../css/craftwork.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../js/lib/bootstrap-3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../js/lib/jquery-textcomplete/jquery.textcomplete.css">
+        <link rel="stylesheet" href="../../css/craftwork.css">
 
-        <script src="../../js/lib/requirejs-2.1.14.min.js" data-main="../../js/boot.js"></script>
+        <script type='text/javascript' src="../../js/lib/jquery-2.1.0.min.js"></script>
+        <script type='text/javascript' src="../../js/lib/requirejs-2.1.14.min.js" data-main="../../js/boot.js"></script>
+        <script src="http://yuku-t.com/jquery-overlay/jquery.overlay.js"></script>
+        <script type='text/javascript' src="../../js/lib/jquery-textcomplete/jquery.textcomplete.old.js"></script>
 
     </head>
     <body class="body">
@@ -18,7 +22,12 @@
         <div class="spacer"></div>
         <div class="main-content-div">
             <label for="instructions">Instructions</label>
-            <textarea id="instructions"></textarea>
+            <textarea id="instructions" spellcheck="false"></textarea>
         </div>
+
+        <!--
+        uncomment this for suggestive entry, but there's a bug atm and the old version (without the bug) looks quite bad
+        <script type="application/javascript" src="../../js/framework/instructionEntry.js"></script>
+        -->
     </body>
 </html>

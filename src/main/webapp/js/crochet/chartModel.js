@@ -30,9 +30,17 @@ define(["jquery"], function($)
 
         this.render = function render(canvasContext, renderContext)
         {
-            headStitch.populateRenderingData(renderContext, true);
-            headStitch.render(canvasContext, renderContext);
+            if(headStitch != null)
+            {
+                headStitch.populateRenderingData(renderContext, true);
+                headStitch.render(canvasContext, renderContext);
+            }
         };
+
+        this.requiresRender = function requiresRender()
+        {
+            return headStitch != null;
+        }
     }
 
     return ChartModel;

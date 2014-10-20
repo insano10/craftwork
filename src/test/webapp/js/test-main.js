@@ -1,5 +1,5 @@
 var allTestFiles = [];
-var TEST_REGEXP = /(spec|test)\.js$/i;
+var TEST_REGEXP = /src\/test\/webapp\/js\/.*(spec|test)\.js$/i;
 
 var pathToModule = function (path)
 {
