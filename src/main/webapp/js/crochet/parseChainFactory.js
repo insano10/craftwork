@@ -53,7 +53,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
         this.parse = function parse(phrase, context)
         {
             // chain 10
-            var chainRegex = /^[\s]*[C|c]hain[\s]+([\d]+)[\s]*$/;
+            var chainRegex = /^[\s]*[C|c]hain[\s]*([\d]+)[\s]*$/;
             var match = chainRegex.exec(phrase);
 
             if (match != null)
