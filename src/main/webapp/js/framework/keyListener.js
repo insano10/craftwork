@@ -1,12 +1,12 @@
-define(["jquery"], function($)
+define(["jquery"], function ($)
 {
     function KeyListener(jquery)
     {
         var listeners = [];
 
-        var notifyListeners = function()
+        var notifyListeners = function ()
         {
-            $.each(listeners, function(idx, listener)
+            $.each(listeners, function (idx, listener)
             {
                 listener.notifyNewInstructionCharacter();
             });
@@ -16,12 +16,12 @@ define(["jquery"], function($)
         {
             var instructionLines = $("#instructions").val().split("\n");
 
-            if(instructionLines != null)
+            if (instructionLines != null)
             {
                 var rowNumbersDiv = $("#row-numbers");
 
                 rowNumbersDiv.html("");
-                for(var i=1 ; i<=instructionLines.length+1 ; i++)
+                for (var i = 1; i <= instructionLines.length + 1; i++)
                 {
                     rowNumbersDiv.append("<p>row " + i + ":</p>");
                 }
@@ -41,26 +41,35 @@ define(["jquery"], function($)
         this.onKeyDown = function onKeyDown(event)
         {
             //certain key presses are not detected by onKeyPressed but are by onKeyDown
-            if(event.which == 8)
+            if (event.which == 8)
             {
                 //backspace
                 notifyListeners();
             }
-            else if(event.which == 90 && event.ctrlKey && event.shiftKey)
+            else if (event.which == 90 && event.ctrlKey && event.shiftKey)
             {
                 //ctrl+shift+z - redo
                 notifyListeners();
             }
-            else if(event.which == 90 && event.ctrlKey && !event.shiftKey)
+            else if (event.which == 90 && event.ctrlKey && !event.shiftKey)
             {
                 //ctrl+x - undo
                 notifyListeners();
             }
-            else if(event.which == 13)
+            else if (event.which == 13)
             {
                 //enter
                 refreshRowNumbers();
             }
+
+//            if ((event.which == 8) ||                                           //backspace
+//                (event.which == 90 && event.ctrlKey && event.shiftKey) ||       //ctrl+shift+z - redo
+//                (event.which == 90 && event.ctrlKey && !event.shiftKey) ||      //ctrl+x - undo
+//                (event.which == 13))                                            //enter
+//            {
+//                notifyListeners();
+//                refreshRowNumbers();
+//            }
         };
     }
 

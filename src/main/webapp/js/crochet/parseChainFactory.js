@@ -1,28 +1,6 @@
 define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", "increaseStitch", "decreaseStitch"],
     function ($, BaseStitch, SingleStitch, ChainStitch, ChainUpStitch, IncreaseStitch, DecreaseStitch)
 {
-    function RowNumberParser(parseChain)
-    {
-        this.parse = function parse(phrase, context)
-        {
-            //Row 1:
-            var rowRegex = /[R|r]ow[\s]+([\d]+)[\s]*:(.*)/;
-            var match = rowRegex.exec(phrase);
-
-            if (match != null)
-            {
-                var rowNum = parseInt(match[1]);
-                var restOfLine = match[2];
-
-                context.rowNum = rowNum;
-                parseChain.parse(restOfLine, context);
-            }
-            else
-            {
-                console.error("Could not find row number in: " + phrase);
-            }
-        }
-    }
 
     function SubPhraseParser(parseChain)
     {
@@ -181,9 +159,8 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
             var chainParseLink = new ParseLink(new ChainStitchParser(chartModel), chainUpParseLink);
 
             var subPhraseParser = new SubPhraseParser(chainParseLink);
-            var rowNumberParser = new RowNumberParser(subPhraseParser);
 
-            return rowNumberParser;
+            return subPhraseParser;
         }
     }
 

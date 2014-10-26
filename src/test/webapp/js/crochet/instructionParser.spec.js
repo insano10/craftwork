@@ -16,7 +16,7 @@ define(["jquery", "parseChainFactory", "instructionParser"], function($, ParseCh
 
         it("should parse multiple valid lines", function() {
 
-            parser.parseInstructions(["row 1: 2 sc", "row 2: 1 sc"]);
+            parser.parseInstructions(["2 sc", "1 sc"]);
 
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
@@ -25,7 +25,7 @@ define(["jquery", "parseChainFactory", "instructionParser"], function($, ParseCh
 
         it("should parse multiple valid lines and ignore invalid ones", function() {
 
-            parser.parseInstructions(["row 1: chain 2", "row 2: invalid", " row 3: 2sc"]);
+            parser.parseInstructions(["chain 2", "invalid", " 2sc"]);
 
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
             expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));

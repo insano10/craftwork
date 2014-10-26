@@ -2,9 +2,9 @@ define(["jquery"], function($)
 {
     function InstructionParser(chartModel, chartRenderer, parseChain)
     {
-        var parse = function parse(line)
+        var parse = function parse(line, rowNumber)
         {
-            var context = { rowNum: 0 };
+            var context = { rowNum: rowNumber };
             parseChain.parse(line, context);
         };
 
@@ -16,7 +16,7 @@ define(["jquery"], function($)
             {
                 if(line)
                 {
-                    parse(line);
+                    parse(line, idx+1);
                 }
             });
 
