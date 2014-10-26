@@ -38,8 +38,14 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                     {
                         keyListener.onKeyDown(event);
 
+                    },
+                    scroll: function()
+                    {
+                        $('#row-numbers').scrollTop($(this).scrollTop());
                     }
                 });
+
+                $("#row-numbers").append("<p>row 1:</p>");
             })
         };
 

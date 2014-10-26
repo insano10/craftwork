@@ -12,6 +12,21 @@ define(["jquery"], function($)
             });
         };
 
+        var refreshRowNumbers = function refreshRowNumbers()
+        {
+            var instructionLines = $("#instructions").val().split("\n");
+
+            if(instructionLines != null)
+            {
+                var rowNumbersDiv = $("#row-numbers");
+
+                rowNumbersDiv.html("");
+                for(var i=1 ; i<=instructionLines.length+1 ; i++)
+                {
+                    rowNumbersDiv.append("<p>row " + i + ":</p>");
+                }
+            }
+        };
 
         this.addListener = function addListener(listener)
         {
@@ -40,6 +55,11 @@ define(["jquery"], function($)
             {
                 //ctrl+x - undo
                 notifyListeners();
+            }
+            else if(event.which == 13)
+            {
+                //enter
+                refreshRowNumbers();
             }
         };
     }
