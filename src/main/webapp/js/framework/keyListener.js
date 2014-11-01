@@ -25,24 +25,10 @@ define(["jquery"], function ($)
         this.onKeyDown = function onKeyDown(event)
         {
             //certain key presses are not detected by onKeyPressed but are by onKeyDown
-            if (event.which == 8)
+            if ((event.which == 8) ||                                           //backspace
+                (event.which == 90 && event.ctrlKey && event.shiftKey) ||       //ctrl+shift+z - redo
+                (event.which == 90 && event.ctrlKey && !event.shiftKey))        //ctrl+x - undo
             {
-                //backspace
-                notifyListeners();
-            }
-            else if (event.which == 90 && event.ctrlKey && event.shiftKey)
-            {
-                //ctrl+shift+z - redo
-                notifyListeners();
-            }
-            else if (event.which == 90 && event.ctrlKey && !event.shiftKey)
-            {
-                //ctrl+x - undo
-                notifyListeners();
-            }
-            else if (event.which == 13)
-            {
-                //enter
                 notifyListeners();
             }
         };
