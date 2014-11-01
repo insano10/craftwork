@@ -12,7 +12,7 @@ define(["jquery"], function($)
             instructionParser.parseInstructions(instructionLines);
         };
 
-        this.notifyNewInstructionCharacter = function notifyNewInstructionCharacter()
+        this.notifyInstructionsUpdated = function notifyInstructionsUpdated()
         {
             if(evaluationTimer != null)
             {

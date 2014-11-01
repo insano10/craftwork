@@ -8,24 +8,8 @@ define(["jquery"], function ($)
         {
             $.each(listeners, function (idx, listener)
             {
-                listener.notifyNewInstructionCharacter();
+                listener.notifyInstructionsUpdated();
             });
-        };
-
-        var refreshRowNumbers = function refreshRowNumbers()
-        {
-            var instructionLines = $("#instructions").val().split("\n");
-
-            if (instructionLines != null)
-            {
-                var rowNumbersDiv = $("#row-numbers");
-
-                rowNumbersDiv.html("");
-                for (var i = 1; i <= instructionLines.length + 1; i++)
-                {
-                    rowNumbersDiv.append("<p>row " + i + ":</p>");
-                }
-            }
         };
 
         this.addListener = function addListener(listener)
@@ -59,17 +43,8 @@ define(["jquery"], function ($)
             else if (event.which == 13)
             {
                 //enter
-                refreshRowNumbers();
+                notifyListeners();
             }
-
-//            if ((event.which == 8) ||                                           //backspace
-//                (event.which == 90 && event.ctrlKey && event.shiftKey) ||       //ctrl+shift+z - redo
-//                (event.which == 90 && event.ctrlKey && !event.shiftKey) ||      //ctrl+x - undo
-//                (event.which == 13))                                            //enter
-//            {
-//                notifyListeners();
-//                refreshRowNumbers();
-//            }
         };
     }
 

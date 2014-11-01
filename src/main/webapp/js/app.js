@@ -2,8 +2,8 @@
  This is the main app entry point from boot.js (loaded by require.js)
  */
 
-define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator"],
-    function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator)
+define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser"],
+    function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator, RowNumberSynchroniser)
     {
         var toggleLogging = function toggleLogging()
         {
@@ -35,9 +35,11 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 var parseChain = new ParseChainFactory().createParseChain(chartModel);
                 var instructionParser = new InstructionParser(chartModel, chartRenderer, parseChain);
                 var instructionEvaluator = new InstructionEvaluator(instructionParser);
+                var rowNumberSynchroniser = new RowNumberSynchroniser();
 
                 chartRenderer.initialiseCanvas();
                 keyListener.addListener(instructionEvaluator);
+                keyListener.addListener(rowNumberSynchroniser);
 
                 $("#instructions").bind({
                     keypress: function (event)

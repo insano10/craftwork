@@ -4,6 +4,7 @@ require(
             "jquery":               "requireJQuery",
             "keyListener":          "framework/keyListener",
             "instructionEvaluator": "framework/instructionEvaluator",
+            "rowNumberSynchroniser":"framework/rowNumberSynchroniser",
             "chartRenderer":        "crochet/rendering/chartRenderer",
             "renderedStitch":       "crochet/rendering/renderedStitch",
             "renderContext":        "crochet/rendering/renderContext",
