@@ -8,11 +8,15 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
         var toggleLogging = function toggleLogging()
         {
             var DEBUG = false; //turn this to true to enable console logging
-            if(!DEBUG){
-                if(!window.console) window.console = {};
+            if (!DEBUG)
+            {
+                if (!window.console) window.console = {};
                 var methods = ["log", "debug", "warn", "info"];
-                for(var i=0;i<methods.length;i++){
-                    console[methods[i]] = function(){};
+                for (var i = 0; i < methods.length; i++)
+                {
+                    console[methods[i]] = function ()
+                    {
+                    };
                 }
             }
         };
@@ -36,24 +40,24 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 keyListener.addListener(instructionEvaluator);
 
                 $("#instructions").bind({
-                    keypress:  function (event)
+                    keypress: function (event)
                     {
                         keyListener.onKeyPressed(event);
                     },
-                    paste: function (event)
+                    paste:    function (event)
                     {
                         keyListener.onKeyPressed(event);
                     },
-                    cut:   function (event)
+                    cut:      function (event)
                     {
                         keyListener.onKeyPressed(event);
                     },
-                    keydown: function(event)
+                    keydown:  function (event)
                     {
                         keyListener.onKeyDown(event);
 
                     },
-                    scroll: function()
+                    scroll:   function ()
                     {
                         $('#row-numbers').scrollTop($(this).scrollTop());
                     }
