@@ -5,11 +5,25 @@
 define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator"],
     function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator)
     {
+        var toggleLogging = function toggleLogging()
+        {
+            var DEBUG = false; //turn this to true to enable console logging
+            if(!DEBUG){
+                if(!window.console) window.console = {};
+                var methods = ["log", "debug", "warn", "info"];
+                for(var i=0;i<methods.length;i++){
+                    console[methods[i]] = function(){};
+                }
+            }
+        };
+
         var start = function ()
         {
             $(document).ready(function ()
             {
                 console.log("Initializing!");
+
+                toggleLogging();
 
                 var chartRenderer = new ChartRenderer();
                 var chartModel = new ChartModel();

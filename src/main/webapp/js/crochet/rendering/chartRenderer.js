@@ -2,6 +2,8 @@ define(["renderContext"], function (RenderContext)
 {
     function ChartRenderer()
     {
+        var START_X_OFFSET = 70;
+        var START_Y_OFFSET = -100;
         var MAX_X_POS = 0;
         var MAX_Y_POS = 0;
 
@@ -83,7 +85,7 @@ define(["renderContext"], function (RenderContext)
                 ctx.save();
                 ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-                var renderContext = new RenderContext(50, MAX_Y_POS - 100);
+                var renderContext = new RenderContext(START_X_OFFSET, MAX_Y_POS + START_Y_OFFSET);
 
                 renderStartArrow(ctx, renderContext);
 

@@ -97,6 +97,16 @@ define(["jquery"], function($)
         this.getRenderYOffset = function getRenderYOffset()
         {
             return this.renderYOffset;
+        };
+
+        this.getRowNum = function getRowNum()
+        {
+            return this.rowNum;
+        };
+
+        this.getHeight = function getHeight()
+        {
+            return this.height;
         }
     }
 
