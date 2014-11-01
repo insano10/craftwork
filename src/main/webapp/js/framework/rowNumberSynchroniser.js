@@ -2,7 +2,8 @@ define(["jquery"], function ($)
 {
     function RowNumberSynchroniser()
     {
-        var EVALUATION_DELAY_MS = 0; //evaluation just needs to be deferred until the next loop to handle copy/paste operations
+        //evaluation just needs to be deferred until the next event tick to ensure the instructions have finished being written to textArea.val
+        var EVALUATION_DELAY_MS = 0;
         var evaluationTimer;
 
         var updateRowNumbers = function updateRowNumbers()
