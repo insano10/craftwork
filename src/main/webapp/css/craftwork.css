@@ -3,6 +3,11 @@
     background-color: #f3f5f7
 }
 
+#header-panel
+{
+    min-height: 55px;
+}
+
 .spacer
 {
     height: 20px;

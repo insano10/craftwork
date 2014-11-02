@@ -9,8 +9,125 @@
         <script type='text/javascript' src="../../js/lib/jquery-2.1.0.min.js"></script>
         <script type='text/javascript' src="../../js/lib/requirejs-2.1.14.min.js" data-main="../../js/boot.js"></script>
 
+        <script type="text/javascript">
+            (function() {
+                var po = document.createElement('script');
+                po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://plus.google.com/js/client:plusone.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(po, s);
+            })();
+
+            function onSignInCallback(authResult) {
+
+                console.log("onSignInCallback");
+
+                delete authResult['g-oauth-window']; // <- need this to avoid SecurityError but is it correct?
+                $('#authResult').html('Auth Result:<br/>');
+                for (var field in authResult) {
+                    $('#authResult').append(' ' + field + ': ' + authResult[field] + '<br/>');
+                }
+                if (authResult['access_token']) {
+                    // The user is signed in
+                    this.authResult = authResult;
+                    connectServer();
+                    // After we load the Google+ API, render the profile data from Google+.
+                    gapi.client.load('plus','v1',this.renderProfile);
+                } else if (authResult['error']) {
+                    // There was an error, which means the user is not signed in.
+                    // As an example, you can troubleshoot by writing to the console:
+                    console.log('There was an error: ' + authResult['error']);
+                    $('#authResult').append('Logged out');
+                    $('.post-login').hide();
+                    $('#login-button').show();
+                }
+                console.log('authResult', authResult);
+            }
+
+            function connectServer()
+            {
+                console.log("connectToServer");
+                console.log(this.authResult.code);
+                $.ajax({
+                    type: 'POST',
+                    url: window.location.href + 'connect?state={{ STATE }}',
+                    contentType: 'application/octet-stream; charset=utf-8',
+                    success: function(result) {
+                        console.log(result);
+                        $('#login-button').hide();
+                        $('#logout-button-panel').empty();
+                        $('#logout-button-panel').append("<button id='logout-button' onclick='disconnectServer()'>Logout</button>");
+                        $(".post-login").show();
+                    },
+                    processData: false,
+                    data: this.authResult.code
+                });
+            }
+
+            function renderProfile()
+            {
+                console.log("renderProfile");
+                var request = gapi.client.plus.people.get( {'userId' : 'me'} );
+                request.execute( function(profile) {
+                    $('#user-profile').empty();
+                    if (profile.error) {
+                        $('#user-profile').append(profile.error);
+                        return;
+                    }
+                    $('#user-profile').append($('<img src=\"' + profile.image.url + '\">'));
+                    $('#user-profile').append($('<span>&nbsp;' + profile.displayName + '</span>'));
+
+                });
+            }
+
+            function disconnectServer()
+            {
+                // Revoke the server tokens
+                $.ajax({
+                    type: 'POST',
+                    url: window.location.href + 'disconnect',
+                    async: false,
+                    success: function(result) {
+                        console.log('revoke response: ' + result);
+                        $('.post-login').hide();
+                        $('#user-profile').empty();
+                        $('#visiblePeople').empty();
+                        $('#authResult').empty();
+                        $('#login-button').show();
+                    },
+                    error: function(e) {
+                        console.log(e);
+                    }
+                });
+            }
+
+        </script>
+
     </head>
     <body class="body">
+
+        <div id="header-panel" class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div id="login-panel" class="row">
+                    <div id="login-button" class="col-md-3">
+                        <button class="g-signin"
+                                data-scope="profile"
+                                data-clientId="167961214562-grbr91oci2183eqd580k8r7vvfsqmvsi.apps.googleusercontent.com"
+                                data-accesstype="offline"
+                                data-callback="onSignInCallback"
+                                data-cookiepolicy="single_host_origin">
+                        </button>
+                    </div>
+                    <div class="col-md-6 post-login">
+                        <div id="user-profile"></div>
+                    </div>
+                    <div class="col-md-3 post-login">
+                        <div id="logout-button-panel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="spacer"></div>
 

@@ -6,12 +6,23 @@
         version="2.5">
 
     <servlet>
-        <servlet-name>ConstructionServlet</servlet-name>
-        <servlet-class>com.insano10.craftwork.servlets.ConstructionServlet</servlet-class>
+        <servlet-name>ConnectionServlet</servlet-name>
+        <servlet-class>com.insano10.craftwork.servlets.ConnectionServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DisconnectionServlet</servlet-name>
+        <servlet-class>com.insano10.craftwork.servlets.DisconnectionServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ConstructionServlet</servlet-name>
-        <url-pattern>/construct/*</url-pattern>
+        <servlet-name>ConnectionServlet</servlet-name>
+        <url-pattern>/craftwork/construct/connect</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DisconnectionServlet</servlet-name>
+        <url-pattern>/craftwork/construct/disconnect</url-pattern>
+    </servlet-mapping>
+
 </web-app>
