@@ -55,8 +55,8 @@
                     success: function(result) {
                         console.log(result);
                         $('#login-button').hide();
-                        $('#logout-button-panel').empty();
-                        $('#logout-button-panel').append("<button id='logout-button' onclick='disconnectServer()'>Logout</button>");
+                        $('#logout-button').empty();
+                        $('#logout-button').append("<button id='logout-button' onclick='disconnectServer()'>Logout</button>");
                         $(".post-login").show();
                     },
                     processData: false,
@@ -69,13 +69,23 @@
                 console.log("renderProfile");
                 var request = gapi.client.plus.people.get( {'userId' : 'me'} );
                 request.execute( function(profile) {
-                    $('#user-profile').empty();
+
+                    var userProfile = $('#user-profile');
+
+                    userProfile.empty();
                     if (profile.error) {
                         $('#user-profile').append(profile.error);
                         return;
                     }
-                    $('#user-profile').append($('<img src=\"' + profile.image.url + '\">'));
-                    $('#user-profile').append($('<span>&nbsp;' + profile.displayName + '</span>'));
+
+                    userProfile.append('' +
+                            '<a href="#" title="Access your profile">' +
+                                '<span>' +
+                                    '<img height="30" width="30" src="' + profile.image.url+ '" alt="' + profile.displayName + '" title="' + profile.displayName + '">' +
+                                '</span>' +
+                                '<span id="profile-name">' + profile.displayName + '' +
+                                '</span>' +
+                            '</a>');
 
                 });
             }
@@ -91,6 +101,7 @@
                         console.log('revoke response: ' + result);
                         $('.post-login').hide();
                         $('#user-profile').empty();
+                        $('#logout-button').empty();
                         $('#visiblePeople').empty();
                         $('#authResult').empty();
                         $('#login-button').show();
@@ -107,25 +118,18 @@
     <body class="body">
 
         <div id="header-panel" class="row">
-            <div class="col-md-8"></div>
-            <div class="col-md-4">
-                <div id="login-panel" class="row">
-                    <div id="login-button" class="col-md-3">
-                        <button class="g-signin"
-                                data-scope="profile"
-                                data-clientId="167961214562-grbr91oci2183eqd580k8r7vvfsqmvsi.apps.googleusercontent.com"
-                                data-accesstype="offline"
-                                data-callback="onSignInCallback"
-                                data-cookiepolicy="single_host_origin">
-                        </button>
-                    </div>
-                    <div class="col-md-6 post-login">
-                        <div id="user-profile"></div>
-                    </div>
-                    <div class="col-md-3 post-login">
-                        <div id="logout-button-panel"></div>
-                    </div>
+            <div id="logout-button"></div>
+            <div id="user-container">
+                <div id="login-button">
+                    <button class="g-signin"
+                        data-scope="profile"
+                        data-clientId="167961214562-grbr91oci2183eqd580k8r7vvfsqmvsi.apps.googleusercontent.com"
+                        data-accesstype="offline"
+                        data-callback="onSignInCallback"
+                        data-cookiepolicy="single_host_origin">
+                    </button>
                 </div>
+                <div id="user-profile"></div>
             </div>
         </div>
 
