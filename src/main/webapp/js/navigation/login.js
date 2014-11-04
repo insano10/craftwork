@@ -1,13 +1,17 @@
 //grab the google plus login button/scripts
-(function() {
+(function ()
+{
     var po = document.createElement('script');
-    po.type = 'text/javascript'; po.async = true;
+    po.type = 'text/javascript';
+    po.async = true;
     po.src = 'https://plus.google.com/js/client:plusone.js';
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(po, s);
 })();
 
-function onSignInCallback(authResult) {
+//callback for the google plus auth gateway
+function onSignInCallback(authResult)
+{
     LoginHelper.onSignInCallback(authResult);
 }
 
@@ -17,68 +21,56 @@ var LoginHelper = (function ()
 
         onSignInCallback: function (authResult)
         {
+            //remove this field to stop the js trying to interact with the cross domain login popup
+            delete authResult['g-oauth-window'];
 
-            console.log("onSignInCallback");
-
-            delete authResult['g-oauth-window']; // <- need this to avoid SecurityError but is it correct?
-            $('#authResult').html('Auth Result:<br/>');
-            for (var field in authResult)
-            {
-                $('#authResult').append(' ' + field + ': ' + authResult[field] + '<br/>');
-            }
             if (authResult['access_token'])
             {
-                // The user is signed in
-                this.authResult = authResult;
-                this.connectServer();
-                // After we load the Google+ API, render the profile data from Google+.
+                //success
+                this.connectServer(authResult);
+
+                //render the profile data from Google+.
                 gapi.client.load('plus', 'v1', this.renderProfile);
-            } else if (authResult['error'])
+            }
+            else if (authResult['error'])
             {
-                // There was an error, which means the user is not signed in.
-                // As an example, you can troubleshoot by writing to the console:
+                //error
                 console.log('There was an error: ' + authResult['error']);
-                $('#authResult').append('Logged out');
                 $('.post-login').hide();
                 $('#login-button').show();
             }
-            console.log('authResult', authResult);
         },
 
-        connectServer: function ()
+        connectServer: function (authResult)
         {
-            console.log("connectToServer");
-            console.log(this.authResult.code);
             $.ajax({
                 type:        'POST',
-                url:         window.location.href + 'connect?state={{ STATE }}',
+                url:         window.location.href + 'connect',
                 contentType: 'application/octet-stream; charset=utf-8',
+                processData: false,
+                data:        authResult.code,
                 success:     function (result)
                 {
-                    console.log(result);
+                    var logoutSelector = $('#logout-button');
                     $('#login-button').hide();
-                    $('#logout-button').empty();
-                    $('#logout-button').append("<button id='logout-button' onclick='LoginHelper.disconnectServer()'>Logout</button>");
+                    logoutSelector.empty();
+                    logoutSelector.append("<button onclick='LoginHelper.disconnectServer()'>Logout</button>");
                     $(".post-login").show();
-                },
-                processData: false,
-                data:        this.authResult.code
+                }
             });
         },
 
         renderProfile: function ()
         {
-            console.log("renderProfile");
             var request = gapi.client.plus.people.get({'userId': 'me'});
             request.execute(function (profile)
             {
-
                 var userProfile = $('#user-profile');
 
                 userProfile.empty();
                 if (profile.error)
                 {
-                    $('#user-profile').append(profile.error);
+                    userProfile.append(profile.error);
                     return;
                 }
 
@@ -107,8 +99,6 @@ var LoginHelper = (function ()
                     $('.post-login').hide();
                     $('#user-profile').empty();
                     $('#logout-button').empty();
-                    $('#visiblePeople').empty();
-                    $('#authResult').empty();
                     $('#login-button').show();
                 },
                 error:   function (e)
