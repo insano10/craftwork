@@ -1,12 +1,8 @@
 package com.insano10.craftwork.servlets;
 
-import com.google.api.client.auth.oauth2.TokenResponseException;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -16,12 +12,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.IOException;
 
 public class DisconnectionServlet extends HttpServlet
 {
-    private static final String CLIENT_ID = "167961214562-grbr91oci2183eqd580k8r7vvfsqmvsi.apps.googleusercontent.com";
-    private static final String CLIENT_SECRET = "tIeDGRBziwoAEdfhfdAZ1kE6";
+    private static final String REVOKE_URL_TEMPLATE = "https://accounts.google.com/o/oauth2/revoke?token=%s";
+    private static final String TOKEN_ATTRIBUTE_ID = "token";
 
     private static final HttpTransport TRANSPORT = new NetHttpTransport();
     private static final JacksonFactory JSON_FACTORY = new JacksonFactory();
@@ -40,7 +36,7 @@ public class DisconnectionServlet extends HttpServlet
         response.setContentType("application/json");
 
         // Only disconnect a connected user.
-        String tokenData = (String) request.getSession().getAttribute("token");
+        String tokenData = (String) request.getSession().getAttribute(TOKEN_ATTRIBUTE_ID);
         if (tokenData == null)
         {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -54,16 +50,16 @@ public class DisconnectionServlet extends HttpServlet
             GoogleCredential credential = new GoogleCredential.Builder()
                     .setJsonFactory(JSON_FACTORY)
                     .setTransport(TRANSPORT)
-                    .setClientSecrets(CLIENT_ID, CLIENT_SECRET).build()
+                    .setClientSecrets(ClientApp.CLIENT_ID, ClientApp.CLIENT_SECRET).build()
                     .setFromTokenResponse(JSON_FACTORY.fromString(
                             tokenData, GoogleTokenResponse.class));
 
             // Execute HTTP GET request to revoke current token.
-            GenericUrl revokeUrl = new GenericUrl(String.format("https://accounts.google.com/o/oauth2/revoke?token=%s", credential.getAccessToken()));
+            GenericUrl revokeUrl = new GenericUrl(String.format(REVOKE_URL_TEMPLATE, credential.getAccessToken()));
             TRANSPORT.createRequestFactory().buildGetRequest(revokeUrl).execute();
 
             // Reset the user's session.
-            request.getSession().removeAttribute("token");
+            request.getSession().removeAttribute(TOKEN_ATTRIBUTE_ID);
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().print(GSON.toJson("Successfully disconnected."));
         }
@@ -74,5 +70,4 @@ public class DisconnectionServlet extends HttpServlet
             response.getWriter().print(GSON.toJson("Failed to revoke token for given user."));
         }
     }
-
 }
