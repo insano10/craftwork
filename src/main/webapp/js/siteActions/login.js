@@ -55,6 +55,12 @@ var LoginHelper = (function ()
                     $('#login-button').hide();
                     logoutSelector.empty();
                     logoutSelector.append("<button onclick='LoginHelper.disconnectServer()'>Logout</button>");
+
+
+                    var saveSelector = $('#save-button');
+                    saveSelector.empty();
+                    saveSelector.append("<button onclick='saveInstructions()'>Save</button>");
+
                     $(".post-login").show();
                 }
             });
@@ -99,6 +105,7 @@ var LoginHelper = (function ()
                     $('.post-login').hide();
                     $('#user-profile').empty();
                     $('#logout-button').empty();
+                    $('#save-button').empty();
                     $('#login-button').show();
                 },
                 error:   function (e)

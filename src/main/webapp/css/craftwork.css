@@ -63,6 +63,15 @@
     left: 6px;
 }
 
+#save-button
+{
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 70px;
+}
+
+
 .spacer
 {
     height: 20px;
