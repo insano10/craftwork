@@ -88,6 +88,27 @@
     padding: 10px;
 }
 
+#instruction-header
+{
+    min-height: 40px;
+}
+
+#instructions-title
+{
+    font: 14px "Helvetica Neue",Arial,Helvetica,sans-serif;
+    font-weight: bold;
+}
+
+#instructions-title:hover
+{
+    background-color: #ebebeb;
+}
+
+.main-labels
+{
+    float: right;
+}
+
 #instructions
 {
     border: none;

@@ -3,7 +3,7 @@ define(["renderContext"], function (RenderContext)
     function ChartRenderer()
     {
         var START_X_OFFSET = 70;
-        var START_Y_OFFSET = -100;
+        var START_Y_OFFSET = -50;
         var MAX_X_POS = 0;
         var MAX_Y_POS = 0;
 
