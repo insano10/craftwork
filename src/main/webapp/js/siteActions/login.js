@@ -45,7 +45,7 @@ var LoginHelper = (function ()
         {
             $.ajax({
                 type:        'POST',
-                url:         window.location.href + 'connect',
+                url:         window.location.href.split("#")[0] + 'connect',
                 contentType: 'application/octet-stream; charset=utf-8',
                 processData: false,
                 data:        authResult.code,
@@ -97,7 +97,7 @@ var LoginHelper = (function ()
             // Revoke the server tokens
             $.ajax({
                 type:    'POST',
-                url:     window.location.href + 'disconnect',
+                url:     window.location.href.split("#")[0] + 'disconnect',
                 async:   false,
                 success: function (result)
                 {

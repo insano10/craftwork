@@ -4,7 +4,7 @@ function saveInstructions()
 
     $.ajax({
         type:    'POST',
-        url:     window.location.href + 'save',
+        url:     window.location.href.split("#")[0] + 'save',
         dataType: "json",
         data: { instructions: JSON.stringify(instructions) },
         success: function (result)
