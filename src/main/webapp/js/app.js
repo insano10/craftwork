@@ -2,8 +2,8 @@
  This is the main app entry point from boot.js (loaded by require.js)
  */
 
-define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser"],
-    function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator, RowNumberSynchroniser)
+define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser", "persistenceHelper", "connectionHelper"],
+    function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator, RowNumberSynchroniser, PersistenceHelper, ConnectionHelper)
     {
         var toggleLogging = function toggleLogging()
         {
@@ -36,11 +36,14 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 var instructionParser = new InstructionParser(chartModel, chartRenderer, parseChain);
                 var instructionEvaluator = new InstructionEvaluator(instructionParser);
                 var rowNumberSynchroniser = new RowNumberSynchroniser();
+                var persistenceHelper = new PersistenceHelper();
+                var connectionHelper = new ConnectionHelper();
 
                 chartRenderer.initialiseCanvas();
                 keyListener.addListener(instructionEvaluator);
                 keyListener.addListener(rowNumberSynchroniser);
 
+                //put this somewhere else as it is referencing UI elements
                 $("#instructions").bind({
                     keypress: function (event)
                     {
@@ -66,6 +69,27 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 });
 
                 $("#row-numbers").append("<p>row 1:</p>");
+
+                $("#save-button").bind({
+                    click: function (event)
+                    {
+                        persistenceHelper.saveInstructions();
+                    }
+                });
+
+                $("#save-title-button").bind({
+                    click: function (event)
+                    {
+                        persistenceHelper.updateTitle();
+                    }
+                });
+
+                $("#logout-button").bind({
+                    click: function (event)
+                    {
+                        connectionHelper.disconnectServer();
+                    }
+                });
             })
         };
 

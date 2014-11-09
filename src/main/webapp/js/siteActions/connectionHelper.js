@@ -1,25 +1,8 @@
-//grab the google plus login button/scripts
-(function ()
+define(["jquery"], function($)
 {
-    var po = document.createElement('script');
-    po.type = 'text/javascript';
-    po.async = true;
-    po.src = 'https://plus.google.com/js/client:plusone.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(po, s);
-})();
-
-//callback for the google plus auth gateway
-function onSignInCallback(authResult)
-{
-    LoginHelper.onSignInCallback(authResult);
-}
-
-var LoginHelper = (function ()
-{
-    return {
-
-        onSignInCallback: function (authResult)
+    function LoginHelper()
+    {
+        this.onSignInCallback = function onSignInCallback(authResult)
         {
             //remove this field to stop the js trying to interact with the cross domain login popup
             delete authResult['g-oauth-window'];
@@ -39,9 +22,9 @@ var LoginHelper = (function ()
                 $('.post-login').hide();
                 $('#login-button').show();
             }
-        },
+        };
 
-        connectServer: function (authResult)
+        this.connectServer = function connectServer(authResult)
         {
             $.ajax({
                 type:        'POST',
@@ -51,15 +34,16 @@ var LoginHelper = (function ()
                 data:        authResult.code,
                 success:     function (result)
                 {
+                    $('#login-button').hide();
+
                     $('#logout-button-div').show();
                     $('#save-button-div').show();
                     $(".post-login").show();
-                    $('#login-button').hide();
                 }
             });
-        },
+        };
 
-        renderProfile: function ()
+        this.renderProfile = function renderProfile()
         {
             var request = gapi.client.plus.people.get({'userId': 'me'});
             request.execute(function (profile)
@@ -83,7 +67,31 @@ var LoginHelper = (function ()
                     '</a>');
 
             });
-        }
-    };
+        };
 
-})();
+        this.disconnectServer = function disconnectServer()
+        {
+            // Revoke the server tokens
+            $.ajax({
+                type:    'POST',
+                url:     window.location.href.split("#")[0] + 'disconnect',
+                async:   false,
+                success: function (result)
+                {
+                    console.log('revoke response: ' + result);
+                    $('.post-login').hide();
+                    $('#save-button-div').hide();
+                    $('#logout-button-div').hide();
+                    $('#user-profile').empty();
+                    $('#login-button').show();
+                },
+                error:   function (e)
+                {
+                    console.log(e);
+                }
+            });
+        };
+    }
+
+    return LoginHelper;
+});

@@ -7,14 +7,6 @@ $(document).ready(function ()
     instructionsTitle.append("Untitled pattern");
 
     instructionsTitle.tooltip({
-        placement : 'bottom'
-    });
-
-    instructionsTitle.bind({
-
-        click: function ()
-        {
-            console.log("title clicked");
-        }
+        placement: 'bottom'
     });
 });

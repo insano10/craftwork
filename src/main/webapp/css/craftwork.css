@@ -55,7 +55,7 @@
     right: 10px;
 }
 
-#logout-button
+#logout-button-div
 {
     display: block;
     position: absolute;
@@ -63,7 +63,7 @@
     left: 6px;
 }
 
-#save-button
+#save-button-div
 {
     display: block;
     position: absolute;

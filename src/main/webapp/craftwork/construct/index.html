@@ -10,15 +10,14 @@
         <script type='text/javascript' src="../../js/lib/bootstrap-3.3.0/js/bootstrap.min.js"></script>
         <script type='text/javascript' src="../../js/lib/requirejs-2.1.14.min.js" data-main="../../js/boot.js"></script>
         <script type='text/javascript' src="../../js/siteActions/login.js"></script>
-        <script type='text/javascript' src="../../js/siteActions/persistence.js"></script>
         <script type='text/javascript' src="../../js/siteActions/widgetBehaviour.js"></script>
 
     </head>
     <body class="body">
 
         <div id="header-panel" class="row">
-            <div id="logout-button"></div>
-            <div id="save-button"></div>
+            <div id="logout-button-div"><button id="logout-button">Logout</button></div>
+            <div id="save-button-div"><button id="save-button">Save</button></div>
             <div id="user-container">
                 <div id="login-button">
                     <button class="g-signin"
@@ -69,7 +68,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button id="save-title-button" type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
