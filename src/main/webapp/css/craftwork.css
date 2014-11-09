@@ -90,13 +90,12 @@
 
 #instruction-header
 {
-    min-height: 40px;
+    min-height: 35px;
 }
 
 #instructions-title
 {
     font: 14px "Helvetica Neue",Arial,Helvetica,sans-serif;
-    /*font-weight: bold;*/
     font-style: italic;
     color: #777;
 }
@@ -145,4 +144,16 @@
 #chart-canvas
 {
     width:100%;
+}
+
+.modal-dialog
+{
+    font: normal 13px arial,sans-serif;
+    padding-top: 15%;
+}
+
+.modal-backdrop
+{
+    background: #ffffff;
+    opacity: 0.75;
 }

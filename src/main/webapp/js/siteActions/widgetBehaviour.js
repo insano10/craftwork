@@ -17,12 +17,4 @@ $(document).ready(function ()
             console.log("title clicked");
         }
     });
-
-    $('#userNameField').tooltip({
-        'show': true,
-        'placement': 'bottom',
-        'title': "Please remember to..."
-    });
-
-    $('#userNameField').tooltip('show');
 });
