@@ -4,7 +4,7 @@ $(document).ready(function ()
     var instructionsTitle = $("#instructions-title");
 
     instructionsTitle.empty();
-    instructionsTitle.append("&lt;Title&gt;");
+    instructionsTitle.append("Untitled pattern");
 
     instructionsTitle.tooltip({
         placement : 'bottom'

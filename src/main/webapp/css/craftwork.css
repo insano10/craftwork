@@ -96,7 +96,9 @@
 #instructions-title
 {
     font: 14px "Helvetica Neue",Arial,Helvetica,sans-serif;
-    font-weight: bold;
+    /*font-weight: bold;*/
+    font-style: italic;
+    color: #777;
 }
 
 #instructions-title:hover
