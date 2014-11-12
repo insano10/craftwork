@@ -11,11 +11,6 @@ define(["jquery"], function ($)
             instructionsTitle.append(title);
         };
 
-        this.initialiseTitle = function initialiseTitle()
-        {
-            setTitle(title);
-        };
-
         this.updateModalTitle = function updateModalTitle()
         {
             $("#rename-title-input").val(title);

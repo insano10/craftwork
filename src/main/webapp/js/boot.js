@@ -23,7 +23,8 @@ require(
             "increaseStitch":        "model/crochet/elements/increaseStitch",
             "chainUpStitch":         "model/crochet/elements/chainUpStitch",
             "connectionHelper":      "siteActions/connectionHelper",
-            "persistenceHelper":     "siteActions/persistenceHelper"
+            "persistenceHelper":     "siteActions/persistenceHelper",
+            "view":                  "view/view"
         }
     },
     ["app"],

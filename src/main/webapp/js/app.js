@@ -2,8 +2,8 @@
  This is the main app entry point from boot.js (loaded by require.js)
  */
 
-define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser", "persistenceHelper", "connectionHelper", "bootstrap"],
-    function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator, RowNumberSynchroniser, PersistenceHelper, ConnectionHelper)
+define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser", "persistenceHelper", "connectionHelper", "view"],
+    function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator, RowNumberSynchroniser, PersistenceHelper, ConnectionHelper, View)
     {
         var toggleLogging = function toggleLogging()
         {
@@ -38,73 +38,13 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 var rowNumberSynchroniser = new RowNumberSynchroniser();
                 var persistenceHelper = new PersistenceHelper();
                 var connectionHelper = new ConnectionHelper();
+                var view = new View(keyListener, persistenceHelper, connectionHelper);
 
                 chartRenderer.initialiseCanvas();
                 keyListener.addListener(instructionEvaluator);
                 keyListener.addListener(rowNumberSynchroniser);
 
-                //put this somewhere else as it is referencing UI elements
-                $("#instructions").bind({
-                    keypress: function (event)
-                    {
-                        keyListener.onKeyPressed(event);
-                    },
-                    paste:    function (event)
-                    {
-                        keyListener.onKeyPressed(event);
-                    },
-                    cut:      function (event)
-                    {
-                        keyListener.onKeyPressed(event);
-                    },
-                    keydown:  function (event)
-                    {
-                        keyListener.onKeyDown(event);
-
-                    },
-                    scroll:   function ()
-                    {
-                        $('#row-numbers').scrollTop($(this).scrollTop());
-                    }
-                });
-
-                $("#row-numbers").append("<p>row 1:</p>");
-
-                $("#save-button").bind({
-                    click: function (event)
-                    {
-                        persistenceHelper.saveInstructions();
-                    }
-                });
-
-                $("#save-title-button").bind({
-                    click: function (event)
-                    {
-                        persistenceHelper.updateTitle();
-                    }
-                });
-
-                $("#logout-button").bind({
-                    click: function (event)
-                    {
-                        connectionHelper.disconnectServer();
-                    }
-                });
-
-                var instructionsTitle = $("#instructions-title");
-
-                instructionsTitle.tooltip({
-                    placement: 'bottom'
-                });
-
-                instructionsTitle.bind({
-                    click: function(event)
-                    {
-                        persistenceHelper.updateModalTitle();
-                    }
-                });
-
-                persistenceHelper.initialiseTitle();
+                view.initialise();
             })
         };
 
