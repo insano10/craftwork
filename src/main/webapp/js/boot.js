@@ -1,7 +1,11 @@
 require(
     {
+        shim : {
+            "bootstrap" : { "deps" :['jquery'] }
+        },
         paths: {
             "jquery":                "requireJQuery",
+            "bootstrap":             "lib/bootstrap-3.3.0/js/bootstrap.min",
             "keyListener":           "framework/keyListener",
             "instructionEvaluator":  "framework/instructionEvaluator",
             "rowNumberSynchroniser": "framework/rowNumberSynchroniser",

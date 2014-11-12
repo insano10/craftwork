@@ -53,7 +53,9 @@ public class PersistenceServlet extends HttpServlet
         System.out.println("User: " + user.getName());
 
         //Get the instructions to be saved
+        String title = GSON.fromJson(request.getParameter("title"), String.class);
         String[] instructions = GSON.fromJson(request.getParameter("instructions"), String[].class);
+        System.out.println(title);
         System.out.println(Arrays.toString(instructions));
 
         response.setStatus(HttpServletResponse.SC_OK);

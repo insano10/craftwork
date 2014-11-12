@@ -2,7 +2,7 @@
  This is the main app entry point from boot.js (loaded by require.js)
  */
 
-define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser", "persistenceHelper", "connectionHelper"],
+define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser", "persistenceHelper", "connectionHelper", "bootstrap"],
     function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator, RowNumberSynchroniser, PersistenceHelper, ConnectionHelper)
     {
         var toggleLogging = function toggleLogging()
@@ -90,6 +90,21 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                         connectionHelper.disconnectServer();
                     }
                 });
+
+                var instructionsTitle = $("#instructions-title");
+
+                instructionsTitle.tooltip({
+                    placement: 'bottom'
+                });
+
+                instructionsTitle.bind({
+                    click: function(event)
+                    {
+                        persistenceHelper.updateModalTitle();
+                    }
+                });
+
+                persistenceHelper.initialiseTitle();
             })
         };
 
