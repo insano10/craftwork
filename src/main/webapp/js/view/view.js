@@ -2,6 +2,36 @@ define(["jquery", "bootstrap"], function ($)
 {
     function View(keyListener, persistenceHelper, connectionHelper)
     {
+        var updateModalTitleInput = function updateModalTitleInput(title)
+        {
+            $("#rename-title-input").val(title);
+        };
+
+
+        var updateInstructionsTitle = function updateInstructionsTitle()
+        {
+            var newTitle = $("#rename-title-input").val();
+
+            if (newTitle)
+            {
+                persistenceHelper.setInstructionsTitle(newTitle);
+                setInstructionsTitle(newTitle);
+
+                console.log("title is now: " + newTitle);
+            }
+            else
+            {
+                console.error("Title cannot be empty");
+            }
+        };
+
+        var setInstructionsTitle = function setInstructionsTitle(title)
+        {
+            var instructionsTitle = $("#instructions-title");
+            instructionsTitle.empty();
+            instructionsTitle.append(title);
+        };
+
         this.initialise = function initialise()
         {
             $("#instructions").bind({
@@ -33,14 +63,15 @@ define(["jquery", "bootstrap"], function ($)
             $("#save-button").bind({
                 click: function (event)
                 {
-                    persistenceHelper.saveInstructions();
+                    var instructions = $("#instructions").val().split("\n");
+                    persistenceHelper.saveInstructions(instructions);
                 }
             });
 
             $("#save-title-button").bind({
                 click: function (event)
                 {
-                    persistenceHelper.updateTitle();
+                    updateInstructionsTitle();
                 }
             });
 
@@ -58,9 +89,10 @@ define(["jquery", "bootstrap"], function ($)
             });
 
             instructionsTitle.bind({
+
                 click: function(event)
                 {
-                    persistenceHelper.updateModalTitle();
+                    updateModalTitleInput(persistenceHelper.getInstructionsTitle());
                 }
             });
 

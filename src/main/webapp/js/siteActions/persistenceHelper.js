@@ -4,45 +4,26 @@ define(["jquery"], function ($)
     {
         var title = "Untitled pattern";
 
-        var setTitle = function setTitle(title)
+        this.getInstructionsTitle = function getInstructionsTitle()
         {
-            var instructionsTitle = $("#instructions-title");
-            instructionsTitle.empty();
-            instructionsTitle.append(title);
+            return title;
         };
 
-        this.updateModalTitle = function updateModalTitle()
+        this.setInstructionsTitle = function setInstructionsTitle(newTitle)
         {
-            $("#rename-title-input").val(title);
+            title = newTitle;
         };
 
-        this.updateTitle = function updateTitle()
+
+        this.saveInstructions = function saveInstructions(instructionArray)
         {
-            var newTitle = $("#rename-title-input").val();
-
-            if (newTitle)
-            {
-                title = newTitle;
-                setTitle(newTitle);
-                console.log("title is now: " + title);
-            }
-            else
-            {
-                console.error("Title cannot be empty");
-            }
-        };
-
-        this.saveInstructions = function saveInstructions()
-        {
-            var instructions = $("#instructions").val().split("\n");
-
             $.ajax({
                 type:     'POST',
                 url:      window.location.href.split("#")[0] + 'save',
                 dataType: "json",
                 data:     {
                     title:        JSON.stringify(title),
-                    instructions: JSON.stringify(instructions)
+                    instructions: JSON.stringify(instructionArray)
                 },
                 success:  function (result)
                 {
