@@ -20,7 +20,7 @@ public class FileBackedPatternStore implements PatternStore
         try
         {
             Files.createDirectories(Paths.get(PATTERN_FOLDER, userId));
-            Path patternFile = Paths.get(PATTERN_FOLDER, userId, pattern.getTitle().concat(".ptn"));
+            Path patternFile = Paths.get(PATTERN_FOLDER, userId, pattern.getId().concat(".ptn"));
             Files.write(patternFile, pattern.asFileFormat(), StandardOpenOption.CREATE);
 
             LOGGER.info("Pattern saved: " + patternFile.toString());

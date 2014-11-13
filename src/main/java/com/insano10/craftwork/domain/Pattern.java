@@ -25,14 +25,9 @@ public class Pattern
                 '}';
     }
 
-    public String getTitle()
+    public String getId()
     {
         return title;
-    }
-
-    public String[] getInstructions()
-    {
-        return instructions;
     }
 
     public Iterable<String> asFileFormat()
