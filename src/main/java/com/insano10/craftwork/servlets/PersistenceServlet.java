@@ -44,29 +44,29 @@ public class PersistenceServlet extends HttpServlet
             return;
         }
 
-        GoogleCredential credential = new GoogleCredential.Builder()
-                .setJsonFactory(JSON_FACTORY)
-                .setTransport(TRANSPORT)
-                .setClientSecrets(ClientApp.CLIENT_ID, ClientApp.CLIENT_SECRET).build()
-                .setFromTokenResponse(JSON_FACTORY.fromString(tokenData, GoogleTokenResponse.class));
-        // Create a new authorized API client.
-        Plus service = new Plus.Builder(TRANSPORT, JSON_FACTORY, credential)
-                .setApplicationName(ClientApp.APPLICATION_NAME)
-                .build();
-
-        Person user = service.people().get("me").execute();
+        Person user = getUserFromToken(tokenData);
         System.out.println("User: " + user.getName());
 
-        //Get the instructions to be saved
-        String title = GSON.fromJson(request.getParameter("title"), String.class);
-        String[] instructionArray = GSON.fromJson(request.getParameter("instructions"), String[].class);
-        Pattern pattern = new Pattern(title, instructionArray); //todo: just send a pattern across json
-        System.out.println(pattern);
-
+        Pattern pattern = GSON.fromJson(request.getParameter("pattern"), Pattern.class);
         patternStore.save(user.getId(), pattern);
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().print(GSON.toJson("Saved"));
+    }
+
+    private Person getUserFromToken(final String token) throws IOException
+    {
+        GoogleCredential credential = new GoogleCredential.Builder()
+                .setJsonFactory(JSON_FACTORY)
+                .setTransport(TRANSPORT)
+                .setClientSecrets(ClientApp.CLIENT_ID, ClientApp.CLIENT_SECRET).build()
+                .setFromTokenResponse(JSON_FACTORY.fromString(token, GoogleTokenResponse.class));
+
+        Plus service = new Plus.Builder(TRANSPORT, JSON_FACTORY, credential)
+                .setApplicationName(ClientApp.APPLICATION_NAME)
+                .build();
+
+        return service.people().get("me").execute();
     }
 
 }

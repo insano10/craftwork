@@ -22,8 +22,10 @@ define(["jquery"], function ($)
                 url:      window.location.href.split("#")[0] + 'save',
                 dataType: "json",
                 data:     {
-                    title:        JSON.stringify(title),
-                    instructions: JSON.stringify(instructionArray)
+                    pattern: JSON.stringify({
+                        title:        title,
+                        instructions: instructionArray
+                    })
                 },
                 success:  function (result)
                 {
