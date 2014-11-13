@@ -1,6 +1,9 @@
 package com.insano10.craftwork.domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Pattern
 {
@@ -30,5 +33,15 @@ public class Pattern
     public String[] getInstructions()
     {
         return instructions;
+    }
+
+    public Iterable<String> asFileFormat()
+    {
+        final List<String> lines = new ArrayList<>();
+
+        lines.add(title);
+        Collections.addAll(lines, instructions);
+
+        return lines;
     }
 }
