@@ -8,6 +8,9 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.plus.Plus;
 import com.google.api.services.plus.model.Person;
 import com.google.gson.Gson;
+import com.insano10.craftwork.domain.Pattern;
+import com.insano10.craftwork.persistence.FileBackedPatternStore;
+import com.insano10.craftwork.persistence.PatternStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +24,8 @@ public class PersistenceServlet extends HttpServlet
     private static final HttpTransport TRANSPORT = new NetHttpTransport();
     private static final JacksonFactory JSON_FACTORY = new JacksonFactory();
     private static final Gson GSON = new Gson();
+
+    private final PatternStore patternStore = new FileBackedPatternStore();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -54,9 +59,11 @@ public class PersistenceServlet extends HttpServlet
 
         //Get the instructions to be saved
         String title = GSON.fromJson(request.getParameter("title"), String.class);
-        String[] instructions = GSON.fromJson(request.getParameter("instructions"), String[].class);
-        System.out.println(title);
-        System.out.println(Arrays.toString(instructions));
+        String[] instructionArray = GSON.fromJson(request.getParameter("instructions"), String[].class);
+        Pattern pattern = new Pattern(title, instructionArray); //todo: just send a pattern across json
+        System.out.println(pattern);
+
+        patternStore.save(user.getId(), pattern);
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().print(GSON.toJson("Saved"));
