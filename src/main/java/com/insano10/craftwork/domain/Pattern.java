@@ -50,4 +50,10 @@ public class Pattern
 
         return lines;
     }
+
+    public static Pattern fromFileFormat(final List<String> lines)
+    {
+        List<String> instructions = lines.subList(2, lines.size());
+        return new Pattern(Long.parseLong(lines.get(0)), lines.get(1), instructions.toArray(new String[instructions.size()]));
+    }
 }

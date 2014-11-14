@@ -54,6 +54,13 @@ public class PersistenceServlet extends HttpServlet
             response.getWriter().print(GSON.toJson(pattern));
             response.setStatus(HttpServletResponse.SC_OK);
         }
+        else if(request.getRequestURI().endsWith("/load"))
+        {
+            Pattern pattern = patternStore.loadLatest(user.getId());
+
+            response.getWriter().print(GSON.toJson(pattern));
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
         else if(request.getRequestURI().endsWith("/save"))
         {
             Pattern pattern = GSON.fromJson(request.getParameter("pattern"), Pattern.class);

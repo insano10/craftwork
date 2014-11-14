@@ -7,4 +7,6 @@ public interface PatternStore
     void save(String userId, Pattern pattern);
 
     Pattern create(String userId);
+
+    Pattern loadLatest(String userId);
 }

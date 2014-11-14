@@ -4,10 +4,10 @@ import com.insano10.craftwork.domain.Pattern;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -30,7 +30,7 @@ public class FileBackedPatternStore implements PatternStore
 
             LOGGER.info("Pattern saved: " + patternFile.toString());
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             LOGGER.error("Error saving pattern " + pattern.toString(), e);
         }
@@ -45,6 +45,38 @@ public class FileBackedPatternStore implements PatternStore
         save(userId, newPattern);
 
         return newPattern;
+    }
+
+    @Override
+    public Pattern loadLatest(String userId)
+    {
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(PATTERN_FOLDER, userId)))
+        {
+            FileTime latestPatternTime = null;
+            Path latestPattern = null;
+            for (Path file : directoryStream)
+            {
+                BasicFileAttributes attributes = Files.readAttributes(file, BasicFileAttributes.class);
+                FileTime modifiedTime = attributes.lastModifiedTime();
+
+                if(latestPatternTime == null || modifiedTime.compareTo(latestPatternTime) > 0)
+                {
+                    latestPatternTime = modifiedTime;
+                    latestPattern = file;
+                }
+            }
+
+            if(latestPattern != null)
+            {
+                List<String> patternLines = Files.readAllLines(latestPattern);
+                return Pattern.fromFileFormat(patternLines);
+            }
+        }
+        catch (IOException e)
+        {
+            LOGGER.error("Failed to read user patterns: " + userId, e);
+        }
+        return null;
     }
 
     private AtomicLong createUserSequence(final String key)

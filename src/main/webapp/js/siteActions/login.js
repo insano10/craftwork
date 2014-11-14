@@ -55,6 +55,19 @@ var LoginHelper = (function ()
                     $('#save-button-div').show();
                     $(".post-login").show();
                     $('#login-button').hide();
+
+                    //load latest pattern for user
+                    $.ajax({
+                        type:     'POST',
+                        url:      window.location.href.split("#")[0] + 'load',
+                        dataType: "json",
+                        data:     {},
+                        success:  function (result)
+                        {
+                            console.log("Latest pattern: " + JSON.parse(result));
+                        }
+                    });
+
                 }
             });
         },
