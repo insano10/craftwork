@@ -64,7 +64,7 @@ define(["jquery", "bootstrap"], function ($)
                 click: function (event)
                 {
                     var instructions = $("#instructions").val().split("\n");
-                    persistenceHelper.saveInstructions(instructions);
+                    persistenceHelper.savePattern(instructions);
                 }
             });
 
@@ -79,6 +79,13 @@ define(["jquery", "bootstrap"], function ($)
                 click: function (event)
                 {
                     connectionHelper.disconnectServer();
+                }
+            });
+
+            $("#create-button").bind({
+                click: function (event)
+                {
+                    var pattern = persistenceHelper.createNewPattern();
                 }
             });
 

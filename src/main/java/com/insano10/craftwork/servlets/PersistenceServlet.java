@@ -47,11 +47,24 @@ public class PersistenceServlet extends HttpServlet
         Person user = getUserFromToken(tokenData);
         System.out.println("User: " + user.getName());
 
-        Pattern pattern = GSON.fromJson(request.getParameter("pattern"), Pattern.class);
-        patternStore.save(user.getId(), pattern);
+        if(request.getRequestURI().endsWith("/create"))
+        {
+            Pattern pattern = patternStore.create(user.getId());
 
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().print(GSON.toJson("Saved"));
+            response.getWriter().print(GSON.toJson(pattern));
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else if(request.getRequestURI().endsWith("/save"))
+        {
+            Pattern pattern = GSON.fromJson(request.getParameter("pattern"), Pattern.class);
+            patternStore.save(user.getId(), pattern);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else
+        {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 
     private Person getUserFromToken(final String token) throws IOException

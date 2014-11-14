@@ -14,8 +14,25 @@ define(["jquery"], function ($)
             title = newTitle;
         };
 
+        this.createNewPattern = function createNewPattern()
+        {
+            $.ajax({
+                type:     'POST',
+                url:      window.location.href.split("#")[0] + 'create',
+                dataType: "json",
+                data:     {},
+                success:  function (result)
+                {
+                    console.log('create response: ' + result);
+                },
+                error:    function (e)
+                {
+                    console.log(e);
+                }
+            });
+        };
 
-        this.saveInstructions = function saveInstructions(instructionArray)
+        this.savePattern = function savePattern(instructionArray)
         {
             $.ajax({
                 type:     'POST',
