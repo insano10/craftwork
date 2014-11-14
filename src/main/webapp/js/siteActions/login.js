@@ -37,7 +37,7 @@ var LoginHelper = (function ()
                 //error
                 console.log('There was an error: ' + authResult['error']);
                 $('.post-login').hide();
-                $('#login-button').show();
+                $('#login-button-div').show();
             }
         },
 
@@ -54,7 +54,7 @@ var LoginHelper = (function ()
                     $('#logout-button-div').show();
                     $('#save-button-div').show();
                     $(".post-login").show();
-                    $('#login-button').hide();
+                    $('#login-button-div').hide();
 
                     //load latest pattern for user
                     $.ajax({
