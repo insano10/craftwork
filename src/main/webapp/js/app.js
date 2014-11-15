@@ -45,6 +45,7 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 keyListener.addListener(rowNumberSynchroniser);
 
                 view.initialise();
+                connectionHelper.authorise(true);
             })
         };
 

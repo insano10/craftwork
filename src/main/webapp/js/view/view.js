@@ -32,6 +32,11 @@ define(["jquery", "bootstrap"], function ($)
             instructionsTitle.append(title);
         };
 
+        var foo = function foo()
+        {
+            console.log("FOO");
+        };
+
         this.initialise = function initialise()
         {
             $("#instructions").bind({
@@ -89,6 +94,13 @@ define(["jquery", "bootstrap"], function ($)
                 }
             });
 
+            $("#login-button").bind({
+                click: function (event)
+                {
+                    connectionHelper.authorise(false);
+                }
+            });
+
             var instructionsTitle = $("#instructions-title");
 
             instructionsTitle.tooltip({
@@ -97,7 +109,7 @@ define(["jquery", "bootstrap"], function ($)
 
             instructionsTitle.bind({
 
-                click: function(event)
+                click: function (event)
                 {
                     updateModalTitleInput(persistenceHelper.getInstructionsTitle());
                 }
