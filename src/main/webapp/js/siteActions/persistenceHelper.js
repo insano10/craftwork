@@ -1,20 +1,31 @@
 define(["jquery"], function ($)
 {
-    function PersistenceHelper()
+    return (function ()
     {
-        var title = "Untitled pattern";
-
-        this.getInstructionsTitle = function getInstructionsTitle()
+        function PersistenceHelper(instructionEvaluator)
         {
-            return title;
+            this.view = null;
+            this.instructionEvaluator = instructionEvaluator;
+            this.title = "Untitled pattern";
+        }
+
+        //todo: this is evil, get rid of it
+        PersistenceHelper.prototype.setView = function setView(view)
+        {
+            this.view = view;
         };
 
-        this.setInstructionsTitle = function setInstructionsTitle(newTitle)
+        PersistenceHelper.prototype.getInstructionsTitle = function getInstructionsTitle()
         {
-            title = newTitle;
+            return this.title;
         };
 
-        this.createNewPattern = function createNewPattern()
+        PersistenceHelper.prototype.setInstructionsTitle = function setInstructionsTitle(newTitle)
+        {
+            this.title = newTitle;
+        };
+
+        PersistenceHelper.prototype.createNewPattern = function createNewPattern()
         {
             $.ajax({
                 type:     'POST',
@@ -32,7 +43,33 @@ define(["jquery"], function ($)
             });
         };
 
-        this.savePattern = function savePattern(instructionArray)
+        PersistenceHelper.prototype.loadPattern = function loadPattern(patternId)
+        {
+            var helper = this;
+            $.ajax({
+                type:     'POST',
+                url:      window.location.href.split("#")[0] + 'load',
+                dataType: "json",
+                data:     {
+                    patternId: JSON.stringify(patternId)
+                },
+                success:  function (pattern)
+                {
+                    console.log('loaded pattern: ' + JSON.stringify(pattern));
+                    this.title = pattern.title;
+
+                    //todo: this is wrong, view should be told about instructions from the model
+                    helper.view.loadPattern(pattern);
+                    helper.instructionEvaluator.notifyInstructionsUpdated();
+                },
+                error:    function (e)
+                {
+                    console.log("failed to load pattern " + patternId + " - " + e);
+                }
+            });
+        };
+
+        PersistenceHelper.prototype.savePattern = function savePattern(instructionArray)
         {
             $.ajax({
                 type:     'POST',
@@ -54,7 +91,7 @@ define(["jquery"], function ($)
                 }
             });
         };
-    }
 
-    return PersistenceHelper;
-});
+        return PersistenceHelper;
+    })();
+})

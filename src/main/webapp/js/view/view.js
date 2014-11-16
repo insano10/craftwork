@@ -1,6 +1,6 @@
 define(["jquery", "bootstrap"], function ($)
 {
-    function View(keyListener, persistenceHelper, connectionHelper)
+    function View(keyListener, persistenceHelper, connectionHelper, rowNumberSynchroniser)
     {
         var updateModalTitleInput = function updateModalTitleInput(title)
         {
@@ -30,11 +30,6 @@ define(["jquery", "bootstrap"], function ($)
             var instructionsTitle = $("#instructions-title");
             instructionsTitle.empty();
             instructionsTitle.append(title);
-        };
-
-        var foo = function foo()
-        {
-            console.log("FOO");
         };
 
         this.initialise = function initialise()
@@ -117,6 +112,18 @@ define(["jquery", "bootstrap"], function ($)
 
             instructionsTitle.empty();
             instructionsTitle.append("Untitled pattern");
+        };
+
+        this.loadPattern = function loadPattern(pattern)
+        {
+            $.each(pattern.instructions, function(idx, instruction)
+            {
+                var instructionBox = $("#instructions");
+                instructionBox.val(instructionBox.val() + instruction + "\n");
+
+            });
+            setInstructionsTitle(pattern.title);
+            rowNumberSynchroniser.notifyInstructionsUpdated();
         };
     }
 

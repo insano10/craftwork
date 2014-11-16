@@ -1,7 +1,9 @@
 define(["jquery"], function($)
 {
-    function ConnectionHelper()
+    function ConnectionHelper(persistenceHelper)
     {
+        var LATEST_PATTERN_ID = null;
+
         var onSignInCallback = function onSignInCallback(authResult)
         {
             //remove this field to stop the js trying to interact with the cross domain login popup
@@ -40,6 +42,8 @@ define(["jquery"], function($)
                     $('#save-button-div').show();
                     $('#create-button-div').show();
                     $(".post-login").show();
+
+                    persistenceHelper.loadPattern(LATEST_PATTERN_ID);
                 }
             });
         };
