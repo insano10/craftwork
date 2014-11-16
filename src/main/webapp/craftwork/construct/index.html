@@ -45,44 +45,52 @@
 
         <div class="spacer"></div>
 
-        <div class="main-content-div">
-            <canvas id="chart-canvas"></canvas>
-        </div>
-
-        <div class="spacer"></div>
-
-        <div class="main-content-div">
-            <div id="instruction-header">
-                <span data-toggle="modal" data-target="#rename-instructions-modal">
-                    <span id="instructions-title" data-toggle="tooltip" data-original-title="Rename"></span>
-                </span>
-                <label class="main-labels" for="instructions">Instructions</label><br/>
+        <div id="workspace">
+            <div class="main-content-div">
+                <canvas id="chart-canvas"></canvas>
             </div>
-            <div id="row-numbers"></div>
-            <textarea id="instructions" spellcheck="false"></textarea>
-        </div>
+
+            <div class="spacer"></div>
+
+            <div class="main-content-div">
+                <div id="instruction-header">
+                    <span data-toggle="modal" data-target="#rename-instructions-modal">
+                        <span id="instructions-title" data-toggle="tooltip" data-original-title="Rename"></span>
+                    </span>
+                    <label class="main-labels" for="instructions">Instructions</label><br/>
+                </div>
+                <div id="row-numbers"></div>
+                <textarea id="instructions" spellcheck="false"></textarea>
+            </div>
 
 
-        <!-- Rename title modal-->
-        <div class="modal" id="rename-instructions-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Rename pattern</h4>
-                    </div>
-                    <div class="modal-body">
+            <!-- Rename title modal-->
+            <div class="modal" id="rename-instructions-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Rename pattern</h4>
+                        </div>
+                        <div class="modal-body">
 
-                        <label for="rename-title-input">Enter a new pattern name:</label><br/>
-                        <input id="rename-title-input" type="text" size="68" onclick="this.select()">
+                            <label for="rename-title-input">Enter a new pattern name:</label><br/>
+                            <input id="rename-title-input" type="text" size="68" onclick="this.select()">
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="save-title-button" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="save-title-button" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="empty-workspace">
+            <span>Please create a new pattern to continue</span>
+        </div>
+        <div id="unauthorised-workspace">
+            <span>Please login to continue</span>
         </div>
 
     </body>

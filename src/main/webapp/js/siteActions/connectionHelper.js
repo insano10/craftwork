@@ -1,10 +1,30 @@
-define(["jquery"], function($)
+define(["jquery"], function ($)
 {
-    function ConnectionHelper(persistenceHelper)
+    return (function ()
     {
         var LATEST_PATTERN_ID = null;
 
-        var onSignInCallback = function onSignInCallback(authResult)
+        function ConnectionHelper(persistenceHelper)
+        {
+            this.persistenceHelper = persistenceHelper;
+            this.view = null;
+        }
+
+        /*
+         Take a function F and X args
+         Return a function that will take the args passed in, concatenate X args on the end and call function F with all of them
+         This gives a way to prepopulate a function with arguments a callback could not necessarily provide
+         */
+        function partial(func /*, 0..n args */) {
+            var args = Array.prototype.slice.call(arguments, 1);
+            return function() {
+                var newArgs = Array.prototype.slice.call(arguments);
+                var allArguments = newArgs.concat(args);
+                return func.apply(this, allArguments);
+            };
+        }
+
+        var onSignInCallback = function onSignInCallback(authResult, connectionHelper)
         {
             //remove this field to stop the js trying to interact with the cross domain login popup
             delete authResult['g-oauth-window'];
@@ -12,7 +32,7 @@ define(["jquery"], function($)
             if (authResult['status']['signed_in'])
             {
                 //success
-                connectServer(authResult);
+                connectServer(authResult, connectionHelper);
 
                 //render the profile data from Google+.
                 gapi.client.load('plus', 'v1', renderProfile);
@@ -23,10 +43,12 @@ define(["jquery"], function($)
                 console.log('There was an error: ' + authResult['error']);
                 $('.post-login').hide();
                 $('#login-button').show();
+
+                connectionHelper.view.unauthorisedUser();
             }
         };
 
-        var connectServer = function connectServer(authResult)
+        var connectServer = function connectServer(authResult, helper)
         {
             $.ajax({
                 type:        'POST',
@@ -43,7 +65,7 @@ define(["jquery"], function($)
                     $('#create-button-div').show();
                     $(".post-login").show();
 
-                    persistenceHelper.loadPattern(LATEST_PATTERN_ID);
+                    helper.persistenceHelper.loadPattern(LATEST_PATTERN_ID);
                 }
             });
         };
@@ -62,6 +84,7 @@ define(["jquery"], function($)
                     return;
                 }
 
+                //todo: make view do this
                 userProfile.append('' +
                     '<a href="#" title="Access your profile">' +
                     '<span>' +
@@ -74,12 +97,19 @@ define(["jquery"], function($)
             });
         };
 
-        this.authorise = function authorise(prompt)
+        ConnectionHelper.prototype.setView = function setView(view)
         {
-            gapi.auth.signIn({"callback" : onSignInCallback});
+            this.view = view;
         };
 
-        this.disconnectServer = function disconnectServer()
+        ConnectionHelper.prototype.authorise = function authorise()
+        {
+            var signInCallback = partial(onSignInCallback, this);
+
+            gapi.auth.signIn({"callback": signInCallback});
+        };
+
+        ConnectionHelper.prototype.disconnectServer = function disconnectServer()
         {
             // Revoke the server tokens
             $.ajax({
@@ -102,7 +132,7 @@ define(["jquery"], function($)
                 }
             });
         };
-    }
 
-    return ConnectionHelper;
-});
+        return ConnectionHelper;
+    })();
+}) ;

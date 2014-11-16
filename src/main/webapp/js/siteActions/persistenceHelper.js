@@ -11,6 +11,22 @@ define(["jquery"], function ($)
             this.activePatternTitle = "Untitled pattern";
         }
 
+        var setPattern = function setPattern(persistence, pattern)
+        {
+            if(pattern != null)
+            {
+                console.log('loaded pattern: ' + JSON.stringify(pattern));
+                persistence.activePatternId = pattern.id;
+                persistence.activePatternTitle = pattern.title;
+
+                //todo: this is wrong, view should be told about instructions from the model
+                persistence.view.loadPattern(pattern);
+                persistence.instructionEvaluator.notifyInstructionsUpdated();
+            }
+
+            persistence.view.notifyPattern(pattern);
+        };
+
         //todo: this is evil, get rid of it
         PersistenceHelper.prototype.setView = function setView(view)
         {
@@ -29,18 +45,20 @@ define(["jquery"], function ($)
 
         PersistenceHelper.prototype.createNewPattern = function createNewPattern()
         {
+            var helper = this;
             $.ajax({
                 type:     'POST',
                 url:      window.location.href.split("#")[0] + 'create',
                 dataType: "json",
                 data:     {},
-                success:  function (result)
+                success:  function (pattern)
                 {
-                    console.log('create response: ' + JSON.stringify(result));
+                    console.log('create response: ' + JSON.stringify(pattern));
+                    setPattern(helper, pattern);
                 },
                 error:    function (e)
                 {
-                    console.log(e);
+                    console.log("failed to create pattern - " + e);
                 }
             });
         };
@@ -57,16 +75,8 @@ define(["jquery"], function ($)
                 },
                 success:  function (pattern)
                 {
-                    if(pattern != null)
-                    {
-                        console.log('loaded pattern: ' + JSON.stringify(pattern));
-                        helper.activePatternId = pattern.id;
-                        helper.activePatternTitle = pattern.title;
-
-                        //todo: this is wrong, view should be told about instructions from the model
-                        helper.view.loadPattern(pattern);
-                        helper.instructionEvaluator.notifyInstructionsUpdated();
-                    }
+                    console.log('load response: ' + JSON.stringify(pattern));
+                    setPattern(helper, pattern);
                 },
                 error:    function (e)
                 {

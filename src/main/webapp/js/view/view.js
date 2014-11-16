@@ -92,7 +92,7 @@ define(["jquery", "bootstrap"], function ($)
             $("#login-button").bind({
                 click: function (event)
                 {
-                    connectionHelper.authorise(false);
+                    connectionHelper.authorise();
                 }
             });
 
@@ -124,6 +124,32 @@ define(["jquery", "bootstrap"], function ($)
             });
             setInstructionsTitle(pattern.title);
             rowNumberSynchroniser.notifyInstructionsUpdated();
+        };
+
+        this.notifyPattern = function notifyPattern(pattern)
+        {
+            if(pattern == null)
+            {
+                $("#empty-workspace").show();
+                $("#workspace").hide();
+                $("#unauthorised-workspace").hide();
+            }
+            else
+            {
+                $("#workspace").show();
+                $("#empty-workspace").hide();
+                $("#unauthorised-workspace").hide();
+            }
+        };
+
+        this.unauthorisedUser = function unauthorisedUser()
+        {
+            $("#unauthorised-workspace").show();
+            $("#empty-workspace").hide();
+            $("#workspace").hide();
+            $('#logout-button-div').hide();
+            $('#save-button-div').hide();
+            $('#create-button-div').hide();
         };
     }
 

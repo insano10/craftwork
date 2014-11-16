@@ -84,6 +84,23 @@
     height: 20px;
 }
 
+/*#workspace*/
+/*{*/
+    /*display: none;*/
+/*}
+this breaks the canvas rendering when .show() is called
+*/
+
+#empty-workspace
+{
+    display: none;
+}
+
+#unauthorised-workspace
+{
+    display: none;
+}
+
 .main-content-div
 {
     border-radius: 5px;

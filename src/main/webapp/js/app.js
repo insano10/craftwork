@@ -42,13 +42,14 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
 
                 //todo: evil
                 persistenceHelper.setView(view);
+                connectionHelper.setView(view);
 
                 chartRenderer.initialiseCanvas();
                 keyListener.addListener(instructionEvaluator);
                 keyListener.addListener(rowNumberSynchroniser);
 
                 view.initialise();
-                connectionHelper.authorise(true);
+                connectionHelper.authorise();
             })
         };
 
