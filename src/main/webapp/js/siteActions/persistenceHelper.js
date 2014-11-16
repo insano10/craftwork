@@ -6,7 +6,9 @@ define(["jquery"], function ($)
         {
             this.view = null;
             this.instructionEvaluator = instructionEvaluator;
-            this.title = "Untitled pattern";
+
+            this.activePatternId = -1;
+            this.activePatternTitle = "Untitled pattern";
         }
 
         //todo: this is evil, get rid of it
@@ -17,12 +19,12 @@ define(["jquery"], function ($)
 
         PersistenceHelper.prototype.getInstructionsTitle = function getInstructionsTitle()
         {
-            return this.title;
+            return this.activePatternTitle;
         };
 
         PersistenceHelper.prototype.setInstructionsTitle = function setInstructionsTitle(newTitle)
         {
-            this.title = newTitle;
+            this.activePatternTitle = newTitle;
         };
 
         PersistenceHelper.prototype.createNewPattern = function createNewPattern()
@@ -34,7 +36,7 @@ define(["jquery"], function ($)
                 data:     {},
                 success:  function (result)
                 {
-                    console.log('create response: ' + result);
+                    console.log('create response: ' + JSON.stringify(result));
                 },
                 error:    function (e)
                 {
@@ -55,12 +57,16 @@ define(["jquery"], function ($)
                 },
                 success:  function (pattern)
                 {
-                    console.log('loaded pattern: ' + JSON.stringify(pattern));
-                    this.title = pattern.title;
+                    if(pattern != null)
+                    {
+                        console.log('loaded pattern: ' + JSON.stringify(pattern));
+                        helper.activePatternId = pattern.id;
+                        helper.activePatternTitle = pattern.title;
 
-                    //todo: this is wrong, view should be told about instructions from the model
-                    helper.view.loadPattern(pattern);
-                    helper.instructionEvaluator.notifyInstructionsUpdated();
+                        //todo: this is wrong, view should be told about instructions from the model
+                        helper.view.loadPattern(pattern);
+                        helper.instructionEvaluator.notifyInstructionsUpdated();
+                    }
                 },
                 error:    function (e)
                 {
@@ -77,7 +83,8 @@ define(["jquery"], function ($)
                 dataType: "json",
                 data:     {
                     pattern: JSON.stringify({
-                        title:        title,
+                        id:           this.activePatternId,
+                        title:        this.activePatternTitle,
                         instructions: instructionArray
                     })
                 },
@@ -94,4 +101,4 @@ define(["jquery"], function ($)
 
         return PersistenceHelper;
     })();
-})
+});
