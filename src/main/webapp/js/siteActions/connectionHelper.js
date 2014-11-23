@@ -24,7 +24,7 @@ define(["jquery"], function ($)
             };
         }
 
-        var onSignInCallback = function onSignInCallback(authResult, connectionHelper)
+        var onAuthTokenRetrieved = function onAuthTokenRetrieved(authResult, connectionHelper)
         {
             //remove this field to stop the js trying to interact with the cross domain login popup
             delete authResult['g-oauth-window'];
@@ -32,7 +32,7 @@ define(["jquery"], function ($)
             if (authResult['status']['signed_in'])
             {
                 //success
-                connectServer(authResult, connectionHelper);
+                loginWithAuthToken(authResult, connectionHelper);
 
                 //render the profile data from Google+.
                 var getProfileCallback = partial(renderProfile, connectionHelper);
@@ -41,15 +41,12 @@ define(["jquery"], function ($)
             else
             {
                 //error
-                console.log('There was an error: ' + authResult['error']);
-                $('.post-login').hide();
-                $('#login-button').show();
-
-                connectionHelper.view.unauthorisedUser();
+                console.log('Error signing in: ' + authResult['error']);
+                connectionHelper.view.userUnauthorised();
             }
         };
 
-        var connectServer = function connectServer(authResult, helper)
+        var loginWithAuthToken = function loginWithAuthToken(authResult, helper)
         {
             $.ajax({
                 type:        'POST',
@@ -59,13 +56,7 @@ define(["jquery"], function ($)
                 data:        authResult.code,
                 success:     function (result)
                 {
-                    $('#login-button-div').hide();
-
-                    $('#logout-button-div').show();
-                    $('#save-button-div').show();
-                    $('#create-button-div').show();
-                    $(".post-login").show();
-
+                    helper.view.userAuthorised();
                     helper.persistenceHelper.loadPattern(LATEST_PATTERN_ID);
                 }
             });
@@ -88,9 +79,9 @@ define(["jquery"], function ($)
 
         ConnectionHelper.prototype.authorise = function authorise()
         {
-            var signInCallback = partial(onSignInCallback, this);
+            var onAuthTokenRetrievedCallback = partial(onAuthTokenRetrieved, this);
 
-            gapi.auth.signIn({"callback": signInCallback});
+            gapi.auth.signIn({"callback": onAuthTokenRetrievedCallback});
         };
 
         ConnectionHelper.prototype.disconnectServer = function disconnectServer()

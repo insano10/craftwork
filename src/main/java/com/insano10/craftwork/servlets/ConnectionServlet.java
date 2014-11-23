@@ -59,7 +59,7 @@ public class ConnectionServlet extends HttpServlet
         catch (TokenResponseException e)
         {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().print(GSON.toJson("Failed to upgrade the authorization code."));
+            response.getWriter().print(GSON.toJson("Failed to upgrade the authorization code. " + e.getMessage()));
         }
         catch (IOException e)
         {

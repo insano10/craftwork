@@ -116,9 +116,11 @@ define(["jquery", "bootstrap"], function ($)
 
         this.loadPattern = function loadPattern(pattern)
         {
+            var instructionBox = $("#instructions");
+            instructionBox.empty();
+
             $.each(pattern.instructions, function(idx, instruction)
             {
-                var instructionBox = $("#instructions");
                 instructionBox.val(instructionBox.val() + instruction + "\n");
 
             });
@@ -142,14 +144,27 @@ define(["jquery", "bootstrap"], function ($)
             }
         };
 
-        this.unauthorisedUser = function unauthorisedUser()
+        this.userAuthorised = function userAuthorised()
+        {
+            $('#login-button-div').hide();
+
+            $('#logout-button-div').show();
+            $('#save-button-div').show();
+            $('#create-button-div').show();
+            $(".post-login").show();
+        };
+
+        this.userUnauthorised = function userUnauthorised()
         {
             $("#unauthorised-workspace").show();
+            $('#login-button-div').show();
+
             $("#empty-workspace").hide();
             $("#workspace").hide();
             $('#logout-button-div').hide();
             $('#save-button-div').hide();
             $('#create-button-div').hide();
+            $('.post-login').hide();
         };
 
         this.renderUserProfile = function renderUserProfile(profile)
