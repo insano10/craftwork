@@ -116,11 +116,13 @@ define(["jquery", "bootstrap"], function ($)
 
         this.loadPattern = function loadPattern(pattern)
         {
+            console.error("loading pattern");
             var instructionBox = $("#instructions");
-            instructionBox.empty();
+            instructionBox.val("");
 
             $.each(pattern.instructions, function(idx, instruction)
             {
+                console.error("val is: " + instructionBox.val());
                 instructionBox.val(instructionBox.val() + instruction + "\n");
 
             });

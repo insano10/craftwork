@@ -29,7 +29,7 @@ define(["jquery"], function ($)
             //remove this field to stop the js trying to interact with the cross domain login popup
             delete authResult['g-oauth-window'];
 
-            if (authResult['status']['signed_in'])
+            if (authResult['status']['signed_in'] && authResult['status']['method'] == 'PROMPT')
             {
                 //success
                 loginWithAuthToken(authResult, connectionHelper);
