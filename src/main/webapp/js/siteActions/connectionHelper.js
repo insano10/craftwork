@@ -3,6 +3,7 @@ define(["jquery"], function ($)
     return (function ()
     {
         var LATEST_PATTERN_ID = null;
+        var NEEDS_TO_LOGIN = true; //todo: google api bug seems to require this, has it been fixed yet? And even if not does it need to be static?
 
         function ConnectionHelper(persistenceHelper)
         {
@@ -31,12 +32,16 @@ define(["jquery"], function ($)
 
             if (authResult['status']['signed_in'] && authResult['status']['method'] == 'PROMPT')
             {
-                //success
-                loginWithAuthToken(authResult, connectionHelper);
+                if(NEEDS_TO_LOGIN)
+                {
+                    //success
+                    loginWithAuthToken(authResult, connectionHelper);
 
-                //render the profile data from Google+.
-                var getProfileCallback = partial(renderProfile, connectionHelper);
-                gapi.client.load('plus', 'v1', getProfileCallback);
+                    //render the profile data from Google+.
+                    var getProfileCallback = partial(renderProfile, connectionHelper);
+                    gapi.client.load('plus', 'v1', getProfileCallback);
+                    NEEDS_TO_LOGIN = false;
+                }
             }
             else
             {
@@ -96,6 +101,7 @@ define(["jquery"], function ($)
                 {
                     console.log('revoke response: ' + result);
                     helper.view.userUnauthorised();
+                    NEEDS_TO_LOGIN = true;
                 },
                 error:   function (e)
                 {
