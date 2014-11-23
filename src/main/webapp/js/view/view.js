@@ -116,13 +116,11 @@ define(["jquery", "bootstrap"], function ($)
 
         this.loadPattern = function loadPattern(pattern)
         {
-            console.error("loading pattern");
             var instructionBox = $("#instructions");
             instructionBox.val("");
 
             $.each(pattern.instructions, function(idx, instruction)
             {
-                console.error("val is: " + instructionBox.val());
                 instructionBox.val(instructionBox.val() + instruction + "\n");
 
             });
@@ -167,6 +165,8 @@ define(["jquery", "bootstrap"], function ($)
             $('#save-button-div').hide();
             $('#create-button-div').hide();
             $('.post-login').hide();
+
+            $('#user-profile').empty();
         };
 
         this.renderUserProfile = function renderUserProfile(profile)

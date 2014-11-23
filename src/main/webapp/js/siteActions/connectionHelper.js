@@ -87,6 +87,7 @@ define(["jquery"], function ($)
         ConnectionHelper.prototype.disconnectServer = function disconnectServer()
         {
             // Revoke the server tokens
+            var helper = this;
             $.ajax({
                 type:    'POST',
                 url:     window.location.href.split("#")[0] + 'disconnect',
@@ -94,16 +95,11 @@ define(["jquery"], function ($)
                 success: function (result)
                 {
                     console.log('revoke response: ' + result);
-                    $('.post-login').hide();
-                    $('#save-button-div').hide();
-                    $('#create-button-div').hide();
-                    $('#logout-button-div').hide();
-                    $('#user-profile').empty();
-                    $('#login-button-div').show();
+                    helper.view.userUnauthorised();
                 },
                 error:   function (e)
                 {
-                    console.log(e);
+                    console.log("Failed to logout: " + e);
                 }
             });
         };
