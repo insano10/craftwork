@@ -151,6 +151,27 @@ define(["jquery", "bootstrap"], function ($)
             $('#save-button-div').hide();
             $('#create-button-div').hide();
         };
+
+        this.renderUserProfile = function renderUserProfile(profile)
+        {
+            var userProfile = $('#user-profile');
+
+            userProfile.empty();
+            if (profile.error)
+            {
+                userProfile.append(profile.error);
+                return;
+            }
+
+            userProfile.append('' +
+                '<a href="#" title="Access your profile">' +
+                '<span>' +
+                '<img height="30" width="30" src="' + profile.image.url + '" alt="' + profile.displayName + '" title="' + profile.displayName + '">' +
+                '</span>' +
+                '<span id="profile-name">' + profile.displayName + '' +
+                '</span>' +
+                '</a>');
+        };
     }
 
     return View;

@@ -35,7 +35,8 @@ define(["jquery"], function ($)
                 connectServer(authResult, connectionHelper);
 
                 //render the profile data from Google+.
-                gapi.client.load('plus', 'v1', renderProfile);
+                var getProfileCallback = partial(renderProfile, connectionHelper);
+                gapi.client.load('plus', 'v1', getProfileCallback);
             }
             else
             {
@@ -70,30 +71,13 @@ define(["jquery"], function ($)
             });
         };
 
-        var renderProfile = function renderProfile()
+        var renderProfile = function renderProfile(helper)
         {
             var request = gapi.client.plus.people.get({'userId': 'me'});
+
             request.execute(function (profile)
             {
-                var userProfile = $('#user-profile');
-
-                userProfile.empty();
-                if (profile.error)
-                {
-                    userProfile.append(profile.error);
-                    return;
-                }
-
-                //todo: make view do this
-                userProfile.append('' +
-                    '<a href="#" title="Access your profile">' +
-                    '<span>' +
-                    '<img height="30" width="30" src="' + profile.image.url + '" alt="' + profile.displayName + '" title="' + profile.displayName + '">' +
-                    '</span>' +
-                    '<span id="profile-name">' + profile.displayName + '' +
-                    '</span>' +
-                    '</a>');
-
+                helper.view.renderUserProfile(profile);
             });
         };
 
