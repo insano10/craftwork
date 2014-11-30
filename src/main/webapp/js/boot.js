@@ -1,7 +1,7 @@
 require(
     {
-        shim : {
-            "bootstrap" : { "deps" :['jquery'] }
+        shim:  {
+            "bootstrap": { "deps": ['jquery'] }
         },
         paths: {
             "jquery":                "lib/jquery-2.1.0.min",
@@ -9,6 +9,7 @@ require(
             "keyListener":           "controller/keyListener",
             "instructionEvaluator":  "controller/instructionEvaluator",
             "rowNumberSynchroniser": "controller/rowNumberSynchroniser",
+            "uiWidgetBehaviour":     "controller/uiWidgetBehaviour",
             "chartRenderer":         "model/crochet/rendering/chartRenderer",
             "renderedStitch":        "model/crochet/rendering/renderedStitch",
             "renderContext":         "model/crochet/rendering/renderContext",

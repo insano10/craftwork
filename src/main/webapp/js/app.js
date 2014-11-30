@@ -2,8 +2,10 @@
  This is the main app entry point from boot.js (loaded by require.js)
  */
 
-define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser", "persistenceHelper", "connectionHelper", "view"],
-    function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator, RowNumberSynchroniser, PersistenceHelper, ConnectionHelper, View)
+define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser", "persistenceHelper", "connectionHelper",
+        "view", "uiWidgetBehaviour"],
+    function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator, RowNumberSynchroniser, PersistenceHelper, ConnectionHelper,
+              View, UiWidgetBehaviour)
     {
         var toggleLogging = function toggleLogging()
         {
@@ -38,7 +40,8 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 var rowNumberSynchroniser = new RowNumberSynchroniser();
                 var persistenceHelper = new PersistenceHelper(instructionEvaluator);
                 var connectionHelper = new ConnectionHelper(persistenceHelper);
-                var view = new View(keyListener, persistenceHelper, connectionHelper, rowNumberSynchroniser);
+                var view = new View(persistenceHelper, rowNumberSynchroniser);
+                var uiWidgetBehaviour = new UiWidgetBehaviour(keyListener, persistenceHelper, connectionHelper, view);
 
                 //todo: evil
                 persistenceHelper.setView(view);
@@ -48,7 +51,7 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 keyListener.addListener(instructionEvaluator);
                 keyListener.addListener(rowNumberSynchroniser);
 
-                view.initialise();
+                uiWidgetBehaviour.initialise();
                 connectionHelper.authorise();
             })
         };
