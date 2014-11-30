@@ -89,10 +89,6 @@ define(["jquery", "bootstrap"], function ($)
                 }
             });
 
-            //todo: put this somewhere else
-            $("#row-numbers").append("<p>row 1:</p>");
-            instructionsTitle.empty();
-            instructionsTitle.append("Untitled pattern");
         };
     }
 

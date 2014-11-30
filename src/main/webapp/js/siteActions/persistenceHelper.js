@@ -19,7 +19,6 @@ define(["jquery"], function ($)
                 persistence.activePatternId = pattern.id;
                 persistence.activePatternTitle = pattern.title;
 
-                //todo: this is wrong, view should be told about instructions from the model
                 persistence.view.loadPattern(pattern);
                 persistence.instructionEvaluator.notifyInstructionsUpdated();
             }

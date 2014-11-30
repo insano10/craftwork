@@ -2,6 +2,22 @@ define(["jquery", "bootstrap"], function ($)
 {
     function View(rowNumberSynchroniser)
     {
+        var setInstructionsTitle = function setInstructionsTitle(title)
+        {
+            var instructionsTitle = $("#instructions-title");
+            instructionsTitle.empty();
+            instructionsTitle.append(title);
+        };
+
+        this.initialise = function initialise()
+        {
+            $("#row-numbers").append("<p>row 1:</p>");
+
+            var instructionsTitle = $("#instructions-title");
+            instructionsTitle.empty();
+            instructionsTitle.append("Untitled pattern");
+        };
+
         this.updateModalTitleInput = function updateModalTitleInput(title)
         {
             $("#rename-title-input").val(title);
@@ -10,13 +26,6 @@ define(["jquery", "bootstrap"], function ($)
         this.updateInstructionsTitle = function updateInstructionsTitle(newTitle)
         {
             setInstructionsTitle(newTitle);
-        };
-
-        var setInstructionsTitle = function setInstructionsTitle(title)
-        {
-            var instructionsTitle = $("#instructions-title");
-            instructionsTitle.empty();
-            instructionsTitle.append(title);
         };
 
         this.loadPattern = function loadPattern(pattern)
