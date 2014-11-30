@@ -7,7 +7,9 @@ require(
             "jquery":                "lib/jquery-2.1.0.min",
             "bootstrap":             "lib/bootstrap-3.3.0/js/bootstrap.min",
             "keyListener":           "controller/keyListener",
+            "connectionHelper":      "controller/connectionHelper",
             "instructionEvaluator":  "controller/instructionEvaluator",
+            "persistenceHelper":     "controller/persistenceHelper",
             "rowNumberSynchroniser": "controller/rowNumberSynchroniser",
             "uiWidgetBehaviour":     "controller/uiWidgetBehaviour",
             "chartRenderer":         "model/crochet/rendering/chartRenderer",
@@ -23,8 +25,6 @@ require(
             "decreaseStitch":        "model/crochet/elements/decreaseStitch",
             "increaseStitch":        "model/crochet/elements/increaseStitch",
             "chainUpStitch":         "model/crochet/elements/chainUpStitch",
-            "connectionHelper":      "siteActions/connectionHelper",
-            "persistenceHelper":     "siteActions/persistenceHelper",
             "view":                  "view/view"
         }
     },
