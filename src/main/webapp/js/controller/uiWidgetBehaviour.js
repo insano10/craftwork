@@ -40,7 +40,17 @@ define(["jquery", "bootstrap"], function ($)
             $("#save-title-button").bind({
                 click: function (event)
                 {
-                    view.updateInstructionsTitle();
+                    var newTitle = $("#rename-title-input").val();
+
+                    if(newTitle)
+                    {
+                        persistenceHelper.setInstructionsTitle(newTitle);
+                        view.updateInstructionsTitle(newTitle);
+                    }
+                    else
+                    {
+                        console.error("Title cannot be empty");
+                    }
                 }
             });
 

@@ -1,28 +1,15 @@
 define(["jquery", "bootstrap"], function ($)
 {
-    function View(persistenceHelper, rowNumberSynchroniser)
+    function View(rowNumberSynchroniser)
     {
         this.updateModalTitleInput = function updateModalTitleInput(title)
         {
             $("#rename-title-input").val(title);
         };
 
-        //todo: should this take in the title or be responsible for finding it on its own?
-        this.updateInstructionsTitle = function updateInstructionsTitle()
+        this.updateInstructionsTitle = function updateInstructionsTitle(newTitle)
         {
-            var newTitle = $("#rename-title-input").val();
-
-            if (newTitle)
-            {
-                persistenceHelper.setInstructionsTitle(newTitle);
-                setInstructionsTitle(newTitle);
-
-                console.log("title is now: " + newTitle);
-            }
-            else
-            {
-                console.error("Title cannot be empty");
-            }
+            setInstructionsTitle(newTitle);
         };
 
         var setInstructionsTitle = function setInstructionsTitle(title)

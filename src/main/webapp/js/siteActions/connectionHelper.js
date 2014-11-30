@@ -5,10 +5,10 @@ define(["jquery"], function ($)
         var LATEST_PATTERN_ID = null;
         var NEEDS_TO_LOGIN = true; //todo: google api bug seems to require this, has it been fixed yet? And even if not does it need to be static?
 
-        function ConnectionHelper(persistenceHelper)
+        function ConnectionHelper(persistenceHelper, view)
         {
             this.persistenceHelper = persistenceHelper;
-            this.view = null;
+            this.view = view;
         }
 
         /*
@@ -75,11 +75,6 @@ define(["jquery"], function ($)
             {
                 helper.view.renderUserProfile(profile);
             });
-        };
-
-        ConnectionHelper.prototype.setView = function setView(view)
-        {
-            this.view = view;
         };
 
         ConnectionHelper.prototype.authorise = function authorise()

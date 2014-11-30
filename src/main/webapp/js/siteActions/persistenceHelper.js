@@ -2,10 +2,10 @@ define(["jquery"], function ($)
 {
     return (function ()
     {
-        function PersistenceHelper(instructionEvaluator)
+        function PersistenceHelper(instructionEvaluator, view)
         {
-            this.view = null;
             this.instructionEvaluator = instructionEvaluator;
+            this.view = view;
 
             this.activePatternId = -1;
             this.activePatternTitle = "Untitled pattern";
@@ -25,12 +25,6 @@ define(["jquery"], function ($)
             }
 
             persistence.view.notifyPattern(pattern);
-        };
-
-        //todo: this is evil, get rid of it
-        PersistenceHelper.prototype.setView = function setView(view)
-        {
-            this.view = view;
         };
 
         PersistenceHelper.prototype.getInstructionsTitle = function getInstructionsTitle()

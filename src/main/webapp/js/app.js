@@ -35,17 +35,16 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 var chartModel = new ChartModel();
                 var keyListener = new KeyListener();
                 var parseChain = new ParseChainFactory().createParseChain(chartModel);
+
+                var rowNumberSynchroniser = new RowNumberSynchroniser();
+                var view = new View(rowNumberSynchroniser);
+
                 var instructionParser = new InstructionParser(chartModel, chartRenderer, parseChain);
                 var instructionEvaluator = new InstructionEvaluator(instructionParser);
-                var rowNumberSynchroniser = new RowNumberSynchroniser();
-                var persistenceHelper = new PersistenceHelper(instructionEvaluator);
-                var connectionHelper = new ConnectionHelper(persistenceHelper);
-                var view = new View(persistenceHelper, rowNumberSynchroniser);
-                var uiWidgetBehaviour = new UiWidgetBehaviour(keyListener, persistenceHelper, connectionHelper, view);
 
-                //todo: evil
-                persistenceHelper.setView(view);
-                connectionHelper.setView(view);
+                var persistenceHelper = new PersistenceHelper(instructionEvaluator, view);
+                var connectionHelper = new ConnectionHelper(persistenceHelper, view);
+                var uiWidgetBehaviour = new UiWidgetBehaviour(keyListener, persistenceHelper, connectionHelper, view);
 
                 chartRenderer.initialiseCanvas();
                 keyListener.addListener(instructionEvaluator);
