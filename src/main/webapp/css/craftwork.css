@@ -22,9 +22,6 @@
 .header-button a
 {
     color: #f3f3f3;
-    font: 14px "Helvetica Neue",Arial,Helvetica,sans-serif;
-    line-height: 18px;
-    font-weight: 700;
     padding-top:5px;
     padding-bottom: 7px;
 }
@@ -33,11 +30,15 @@
 .header-button>ul>li>a
 {
     color: #f3f3f3;
+    padding-top:5px;
+    padding-bottom: 7px;
+}
+
+.option-text
+{
     font: 14px "Helvetica Neue",Arial,Helvetica,sans-serif;
     line-height: 18px;
     font-weight: 700;
-    padding-top:5px;
-    padding-bottom: 7px;
 }
 
 .header-button:hover
@@ -139,18 +140,37 @@
     position: absolute;
     top: 0;
     left: -300px;
-    padding: 15px;
+    padding: 20px;
     -webkit-transform: translateX(0);
     transform: translateX(0);
     -webkit-transition: .3s ease all;
     transition: .3s ease all;
-    border: 1px solid #000000;
+    background-color: #ffffff;
+    border: 1px solid #dfe0e2;
+    border-radius: 5px;
+    margin-top: 20px;
 }
 
 #site-wrapper.show-nav #site-menu
 {
     -webkit-transform: translateX(300px);
     transform: translateX(300px);
+}
+
+.site-menu-option a
+{
+    color: #000000;
+}
+
+.site-menu-option a:link
+{
+    color: #000000;
+    text-decoration: none;
+}
+
+#new-pattern-image
+{
+    margin-right: 10px;
 }
 
 .spacer
