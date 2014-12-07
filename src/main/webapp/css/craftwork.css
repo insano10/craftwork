@@ -62,7 +62,8 @@
     display: block;
     position: absolute;
     top: 5px;
-    right: 210px;
+    right: 10px;
+    cursor: pointer;
 }
 
 #logout-button-div

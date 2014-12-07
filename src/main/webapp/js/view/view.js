@@ -19,6 +19,8 @@ define(["jquery", "bootstrap"], function ($)
             var instructionsTitle = $("#instructions-title");
             instructionsTitle.empty();
             instructionsTitle.append("Untitled pattern");
+
+            this.userUnauthorised();
         };
 
         this.updateModalTitleInput = function updateModalTitleInput(title)
