@@ -81,7 +81,15 @@ define(["jquery"], function ($)
         {
             var onAuthTokenRetrievedCallback = partial(onAuthTokenRetrieved, this);
 
-            gapi.auth.signIn({"callback": onAuthTokenRetrievedCallback});
+            gapi.auth.signIn(
+                {
+                    "callback": onAuthTokenRetrievedCallback,
+                    "clientid": "167961214562-grbr91oci2183eqd580k8r7vvfsqmvsi.apps.googleusercontent.com",
+                    "scope": "https://www.googleapis.com/auth/plus.login",
+                    "requestvisibleactions": "http://schema.org/AddAction",
+                    "cookiepolicy": "single_host_origin"
+                }
+            );
         };
 
         ConnectionHelper.prototype.disconnectServer = function disconnectServer()
