@@ -32,6 +32,8 @@
     font: 14px "Helvetica Neue",Arial,Helvetica,sans-serif;
     line-height: 18px;
     font-weight: 700;
+    padding-top:5px;
+    padding-bottom: 7px;
 }
 
 #user-profile a:link
