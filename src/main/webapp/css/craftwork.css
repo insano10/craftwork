@@ -23,7 +23,6 @@
 
 #user-profile:hover
 {
-    color: #f3f3f3 ;
     background-color: #659797;
 }
 
@@ -38,7 +37,6 @@
 #user-profile a:link
 {
     color: #f3f3f3;
-    background-color: transparent;
     text-decoration: none;
 }
 
@@ -50,6 +48,11 @@
 .profile-options
 {
     background-color: #659797;
+}
+
+.profile-options li > a:hover
+{
+    background-color: #3F7D7D;
 }
 
 #login-button-div

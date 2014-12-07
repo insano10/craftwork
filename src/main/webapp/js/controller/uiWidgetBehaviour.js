@@ -54,7 +54,7 @@ define(["jquery", "bootstrap"], function ($)
                 }
             });
 
-            $("#logout-button").bind({
+            $("#logout-option").bind({
                 click: function (event)
                 {
                     connectionHelper.disconnectServer();
