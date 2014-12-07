@@ -130,10 +130,6 @@
     width: 100%;
     height: 100%;
     position: relative;
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-    -webkit-transition: .3s ease all;
-    transition: .3s ease all;
 }
 
 #site-menu
@@ -144,10 +140,14 @@
     top: 0;
     left: -300px;
     padding: 15px;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-transition: .3s ease all;
+    transition: .3s ease all;
     border: 1px solid #000000;
 }
 
-#site-wrapper.show-nav #site-content
+#site-wrapper.show-nav #site-menu
 {
     -webkit-transform: translateX(300px);
     transform: translateX(300px);
