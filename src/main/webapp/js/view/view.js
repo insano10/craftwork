@@ -16,6 +16,13 @@ define(["jquery", "bootstrap"], function ($)
             //enable dropdown widgets
             $(".dropdown-toggle").dropdown();
 
+            $(".toggle-nav").bind({
+                click: function (event)
+                {
+                    $("#site-wrapper").toggleClass("show-nav");
+                }
+            });
+
             var instructionsTitle = $("#instructions-title");
             instructionsTitle.empty();
             instructionsTitle.append("Untitled pattern");
