@@ -14,22 +14,28 @@
     <body class="body">
 
         <div id="header-panel" class="row">
-            <div id="save-button-div"><button id="save-button">Save</button></div>
-            <div id="create-button-div"><button id="create-button">New</button></div>
-            <div id="user-container">
-                <div id="user-profile" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Access your profile">
-                        <span> <img id="profile-image" height="30" width="30" src="???" alt="unknown" title="unknown"> </span>
-                        <span id="profile-name">Unknown</span>
-                    </a>
-                    <ul class="dropdown-menu profile-options">
-                        <li><a id="settings-option" href="#">Settings</a></li>
-                        <li><a id="logout-option" href="#">Logout</a></li>
-                    </ul>
-                </div>
-                <div id="login-button-div">
-                    <img id="login-button" src="../../images/signin.png">
-                </div>
+
+            <div id="my-patterns" class="header-button">
+                <a href="#" title="My Patterns">
+                    <span><img id="my-patterns-image" src="../../images/chest.png" alt="My Patterns" title="My Patterns"></span>
+                    <span>My Patterns</span>
+                </a>
+            </div>
+
+            <!--<div id="save-button-div"><button id="save-button">Save</button></div>-->
+            <!--<div id="create-button-div"><button id="create-button">New</button></div>-->
+            <div id="user-profile" class="dropdown header-button">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Access your profile">
+                    <span><img id="profile-image" height="30" width="30" src="???" alt="unknown" title="unknown"></span>
+                    <span id="profile-name">Unknown</span>
+                </a>
+                <ul class="dropdown-menu profile-options">
+                    <li><a id="settings-option" href="#">Settings</a></li>
+                    <li><a id="logout-option" href="#">Logout</a></li>
+                </ul>
+            </div>
+            <div id="login-button-div">
+                <img id="login-button" src="../../images/signin.png">
             </div>
         </div>
 
@@ -76,6 +82,7 @@
                 </div>
             </div>
         </div>
+
         <div id="empty-workspace">
             <span>Please create a new pattern to continue</span>
         </div>
