@@ -50,6 +50,7 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 keyListener.addListener(instructionEvaluator);
                 keyListener.addListener(rowNumberSynchroniser);
 
+                view.initialise();
                 uiWidgetBehaviour.initialise();
                 connectionHelper.authorise();
             })

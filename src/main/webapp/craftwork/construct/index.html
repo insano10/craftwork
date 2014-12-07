@@ -39,7 +39,16 @@
                 <div id="login-button-div">
                     <button id="login-button">Login</button>
                 </div>
-                <div id="user-profile"></div>
+                <div id="user-profile" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Access your profile">
+                        <span> <img id="profile-image" height="30" width="30" src="???" alt="unknown" title="unknown"> </span>
+                        <span id="profile-name">Unknown</span>
+                    </a>
+                    <ul class="dropdown-menu profile-options">
+                        <li><a id="settings-option" href="#">Settings</a></li>
+                        <li><a id="logout-option" href="#">Logout</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 

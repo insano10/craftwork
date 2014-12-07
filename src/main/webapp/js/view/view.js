@@ -13,6 +13,9 @@ define(["jquery", "bootstrap"], function ($)
         {
             $("#row-numbers").append("<p>row 1:</p>");
 
+            //enable dropdown widgets
+            $(".dropdown-toggle").dropdown();
+
             var instructionsTitle = $("#instructions-title");
             instructionsTitle.empty();
             instructionsTitle.append("Untitled pattern");
@@ -66,6 +69,7 @@ define(["jquery", "bootstrap"], function ($)
             $('#save-button-div').show();
             $('#create-button-div').show();
             $(".post-login").show();
+            $('#user-profile').show();
         };
 
         this.userUnauthorised = function userUnauthorised()
@@ -79,29 +83,25 @@ define(["jquery", "bootstrap"], function ($)
             $('#save-button-div').hide();
             $('#create-button-div').hide();
             $('.post-login').hide();
-
-            $('#user-profile').empty();
+            $('#user-profile').hide();
         };
 
         this.renderUserProfile = function renderUserProfile(profile)
         {
             var userProfile = $('#user-profile');
 
-            userProfile.empty();
             if (profile.error)
             {
                 userProfile.append(profile.error);
                 return;
             }
 
-            userProfile.append('' +
-                '<a href="#" title="Access your profile">' +
-                '<span>' +
-                '<img height="30" width="30" src="' + profile.image.url + '" alt="' + profile.displayName + '" title="' + profile.displayName + '">' +
-                '</span>' +
-                '<span id="profile-name">' + profile.displayName + '' +
-                '</span>' +
-                '</a>');
+            var profileImage = $("#profile-image");
+            profileImage.attr("src", profile.image.url);
+            profileImage.attr("alt", profile.displayName);
+            profileImage.attr("title", profile.displayName);
+
+            $("#profile-name").text(profile.displayName);
         };
     }
 

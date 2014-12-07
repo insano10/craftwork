@@ -47,6 +47,11 @@
     padding-left: 5px;
 }
 
+.profile-options
+{
+    background-color: #659797;
+}
+
 #login-button-div
 {
     display: block;
