@@ -118,6 +118,15 @@ define(["jquery", "bootstrap"], function ($)
 
             $("#profile-name").text(profile.displayName);
         };
+
+        this.updateMyPatternList = function updateMyPatternList(patterns)
+        {
+            var myPatternList = $("#my-pattern-list");
+
+            $.each(patterns, function(idx, pattern) {
+                myPatternList.append("<div class='site-menu-option my-pattern-item'><a href='#'>" + pattern.title + "</a></div>")
+            });
+        }
     }
 
     return View;
