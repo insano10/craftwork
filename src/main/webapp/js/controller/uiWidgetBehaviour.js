@@ -61,7 +61,7 @@ define(["jquery", "bootstrap"], function ($)
                 }
             });
 
-            $("#new-pattern-option").bind({
+            $("#new-pattern-option-div").bind({
                 click: function (event)
                 {
                     var pattern = persistenceHelper.createNewPattern();

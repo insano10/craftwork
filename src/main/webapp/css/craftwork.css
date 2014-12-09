@@ -140,7 +140,7 @@
     position: absolute;
     top: 0;
     left: -300px;
-    padding: 20px;
+    padding: 30px;
     -webkit-transform: translateX(0);
     transform: translateX(0);
     -webkit-transition: .3s ease all;
@@ -171,6 +171,15 @@
 #new-pattern-image
 {
     margin-right: 10px;
+}
+
+#new-pattern-option-div
+{
+    border: 1px solid #dfe0e2;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 85%;
+    padding: 10px;
 }
 
 .spacer

@@ -23,12 +23,10 @@ define(["jquery", "bootstrap"], function ($)
                 }
             });
 
-            $("#new-pattern-option").hover(function() {
+            $("#new-pattern-option-div").hover(function() {
                     $("#new-pattern-image").attr("src", "../../images/new-circle-highlight.png");
-                    console.log("hoverin");
                 }, function() {
                     $("#new-pattern-image").attr("src", "../../images/new-circle.png");
-                    console.log("hoverout");
             });
 
             var instructionsTitle = $("#instructions-title");
