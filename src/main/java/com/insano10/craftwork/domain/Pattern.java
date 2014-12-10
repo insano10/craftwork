@@ -39,8 +39,14 @@ public class Pattern
 
         lines.add(String.valueOf(id));
         lines.add(title);
-        Collections.addAll(lines, instructions);
 
+        System.out.println(instructions);
+
+        Arrays.asList(instructions).stream().
+                filter((String s) -> !s.isEmpty()).
+                forEach(lines::add);
+
+        System.out.println(lines);
         return lines;
     }
 

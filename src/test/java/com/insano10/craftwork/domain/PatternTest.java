@@ -3,7 +3,6 @@ package com.insano10.craftwork.domain;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -22,6 +21,17 @@ public class PatternTest
         assertEquals("line 1", fileFormatStrings.get(2));
         assertEquals("line 2", fileFormatStrings.get(3));
         assertEquals("line 3", fileFormatStrings.get(4));
+    }
+
+    @Test
+    public void shouldTrimEmptyLinesFromEndOfPatternWhenConvertingToFileFormat() throws Exception
+    {
+        final List<String> fileFormatStrings = new Pattern(0L, "Title", new String[]{"line 1", "", ""}).asFileFormat();
+
+        assertEquals("0", fileFormatStrings.get(0));
+        assertEquals("Title", fileFormatStrings.get(1));
+        assertEquals("line 1", fileFormatStrings.get(2));
+        assertEquals("lines: " + fileFormatStrings, 3, fileFormatStrings.size());
     }
 
     @Test
