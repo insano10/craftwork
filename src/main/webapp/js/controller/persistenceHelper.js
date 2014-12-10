@@ -47,7 +47,12 @@ define(["jquery"], function ($)
                 success:  function (pattern)
                 {
                     console.log('create response: ' + JSON.stringify(pattern));
-                    setPattern(helper, pattern);
+
+                    if(this.activePatternId == -1)
+                    {
+                        setPattern(helper, pattern);
+                    }
+                    helper.loadPatterns();
                 },
                 error:    function (e)
                 {
@@ -99,10 +104,10 @@ define(["jquery"], function ($)
 
         PersistenceHelper.prototype.savePattern = function savePattern(instructionArray)
         {
+            var helper = this;
             $.ajax({
                 type:     'POST',
                 url:      window.location.href.split("#")[0] + 'save',
-                dataType: "json",
                 data:     {
                     pattern: JSON.stringify({
                         id:           this.activePatternId,
@@ -113,6 +118,7 @@ define(["jquery"], function ($)
                 success:  function (result)
                 {
                     console.log('save response: ' + result);
+                    helper.loadPatterns();
                 },
                 error:    function (e)
                 {
