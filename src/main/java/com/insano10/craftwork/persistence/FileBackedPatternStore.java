@@ -28,7 +28,7 @@ public class FileBackedPatternStore implements PatternStore
         {
             Files.createDirectories(Paths.get(PATTERN_FOLDER, userId));
             Path patternFile = Paths.get(PATTERN_FOLDER, userId, String.valueOf(pattern.getId()).concat(".ptn"));
-            Files.write(patternFile, pattern.asFileFormat(), StandardOpenOption.CREATE);
+            Files.write(patternFile, pattern.asFileFormat(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
             LOGGER.info("Pattern saved: " + patternFile.toString());
         }
