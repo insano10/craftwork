@@ -62,6 +62,7 @@ define(["jquery"], function ($)
                 success:     function (result)
                 {
                     helper.view.userAuthorised();
+                    helper.persistenceHelper.loadPatterns();
                     helper.persistenceHelper.loadPattern(LATEST_PATTERN_ID);
                 }
             });

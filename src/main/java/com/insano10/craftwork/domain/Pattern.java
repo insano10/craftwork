@@ -1,9 +1,6 @@
 package com.insano10.craftwork.domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Pattern
 {
@@ -25,14 +22,10 @@ public class Pattern
         return new Pattern(id, UNKNOWN_TITLE, new String[0]);
     }
 
-    @Override
-    public String toString()
+    public static Pattern fromFileFormat(final List<String> lines)
     {
-        return "Pattern{" +
-                "id='" + id + '\'' +
-                "title='" + title + '\'' +
-                ", instructions=" + Arrays.toString(instructions) +
-                '}';
+        List<String> instructions = lines.subList(2, lines.size());
+        return new Pattern(Long.parseLong(lines.get(0)), lines.get(1), instructions.toArray(new String[instructions.size()]));
     }
 
     public long getId()
@@ -40,7 +33,7 @@ public class Pattern
         return id;
     }
 
-    public Iterable<String> asFileFormat()
+    public List<String> asFileFormat()
     {
         final List<String> lines = new ArrayList<>();
 
@@ -51,9 +44,37 @@ public class Pattern
         return lines;
     }
 
-    public static Pattern fromFileFormat(final List<String> lines)
+    @Override
+    public boolean equals(Object o)
     {
-        List<String> instructions = lines.subList(2, lines.size());
-        return new Pattern(Long.parseLong(lines.get(0)), lines.get(1), instructions.toArray(new String[instructions.size()]));
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pattern pattern = (Pattern) o;
+
+        if (id != pattern.id) return false;
+        if (!Arrays.equals(instructions, pattern.instructions)) return false;
+        if (!title.equals(pattern.title)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + title.hashCode();
+        result = 31 * result + Arrays.hashCode(instructions);
+        return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Pattern{" +
+                "id='" + id + '\'' +
+                "title='" + title + '\'' +
+                ", instructions=" + Arrays.toString(instructions) +
+                '}';
     }
 }

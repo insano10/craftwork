@@ -53,14 +53,6 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
                 view.initialise();
                 uiWidgetBehaviour.initialise();
                 connectionHelper.authorise();
-
-                //todo: fake!
-                var patterns = [
-                    {id: 1, title: "my pattern 1", instructions: []},
-                    {id: 2, title: "my pattern 2", instructions: []},
-                    {id: 3, title: "my pattern 3", instructions: []}
-                ];
-                view.updateMyPatternList(patterns);
             })
         };
 

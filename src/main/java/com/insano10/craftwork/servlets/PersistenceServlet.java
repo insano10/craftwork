@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 
 public class PersistenceServlet extends HttpServlet
 {
@@ -28,9 +29,28 @@ public class PersistenceServlet extends HttpServlet
     private final PatternStore patternStore = new FileBackedPatternStore();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+        if(request.getRequestURI().endsWith("/patterns"))
+        {
+            String tokenData = (String) request.getSession().getAttribute("token");
+            if (tokenData == null)
+            {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().print(GSON.toJson("User is not logged in"));
+                return;
+            }
 
+            Person user = getUserFromToken(tokenData);
+
+            Collection<Pattern> patterns = patternStore.getPatterns(user.getId());
+            response.getWriter().print(GSON.toJson(patterns));
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        else
+        {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 
     @Override

@@ -78,6 +78,25 @@ define(["jquery"], function ($)
             });
         };
 
+        PersistenceHelper.prototype.loadPatterns = function loadPatterns()
+        {
+            var helper = this;
+            $.ajax({
+                type:     'GET',
+                url:      window.location.href.split("#")[0] + 'patterns',
+                dataType: "json",
+                success:  function (patterns)
+                {
+                    console.log('load response: ' + JSON.stringify(patterns));
+                    helper.view.updateMyPatternList(patterns);
+                },
+                error:    function (e)
+                {
+                    console.log("failed to load patterns - " + e);
+                }
+            });
+        };
+
         PersistenceHelper.prototype.savePattern = function savePattern(instructionArray)
         {
             $.ajax({

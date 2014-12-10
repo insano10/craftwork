@@ -45,4 +45,9 @@
         <url-pattern>/craftwork/construct/save</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>PersistenceServlet</servlet-name>
+        <url-pattern>/craftwork/construct/patterns</url-pattern>
+    </servlet-mapping>
+
 </web-app>
