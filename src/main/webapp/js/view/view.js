@@ -128,7 +128,7 @@ define(["jquery", "bootstrap"], function ($)
             myPatternList.empty();
 
             $.each(patterns, function(idx, pattern) {
-                myPatternList.append("<div class='site-menu-option my-pattern-item'><a href='#'>" + pattern.title + "</a></div>")
+                myPatternList.append("<div class='site-menu-option my-pattern-item'><a id='pattern-" + pattern.id+ "' href='#'>" + pattern.title + "</a></div>")
             });
         }
     }

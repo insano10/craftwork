@@ -56,14 +56,18 @@ define(["renderContext"], function (RenderContext)
         {
             var lastStitch = renderContext.getLastRenderedStitch();
 
-            canvasContext.save();
+            if(lastStitch != null)
+            {
 
-            //rotate image 90 degrees
-            canvasContext.translate(lastStitch.getXPos(), lastStitch.getYPos());
-            canvasContext.rotate(90*Math.PI/180);
-            canvasContext.drawImage(arrowEndIcon, -15, -13);
+                canvasContext.save();
 
-            canvasContext.restore();
+                //rotate image 90 degrees
+                canvasContext.translate(lastStitch.getXPos(), lastStitch.getYPos());
+                canvasContext.rotate(90 * Math.PI / 180);
+                canvasContext.drawImage(arrowEndIcon, -15, -13);
+
+                canvasContext.restore();
+            }
         };
 
         this.initialiseCanvas = function initialiseCanvas()
@@ -77,8 +81,6 @@ define(["renderContext"], function (RenderContext)
 
         this.renderModel = function renderModel(model)
         {
-            if(model.requiresRender())
-            {
                 var chartCanvas = document.getElementById("chart-canvas");
                 var ctx = chartCanvas.getContext("2d");
 
@@ -94,7 +96,6 @@ define(["renderContext"], function (RenderContext)
                 renderEndArrow(ctx, renderContext);
 
                 ctx.restore();
-            }
         };
     }
 

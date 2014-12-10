@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 
 public class PersistenceServlet extends HttpServlet
@@ -43,7 +42,7 @@ public class PersistenceServlet extends HttpServlet
 
             Person user = getUserFromToken(tokenData);
 
-            Collection<Pattern> patterns = patternStore.getPatterns(user.getId());
+            Collection<Pattern> patterns = patternStore.loadPatterns(user.getId());
             response.getWriter().print(GSON.toJson(patterns));
             response.setStatus(HttpServletResponse.SC_OK);
         }
@@ -76,7 +75,18 @@ public class PersistenceServlet extends HttpServlet
         }
         else if(request.getRequestURI().endsWith("/load"))
         {
-            Pattern pattern = patternStore.loadLatest(user.getId());
+            final String patternId = request.getParameter("patternId");
+
+            final  Pattern pattern;
+            //todo: replace this hack by putting id in url. e.g. /load/123
+            if(patternId.isEmpty() || patternId.equals("null"))
+            {
+                pattern = patternStore.loadLatest(user.getId());
+            }
+            else
+            {
+                pattern = patternStore.loadPattern(user.getId(), patternId);
+            }
 
             response.getWriter().print(GSON.toJson(pattern));
             response.setStatus(HttpServletResponse.SC_OK);

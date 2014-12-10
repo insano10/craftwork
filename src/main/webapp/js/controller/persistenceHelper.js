@@ -94,6 +94,15 @@ define(["jquery"], function ($)
                 {
                     console.log('load response: ' + JSON.stringify(patterns));
                     helper.view.updateMyPatternList(patterns);
+
+                    $.each(patterns, function(idx, pattern){
+                        $("#pattern-" + pattern.id).bind({
+                            click: function() {
+                                console.log("loading " + pattern.id);
+                                helper.loadPattern(pattern.id);
+                            }
+                        })
+                    });
                 },
                 error:    function (e)
                 {

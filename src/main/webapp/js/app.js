@@ -9,7 +9,7 @@ define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructi
     {
         var toggleLogging = function toggleLogging()
         {
-            var DEBUG = false; //turn this to true to enable console logging
+            var DEBUG = true; //turn this to true to enable console logging
             if (!DEBUG)
             {
                 if (!window.console) window.console = {};

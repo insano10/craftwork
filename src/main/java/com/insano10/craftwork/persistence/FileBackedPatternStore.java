@@ -82,7 +82,7 @@ public class FileBackedPatternStore implements PatternStore
     }
 
     @Override
-    public Collection<Pattern> getPatterns(String userId)
+    public Collection<Pattern> loadPatterns(String userId)
     {
         final Collection<Pattern> patterns = new ArrayList<>();
 
@@ -100,6 +100,21 @@ public class FileBackedPatternStore implements PatternStore
         }
 
         return patterns;
+    }
+
+    @Override
+    public Pattern loadPattern(String userId, String patternId)
+    {
+        try
+        {
+            List<String> patternLines = Files.readAllLines(Paths.get(PATTERN_FOLDER, userId, patternId + ".ptn"));
+            return Pattern.fromFileFormat(patternLines);
+        }
+        catch (IOException e)
+        {
+            LOGGER.error("Failed to load user pattern: " + patternId);
+        }
+        return null;
     }
 
     private AtomicLong createUserSequence(final String key)

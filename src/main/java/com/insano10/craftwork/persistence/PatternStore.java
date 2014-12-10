@@ -12,5 +12,7 @@ public interface PatternStore
 
     Pattern loadLatest(String userId);
 
-    Collection<Pattern> getPatterns(String userId);
+    Collection<Pattern> loadPatterns(String userId);
+
+    Pattern loadPattern(String userId, String patternId);
 }
