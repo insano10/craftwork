@@ -140,7 +140,7 @@
     position: absolute;
     top: 0;
     left: -400px;
-    padding: 10px;
+    padding: 20px 10px;
     -webkit-transform: translateX(0);
     transform: translateX(0);
     -webkit-transition: .3s ease all;
@@ -181,6 +181,7 @@
     color: #878787;
     text-transform: uppercase;
     padding-bottom: 10px;
+    margin-top: 10px;
 }
 
 #new-pattern-button
