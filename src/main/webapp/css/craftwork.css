@@ -135,11 +135,11 @@
 
 #site-menu
 {
-    width: 250px;
+    width: 350px;
     height: 100%;
     position: absolute;
     top: 0;
-    left: -300px;
+    left: -400px;
     padding: 10px;
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -153,8 +153,8 @@
 
 #site-wrapper.show-nav #site-menu
 {
-    -webkit-transform: translateX(300px);
-    transform: translateX(300px);
+    -webkit-transform: translateX(400px);
+    transform: translateX(400px);
 }
 
 .site-menu-option a
@@ -183,9 +183,10 @@
     padding-bottom: 10px;
 }
 
-#new-pattern-image
+#new-pattern-button
 {
-    margin-right: 10px;
+    float: right;
+    cursor: pointer;
 }
 
 #new-pattern-option-div
