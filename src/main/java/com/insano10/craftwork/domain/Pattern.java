@@ -1,31 +1,36 @@
 package com.insano10.craftwork.domain;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Pattern
 {
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
     private static final String UNKNOWN_TITLE = "Untitled Pattern";
 
     private long id;
     private final String title;
     private final String[] instructions;
+    private final String lastModified;
 
-    public Pattern(final long id, final String title, final String[] instructions)
+    public Pattern(final long id, final String title, final String[] instructions, LocalDateTime lastModified)
     {
         this.id = id;
         this.title = title;
         this.instructions = instructions;
+        this.lastModified = DATE_TIME_FORMATTER.format(lastModified);
     }
 
     public static Pattern newPattern(final long id)
     {
-        return new Pattern(id, UNKNOWN_TITLE, new String[0]);
+        return new Pattern(id, UNKNOWN_TITLE, new String[0], LocalDateTime.now());
     }
 
-    public static Pattern fromFileFormat(final List<String> lines)
+    public static Pattern fromFileFormat(final List<String> lines, LocalDateTime lastModified)
     {
         List<String> instructions = lines.subList(2, lines.size());
-        return new Pattern(Long.parseLong(lines.get(0)), lines.get(1), instructions.toArray(new String[instructions.size()]));
+        return new Pattern(Long.parseLong(lines.get(0)), lines.get(1), instructions.toArray(new String[instructions.size()]), lastModified);
     }
 
     public long getId()
@@ -40,13 +45,10 @@ public class Pattern
         lines.add(String.valueOf(id));
         lines.add(title);
 
-        System.out.println(instructions);
-
         Arrays.asList(instructions).stream().
                 filter((String s) -> !s.isEmpty()).
                 forEach(lines::add);
 
-        System.out.println(lines);
         return lines;
     }
 
@@ -81,6 +83,7 @@ public class Pattern
                 "id='" + id + '\'' +
                 "title='" + title + '\'' +
                 ", instructions=" + Arrays.toString(instructions) +
+                ", lastModified=" + lastModified +
                 '}';
     }
 }

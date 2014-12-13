@@ -201,10 +201,18 @@
 .my-pattern-item
 {
     border-top: 1px solid #dfe0e2;
-    padding: 10px;
+    padding: 10px 10px 0 10px;
     font-family: caecilia, times, serif;
     font-size: 16px;
     font-weight: 400;
+}
+
+.my-pattern-item-last-modified
+{
+    padding-left: 10px;
+    padding-bottom: 10px;
+    font-family: caecilia, times, serif;
+    font-size: 11px;
 }
 
 .spacer

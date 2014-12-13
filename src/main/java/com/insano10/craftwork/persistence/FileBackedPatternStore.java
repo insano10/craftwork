@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -71,7 +73,7 @@ public class FileBackedPatternStore implements PatternStore
             if(latestPattern != null)
             {
                 List<String> patternLines = Files.readAllLines(latestPattern);
-                return Pattern.fromFileFormat(patternLines);
+                return Pattern.fromFileFormat(patternLines, getFileLastModifiedTime(latestPattern));
             }
         }
         catch (IOException e)
@@ -91,7 +93,7 @@ public class FileBackedPatternStore implements PatternStore
             for (final Path file : directoryStream)
             {
                 List<String> patternLines = Files.readAllLines(file);
-                patterns.add(Pattern.fromFileFormat(patternLines));
+                patterns.add(Pattern.fromFileFormat(patternLines, getFileLastModifiedTime(file)));
             }
         }
         catch (IOException e)
@@ -107,8 +109,9 @@ public class FileBackedPatternStore implements PatternStore
     {
         try
         {
-            List<String> patternLines = Files.readAllLines(Paths.get(PATTERN_FOLDER, userId, patternId + ".ptn"));
-            return Pattern.fromFileFormat(patternLines);
+            Path patternFile = Paths.get(PATTERN_FOLDER, userId, patternId + ".ptn");
+            List<String> patternLines = Files.readAllLines(patternFile);
+            return Pattern.fromFileFormat(patternLines, getFileLastModifiedTime(patternFile));
         }
         catch (IOException e)
         {
@@ -120,6 +123,12 @@ public class FileBackedPatternStore implements PatternStore
     private AtomicLong createUserSequence(final String key)
     {
         return new AtomicLong(0);
+    }
+
+    private LocalDateTime getFileLastModifiedTime(final Path path) throws IOException
+    {
+        BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
+        return LocalDateTime.ofInstant(attributes.lastModifiedTime().toInstant(), ZoneId.systemDefault());
     }
 
 }
