@@ -53,13 +53,13 @@
     text-decoration: none;
 }
 
-#my-patterns
+#menu
 {
     top: 5px;
     left: 10px;
 }
 
-#my-patterns-image
+#menu-image
 {
     padding-right: 2px;
     padding-left: 5px;
@@ -140,7 +140,7 @@
     position: absolute;
     top: 0;
     left: -300px;
-    padding: 30px;
+    padding: 10px;
     -webkit-transform: translateX(0);
     transform: translateX(0);
     -webkit-transition: .3s ease all;
@@ -173,6 +173,16 @@
     background-color: #f3f5f7;
 }
 
+#my-patterns-header
+{
+    font-family: gotham, helvetica, arial, sans-serif;
+    font-size: 21px;
+    font-weight: 300;
+    color: #878787;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+
 #new-pattern-image
 {
     margin-right: 10px;
@@ -183,13 +193,16 @@
     border: 1px solid #dfe0e2;
     border-radius: 5px;
     cursor: pointer;
-    width: 85%;
     padding: 10px;
 }
 
 .my-pattern-item
 {
+    border-top: 1px solid #dfe0e2;
     padding: 10px;
+    font-family: caecilia, times, serif;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .spacer
