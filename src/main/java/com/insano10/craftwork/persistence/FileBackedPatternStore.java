@@ -9,10 +9,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -86,7 +83,7 @@ public class FileBackedPatternStore implements PatternStore
     @Override
     public Collection<Pattern> loadPatterns(String userId)
     {
-        final Collection<Pattern> patterns = new ArrayList<>();
+        final List<Pattern> patterns = new ArrayList<>();
 
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(PATTERN_FOLDER, userId)))
         {
@@ -100,6 +97,8 @@ public class FileBackedPatternStore implements PatternStore
         {
             LOGGER.error("Failed to read user patterns: " + userId, e);
         }
+
+        Collections.sort(patterns);
 
         return patterns;
     }

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Pattern
+public class Pattern implements Comparable<Pattern>
 {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
     private static final String UNKNOWN_TITLE = "Untitled Pattern";
@@ -12,14 +12,16 @@ public class Pattern
     private long id;
     private final String title;
     private final String[] instructions;
-    private final String lastModified;
+    private final LocalDateTime lastModified;
+    private final String lastModifiedString;
 
     public Pattern(final long id, final String title, final String[] instructions, LocalDateTime lastModified)
     {
         this.id = id;
         this.title = title;
         this.instructions = instructions;
-        this.lastModified = DATE_TIME_FORMATTER.format(lastModified);
+        this.lastModified = lastModified;
+        this.lastModifiedString = DATE_TIME_FORMATTER.format(lastModified);
     }
 
     public static Pattern newPattern(final long id)
@@ -77,13 +79,19 @@ public class Pattern
     }
 
     @Override
+    public int compareTo(Pattern otherPattern)
+    {
+        return otherPattern.lastModified.compareTo(this.lastModified);
+    }
+
+    @Override
     public String toString()
     {
         return "Pattern{" +
                 "id='" + id + '\'' +
                 "title='" + title + '\'' +
                 ", instructions=" + Arrays.toString(instructions) +
-                ", lastModified=" + lastModified +
+                ", lastModifiedString=" + lastModifiedString +
                 '}';
     }
 }
