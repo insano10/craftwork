@@ -103,6 +103,12 @@ define(["jquery"], function ($)
                             }
                         })
                     });
+
+                    $(".delete-pattern").bind({
+                       click: function() {
+                           console.log("deleting pattern");
+                       }
+                    });
                 },
                 error:    function (e)
                 {

@@ -215,6 +215,12 @@
     font-size: 11px;
 }
 
+.delete-pattern
+{
+    cursor: pointer;
+    float: right;
+}
+
 .spacer
 {
     height: 20px;
