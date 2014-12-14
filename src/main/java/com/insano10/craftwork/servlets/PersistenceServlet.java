@@ -98,6 +98,13 @@ public class PersistenceServlet extends HttpServlet
 
             response.setStatus(HttpServletResponse.SC_OK);
         }
+        else if(request.getRequestURI().endsWith("/delete"))
+        {
+            int patternId = Integer.parseInt(request.getParameter("id"));
+            patternStore.deletePattern(user.getId(), patternId);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
         else
         {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);

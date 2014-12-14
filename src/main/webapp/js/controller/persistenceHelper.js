@@ -101,13 +101,14 @@ define(["jquery"], function ($)
                                 console.log("loading " + pattern.id);
                                 helper.loadPattern(pattern.id);
                             }
-                        })
-                    });
+                        });
 
-                    $(".delete-pattern").bind({
-                       click: function() {
-                           console.log("deleting pattern");
-                       }
+                        $("#delete-pattern-" + pattern.id).bind({
+                            click: function() {
+                                console.log("deleting pattern: " + pattern.id);
+                                helper.deletePattern(pattern.id);
+                            }
+                        })
                     });
                 },
                 error:    function (e)
@@ -133,6 +134,27 @@ define(["jquery"], function ($)
                 success:  function (result)
                 {
                     console.log('save response: ' + result);
+                    helper.loadPatterns();
+                },
+                error:    function (e)
+                {
+                    console.log(e);
+                }
+            });
+        };
+
+        PersistenceHelper.prototype.deletePattern = function deletePattern(patternId)
+        {
+            var helper = this;
+            $.ajax({
+                type:     'POST',
+                url:      window.location.href.split("#")[0] + 'delete',
+                data:     {
+                    id: patternId
+                },
+                success:  function (result)
+                {
+                    console.log('delete response: ' + result);
                     helper.loadPatterns();
                 },
                 error:    function (e)

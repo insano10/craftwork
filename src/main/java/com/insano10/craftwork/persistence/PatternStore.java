@@ -15,4 +15,6 @@ public interface PatternStore
     Collection<Pattern> loadPatterns(String userId);
 
     Pattern loadPattern(String userId, String patternId);
+
+    void deletePattern(String userId, int patternId);
 }

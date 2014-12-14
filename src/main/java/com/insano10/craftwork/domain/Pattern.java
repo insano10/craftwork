@@ -12,7 +12,7 @@ public class Pattern implements Comparable<Pattern>
     private long id;
     private final String title;
     private final String[] instructions;
-    private final LocalDateTime lastModified;
+    private transient final LocalDateTime lastModified;
     private final String lastModifiedString;
 
     public Pattern(final long id, final String title, final String[] instructions, LocalDateTime lastModified)

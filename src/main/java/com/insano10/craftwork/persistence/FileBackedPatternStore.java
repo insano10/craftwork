@@ -119,6 +119,21 @@ public class FileBackedPatternStore implements PatternStore
         return null;
     }
 
+    @Override
+    public void deletePattern(String userId, int patternId)
+    {
+        try
+        {
+            LOGGER.info("Deleting pattern: " + patternId);
+            Path patternFile = Paths.get(PATTERN_FOLDER, userId, patternId + ".ptn");
+            Files.delete(patternFile);
+        }
+        catch (IOException e)
+        {
+            LOGGER.error("Failed to delete user pattern: " + patternId);
+        }
+    }
+
     private AtomicLong createUserSequence(final String key)
     {
         return new AtomicLong(0);
