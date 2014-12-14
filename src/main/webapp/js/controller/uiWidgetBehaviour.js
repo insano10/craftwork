@@ -68,6 +68,24 @@ define(["jquery", "bootstrap"], function ($)
                 }
             });
 
+            $('#delete-pattern-modal').on('show.bs.modal', function(e)
+            {
+                //pass the pattern details into the modal when the trash can is clicked
+                var patternId = $(e.relatedTarget).data('pattern-id');
+                var patternTitle = $(e.relatedTarget).data('pattern-title');
+
+                $(e.currentTarget).find('button[id="delete-pattern-button"]').data("pattern-id", patternId);
+                $("#deletePatternModalLabel").html("Delete pattern '" + patternTitle + "'?");
+            });
+
+            $("#delete-pattern-button").bind({
+                click: function (event)
+                {
+                    var patternId = $(this).data("pattern-id");
+                    persistenceHelper.deletePattern(patternId);
+                }
+            });
+
             $("#login-button").bind({
                 click: function (event)
                 {

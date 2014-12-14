@@ -102,13 +102,6 @@ define(["jquery"], function ($)
                                 helper.loadPattern(pattern.id);
                             }
                         });
-
-                        $("#delete-pattern-" + pattern.id).bind({
-                            click: function() {
-                                console.log("deleting pattern: " + pattern.id);
-                                helper.deletePattern(pattern.id);
-                            }
-                        })
                     });
                 },
                 error:    function (e)

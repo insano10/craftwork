@@ -75,12 +75,12 @@
 
 
                     <!-- Rename title modal-->
-                    <div class="modal" id="rename-instructions-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal" id="rename-instructions-modal" tabindex="-1" role="dialog" aria-labelledby="renameModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Rename pattern</h4>
+                                    <h4 class="modal-title" id="renameModalLabel">Rename pattern</h4>
                                 </div>
                                 <div class="modal-body">
 
@@ -91,6 +91,22 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     <button id="save-title-button" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete pattern modal-->
+                    <div class="modal" id="delete-pattern-modal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title" id="deletePatternModalLabel"></h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button id="delete-pattern-button" type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
                                 </div>
                             </div>
                         </div>
