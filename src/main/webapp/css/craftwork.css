@@ -1,122 +1,10 @@
+
+/*
+    Main Structure
+*/
 .body
 {
     background-color: #f3f5f7
-}
-
-#header-panel
-{
-    height: 40px;
-    background-color: #639797;
-}
-
-.header-button
-{
-    border-radius: 3px;
-    color: #f3f3f3;
-    background-color: #3F7D7D;
-    display: block;
-    position: absolute;
-    padding: 0 10px 0 0;
-}
-
-.header-button a
-{
-    color: #f3f3f3;
-    padding-top:5px;
-    padding-bottom: 7px;
-}
-
-/* this shouldn't be required as the '.header-button a' style should find this, but it doesn't */
-.header-button>ul>li>a
-{
-    color: #f3f3f3;
-    padding-top:5px;
-    padding-bottom: 7px;
-}
-
-.option-text
-{
-    font: 14px "Helvetica Neue",Arial,Helvetica,sans-serif;
-    line-height: 18px;
-    font-weight: 700;
-}
-
-.header-button:hover
-{
-    background-color: #659797;
-    border: 1px solid #3F7D7D;
-}
-
-.header-button a:link
-{
-    color: #f3f3f3;
-    text-decoration: none;
-}
-
-#menu
-{
-    top: 5px;
-    left: 10px;
-}
-
-#menu-image
-{
-    padding-right: 2px;
-    padding-left: 5px;
-}
-
-#user-profile
-{
-    top: 5px;
-    right: 10px;
-}
-
-#profile-name
-{
-    padding-left: 5px;
-}
-
-.profile-options
-{
-    background-color: #659797;
-}
-
-.profile-options li > a:hover
-{
-    background-color: #3F7D7D;
-}
-
-#login-button-div
-{
-    display: block;
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    cursor: pointer;
-}
-
-#logout-button-div
-{
-    display: block;
-    position: absolute;
-    top: 3px;
-    left: 6px;
-}
-
-#save-button-div
-{
-    display: block;
-    position: absolute;
-    top: 5px;
-    left: 150px;
-}
-
-#create-button-div
-{
-    display: block;
-    position: absolute;
-    top: 3px;
-    left: 125px;
 }
 
 #site-wrapper
@@ -151,97 +39,6 @@
     margin-top: 20px;
 }
 
-#site-wrapper.show-nav #site-menu
-{
-    -webkit-transform: translateX(400px);
-    transform: translateX(400px);
-}
-
-.site-menu-option a
-{
-    color: #000000;
-}
-
-.site-menu-option a:link
-{
-    color: #000000;
-    text-decoration: none;
-}
-
-.option-highlight
-{
-    background-color: #f3f5f7;
-}
-
-#my-patterns-header
-{
-    font-family: gotham, helvetica, arial, sans-serif;
-    font-size: 21px;
-    font-weight: 300;
-    color: #878787;
-    text-transform: uppercase;
-    padding-bottom: 10px;
-    margin-top: 10px;
-}
-
-#delete-pattern-label
-{
-    font-family: gotham, helvetica, arial, sans-serif;
-    font-size: 18px;
-    font-weight: 300;
-    color: #878787;
-    text-transform: uppercase;
-    padding-top: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #878787;
-    display: inline-block;
-}
-
-#delete-pattern-text
-{
-    padding: 20px;
-    font-family: caecilia, times, serif;
-    font-size: 24px;
-}
-
-
-#new-pattern-button
-{
-    float: right;
-    cursor: pointer;
-}
-
-#new-pattern-option-div
-{
-    border: 1px solid #dfe0e2;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 10px;
-}
-
-.my-pattern-item
-{
-    border-top: 1px solid #dfe0e2;
-    padding: 10px 10px 0 10px;
-    font-family: caecilia, times, serif;
-    font-size: 16px;
-    font-weight: 400;
-}
-
-.my-pattern-item-last-modified
-{
-    padding-left: 10px;
-    padding-bottom: 10px;
-    font-family: caecilia, times, serif;
-    font-size: 11px;
-}
-
-.delete-pattern
-{
-    cursor: pointer;
-    float: right;
-}
-
 .spacer
 {
     height: 20px;
@@ -268,6 +65,206 @@
     padding: 10px;
 }
 
+.main-labels
+{
+    float: right;
+}
+
+#chart-canvas
+{
+    width:100%;
+}
+
+.modal-dialog
+{
+    font: normal 13px arial,sans-serif;
+    padding-top: 15%;
+}
+
+.modal-backdrop
+{
+    background: #ffffff;
+    opacity: 0.75;
+}
+
+
+/*
+    Header Panel
+*/
+#header-panel
+{
+    height: 40px;
+    background-color: #639797;
+}
+
+.header-button
+{
+    border-radius: 3px;
+    color: #f3f3f3;
+    background-color: #3F7D7D;
+    display: block;
+    position: absolute;
+    padding: 0 10px 0 0;
+}
+
+.header-button a
+{
+    color: #f3f3f3;
+    padding-top:5px;
+    padding-bottom: 7px;
+}
+
+.header-button a:link
+{
+    color: #f3f3f3;
+    text-decoration: none;
+}
+
+.header-button:hover
+{
+    background-color: #659797;
+    border: 1px solid #3F7D7D;
+}
+
+/* this shouldn't be required as the '.header-button a' style should find this, but it doesn't */
+.header-button>ul>li>a
+{
+    color: #f3f3f3;
+    padding-top:5px;
+    padding-bottom: 7px;
+}
+
+.option-text
+{
+    font: 14px "Helvetica Neue",Arial,Helvetica,sans-serif;
+    line-height: 18px;
+    font-weight: 700;
+}
+
+#menu
+{
+    top: 5px;
+    left: 10px;
+}
+
+#menu-image
+{
+    padding-right: 2px;
+    padding-left: 5px;
+}
+
+#login-button-div
+{
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#user-profile
+{
+    top: 5px;
+    right: 10px;
+}
+
+#profile-name
+{
+    padding-left: 5px;
+}
+
+.profile-options
+{
+    background-color: #659797;
+}
+
+.profile-options li > a:hover
+{
+    background-color: #3F7D7D;
+}
+
+#logout-button-div
+{
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 6px;
+}
+
+#save-button-div
+{
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 150px;
+}
+
+
+/*
+    Slide Out Menu
+*/
+
+#site-wrapper.show-nav #site-menu
+{
+    -webkit-transform: translateX(400px);
+    transform: translateX(400px);
+}
+
+.site-menu-option a
+{
+    color: #000000;
+}
+
+.site-menu-option a:link
+{
+    color: #000000;
+    text-decoration: none;
+}
+
+#my-patterns-header
+{
+    font-family: gotham, helvetica, arial, sans-serif;
+    font-size: 21px;
+    font-weight: 300;
+    color: #878787;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+
+#new-pattern-button
+{
+    float: right;
+    cursor: pointer;
+}
+
+.my-pattern-item
+{
+    border-top: 1px solid #dfe0e2;
+    padding: 10px 10px 0 10px;
+    font-family: caecilia, times, serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.my-pattern-item-last-modified
+{
+    padding-left: 10px;
+    padding-bottom: 10px;
+    font-family: caecilia, times, serif;
+    font-size: 11px;
+}
+
+.delete-pattern
+{
+    cursor: pointer;
+    float: right;
+}
+
+/*
+    Instructions Window
+*/
+
 #instruction-header
 {
     min-height: 35px;
@@ -285,11 +282,6 @@
     background-color: #ebebeb;
 }
 
-.main-labels
-{
-    float: right;
-}
-
 #instructions
 {
     border: none;
@@ -297,6 +289,11 @@
     resize: none;
     height: 300px;
     float: right;
+}
+
+#instructions:focus
+{
+    outline: none;
 }
 
 #row-numbers
@@ -316,24 +313,26 @@
     margin: 0;
 }
 
-#instructions:focus
+/*
+    Delete Pattern Modal
+*/
+
+#delete-pattern-label
 {
-    outline: none;
+    font-family: gotham, helvetica, arial, sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #878787;
+    text-transform: uppercase;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #878787;
+    display: inline-block;
 }
 
-#chart-canvas
+#delete-pattern-text
 {
-    width:100%;
-}
-
-.modal-dialog
-{
-    font: normal 13px arial,sans-serif;
-    padding-top: 15%;
-}
-
-.modal-backdrop
-{
-    background: #ffffff;
-    opacity: 0.75;
+    padding: 20px;
+    font-family: caecilia, times, serif;
+    font-size: 24px;
 }
