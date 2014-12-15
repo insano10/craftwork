@@ -314,10 +314,15 @@
 }
 
 /*
-    Delete Pattern Modal
+   Modals
 */
 
-#delete-pattern-label
+.modal-dialog-body
+{
+    text-align: center;
+}
+
+.modal-header-label
 {
     font-family: gotham, helvetica, arial, sans-serif;
     font-size: 18px;
@@ -330,15 +335,20 @@
     display: inline-block;
 }
 
-#delete-pattern-text
+.modal-body-text
 {
     padding: 20px;
     font-family: caecilia, times, serif;
     font-size: 24px;
 }
 
-#delete-pattern-button
+.modal-confirm-button
 {
     color: #ffffff;
     background-color: #639797;
+}
+
+#rename-title-input
+{
+    margin-bottom: 20px;
 }

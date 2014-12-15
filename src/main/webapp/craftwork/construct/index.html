@@ -77,20 +77,16 @@
                     <!-- Rename title modal-->
                     <div class="modal" id="rename-instructions-modal" tabindex="-1" role="dialog" aria-labelledby="renameModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title" id="renameModalLabel">Rename pattern</h4>
+                            <div class="modal-dialog-body">
+                                <div class="glyphicon glyphicon-pencil"></div><br/>
+                                <div class="modal-header-label">Rename Pattern</div>
+                                <h4 class="modal-title modal-body-text">Enter a new pattern name:</h4>
+                                <div>
+                                    <input id="rename-title-input" type="text" size="40" onclick="this.select()">
                                 </div>
-                                <div class="modal-body">
-
-                                    <label for="rename-title-input">Enter a new pattern name:</label><br/>
-                                    <input id="rename-title-input" type="text" size="68" onclick="this.select()">
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button id="save-title-button" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                <div class="modal-buttons">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button id="save-title-button" type="button" class="btn modal-confirm-button" data-dismiss="modal">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -99,13 +95,13 @@
                     <!-- Delete pattern modal-->
                     <div class="modal" id="delete-pattern-modal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
-                            <div style="text-align: center">
-                                <div id="delete-modal-icon" class="glyphicon glyphicon-trash"></div><br/>
-                                <div id="delete-pattern-label">Delete Pattern</div>
-                                <h4 id="delete-pattern-text" class="modal-title">Are you sure you want to delete pattern '<span id="deletePatternModalLabel"></span>'?</h4>
+                            <div class="modal-dialog-body">
+                                <div class="glyphicon glyphicon-trash"></div><br/>
+                                <div class="modal-header-label">Delete Pattern</div>
+                                <h4 class="modal-title modal-body-text">Are you sure you want to delete pattern '<span id="deletePatternModalLabel"></span>'?</h4>
                                 <div class="modal-buttons">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <button id="delete-pattern-button" type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                    <button id="delete-pattern-button" type="button" class="btn modal-confirm-button" data-dismiss="modal">Ok</button>
                                 </div>
                             </div>
                         </div>
