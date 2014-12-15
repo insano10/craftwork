@@ -75,7 +75,7 @@ define(["jquery", "bootstrap"], function ($)
                 var patternTitle = $(e.relatedTarget).data('pattern-title');
 
                 $(e.currentTarget).find('button[id="delete-pattern-button"]').data("pattern-id", patternId);
-                $("#deletePatternModalLabel").html("Delete pattern '" + patternTitle + "'?");
+                $("#deletePatternModalLabel").html(patternTitle);
             });
 
             $("#delete-pattern-button").bind({

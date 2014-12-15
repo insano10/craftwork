@@ -184,6 +184,27 @@
     margin-top: 10px;
 }
 
+#delete-pattern-label
+{
+    font-family: gotham, helvetica, arial, sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #878787;
+    text-transform: uppercase;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #878787;
+    display: inline-block;
+}
+
+#delete-pattern-text
+{
+    padding: 20px;
+    font-family: caecilia, times, serif;
+    font-size: 24px;
+}
+
+
 #new-pattern-button
 {
     float: right;
