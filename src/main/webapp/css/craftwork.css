@@ -336,3 +336,9 @@
     font-family: caecilia, times, serif;
     font-size: 24px;
 }
+
+#delete-pattern-button
+{
+    color: #ffffff;
+    background-color: #639797;
+}
