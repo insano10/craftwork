@@ -154,6 +154,12 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             }
         };
 
+        //todo: either have each stitch chain to the next internally OR expose getter, not both
+        Stitch.prototype.getNextStitch = function getNextStitch()
+        {
+            return this.nextStitch;
+        };
+
         Stitch.prototype.getRowNum = function getRowNum()
         {
             return this.rowNum;
