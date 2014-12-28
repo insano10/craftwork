@@ -76,6 +76,11 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             return this.imgWidth;
         };
 
+        Stitch.prototype.getHeight = function getHeight()
+        {
+            return this.imgHeight;
+        };
+
         Stitch.prototype.setPreviousStitch = function setPreviousStitch(stitch)
         {
             this.previousStitch = stitch;
@@ -158,6 +163,11 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
         Stitch.prototype.getNextStitch = function getNextStitch()
         {
             return this.nextStitch;
+        };
+
+        Stitch.prototype.getIcon = function getIcon()
+        {
+            return this.icon;
         };
 
         Stitch.prototype.getRowNum = function getRowNum()
