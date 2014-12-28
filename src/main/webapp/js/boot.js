@@ -12,6 +12,7 @@ require(
             "persistenceHelper":     "controller/persistenceHelper",
             "rowNumberSynchroniser": "controller/rowNumberSynchroniser",
             "uiWidgetBehaviour":     "controller/uiWidgetBehaviour",
+            "chainRenderer":         "model/crochet/rendering/chainRenderer",
             "chartRenderer":         "model/crochet/rendering/chartRenderer",
             "renderedStitch":        "model/crochet/rendering/renderedStitch",
             "renderContext":         "model/crochet/rendering/renderContext",

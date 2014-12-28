@@ -1,6 +1,6 @@
 define(["jquery"], function($)
 {
-    function ChartModel()
+    function ChartModel(chainRenderer)
     {
         var ROW_NUM_RENDER_X_OFFSET = -50;
 
@@ -45,13 +45,10 @@ define(["jquery"], function($)
 
         this.render = function render(canvasContext, renderContext)
         {
-
-            if(headStitch != null)
+            if(this.requiresRender())
             {
-                headStitch.populateRenderingData(renderContext, true);
-
+                chainRenderer.render(headStitch, canvasContext, renderContext);
                 renderRowNumbers(canvasContext, renderContext);
-                headStitch.render(canvasContext, renderContext);
             }
         };
 
