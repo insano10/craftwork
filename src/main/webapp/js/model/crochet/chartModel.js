@@ -47,8 +47,8 @@ define(["jquery"], function($)
         {
             if(this.requiresRender())
             {
-                chainRenderer.render(headStitch, canvasContext, renderContext);
-//                chainRenderer.renderNew(headStitch, tailStitch, canvasContext, renderContext);
+//                chainRenderer.render(headStitch, canvasContext, renderContext);
+                chainRenderer.renderNew(headStitch, tailStitch, canvasContext, renderContext);
                 renderRowNumbers(canvasContext, renderContext);
             }
         };
