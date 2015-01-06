@@ -4,7 +4,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
     {
         function straight(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("STR_STR: " + stitch.toString());
+            console.log("EVEN_STR_STR: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(0);
@@ -13,7 +13,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
 
         function up(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("STR_UP: " + stitch.toString());
+            console.log("EVEN_STR_UP: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(relativeAngle * Math.PI / 180);
@@ -22,7 +22,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
 
         function down(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("STR_DOWN: " + stitch.toString());
+            console.log("EVEN_STR_DOWN: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             var stitchHeight = previousStitch == null ? stitch.getHeight() : previousStitch.getHeight();
 
@@ -34,7 +34,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
 
         function getId()
         {
-            return "ODD_STR";
+            return "EVEN_STR";
         }
 
         return { straight: straight, up: up, down: down, getId: getId};
@@ -44,7 +44,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
     {
         function straight(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("DOWN_DOWN: " + stitch.toString());
+            console.log("EVEN_DOWN_DOWN: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(0);
@@ -53,7 +53,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
 
         function up(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("DOWN_UP: " + stitch.toString());
+            console.log("EVEN_DOWN_UP: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(relativeAngle * Math.PI / 180);
@@ -62,7 +62,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
 
         function down(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("DOWN_DOWN: " + stitch.toString());
+            console.log("EVEN_DOWN_DOWN: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             var stitchHeight = previousStitch == null ? stitch.getHeight() : previousStitch.getHeight();
             canvasContext.translate(translation.x, translation.y + stitchHeight);         //bottom corner
@@ -73,7 +73,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
 
         function getId()
         {
-            return "ODD_DOWN";
+            return "EVEN_DOWN";
         }
 
         return { straight: straight, up: up, down: down, getId: getId};
@@ -83,7 +83,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
     {
         function straight(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("UP_STR: " + stitch.toString());
+            console.log("EVEN_UP_STR: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(0);
@@ -92,7 +92,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
 
         function up(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("UP_UP: " + stitch.toString());
+            console.log("EVEN_UP_UP: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(relativeAngle * Math.PI / 180);
@@ -101,7 +101,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
 
         function down(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("UP_DOWN: " + stitch.toString());
+            console.log("EVEN_UP_DOWN: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             var stitchHeight = previousStitch == null ? stitch.getHeight() : previousStitch.getHeight();
             canvasContext.translate(translation.x, translation.y + stitchHeight);         //bottom corner
@@ -112,7 +112,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
 
         function getId()
         {
-            return "ODD_UP";
+            return "EVEN_UP";
         }
 
         return { straight: straight, up: up, down: down, getId: getId};

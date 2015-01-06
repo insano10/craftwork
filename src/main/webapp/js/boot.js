@@ -18,6 +18,8 @@ require(
             "renderContext":         "model/crochet/rendering/renderContext",
             "renderTransforms":      "model/crochet/rendering/renderTransforms",
             "oddRowTransforms":      "model/crochet/rendering/transforms/oddRowTransforms",
+            "evenRowTransforms":     "model/crochet/rendering/transforms/evenRowTransforms",
+            "transformHelper":       "model/crochet/rendering/transforms/transformHelper",
             "chartModel":            "model/crochet/chartModel",
             "instructionParser":     "model/crochet/instructionParser",
             "parseChainFactory":     "model/crochet/parseChainFactory",
