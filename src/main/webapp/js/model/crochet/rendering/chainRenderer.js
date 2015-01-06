@@ -1,4 +1,4 @@
-define(["renderedStitch", "stitchUtils"], function (RenderedStitch, StitchUtils)
+define(["renderedStitch", "stitchUtils", "renderTransforms"], function (RenderedStitch, StitchUtils, RenderTransforms)
 {
     function ChainRenderer()
     {
@@ -72,31 +72,31 @@ define(["renderedStitch", "stitchUtils"], function (RenderedStitch, StitchUtils)
             console.log(stitch.toString() + " updated angle = " + stitchAngles[stitch.getId()]);
         };
 
-        var renderIcon = function renderIcon(canvasContext, stitch, translation)
+        var renderIcon = function renderIcon(previousStitch, stitch, renderContext, canvasContext)
         {
-            console.log("translating icon x: " + translation.x + ", y: " + translation.y + " at relative angle " + stitchRelativeRotations[stitch.getId()]);
+            var fromAngle = previousStitch == null ? 0 : stitchAngles[previousStitch.getId()];
+            var toAngle = stitchAngles[stitch.getId()];
+            var relativeAngle = stitchRelativeRotations[stitch.getId()];
 
-            canvasContext.rotate(stitchRelativeRotations[stitch.getId()] * Math.PI / 180);
-            canvasContext.translate(translation.x, translation.y);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+            var drawTransform = RenderTransforms.getDrawTransform(renderContext.getRenderTransform(), fromAngle, toAngle, stitch.getRowNum());
+
+            drawTransform.drawFunction(previousStitch, stitch, relativeAngle, canvasContext);
+            renderContext.setRenderTransform(drawTransform.nextState);
         };
 
-        var drawLoop = function drawLoop(startStitch, startTranslation, canvasContext)
+        var drawLoop = function drawLoop(startStitch, canvasContext, renderContext)
         {
             var stitch = startStitch;
-            var translation = startTranslation;
 
             canvasContext.save();
             while(stitch != null)
             {
-                if(!draw(stitch, canvasContext, translation))
+                if(!draw(stitch.getPreviousStitch(), stitch, renderContext, canvasContext))
                 {
                     break;
                 }
                 else
                 {
-                    //update translation
-                    translation = getTranslationFrom(stitch, stitch.getNextStitch());
                     stitch = stitch.getNextStitch();
                 }
             }
@@ -104,60 +104,23 @@ define(["renderedStitch", "stitchUtils"], function (RenderedStitch, StitchUtils)
 
             if(stitch != null)
             {
+                //todo: if the canvas is now restored, the relative angle/transform may be wrong
                 //not all stitches have been drawn, continue in another event loop once images are ready
                 setTimeout(function ()
                 {
-                    drawLoop(stitch, translation, canvasContext);
+                    drawLoop(stitch, canvasContext, renderContext);
                 }, 100);
             }
         };
 
-        var draw = function draw(stitch, canvasContext, translation)
+        var draw = function draw(previousStitch, stitch, renderContext, canvasContext)
         {
             if(stitch.getIcon().complete)
             {
-                renderIcon(canvasContext, stitch, translation);
+                renderIcon(previousStitch, stitch, renderContext, canvasContext);
                 return true;
             }
             return false;
-        };
-
-        var getTranslationFrom = function getTranslationFrom(fromStitch, toStitch)
-        {
-            var translation = {x:0, y:0};
-
-            if(toStitch != null)
-            {
-                if (fromStitch.getRowNum() < toStitch.getRowNum())
-                {
-                    //go upwards
-                    translation.y = -toStitch.getHeight();
-                }
-                else
-                {
-                    var extraXTranslation = 0;
-                    if(toStitch.getStitchesBelow().length > 1)
-                    {
-                        extraXTranslation += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(toStitch.getStitchesBelow().length, toStitch.getRowNum(), toStitch.getWidth());
-                    }
-                    if(fromStitch.getStitchesBelow().length > 1)
-                    {
-                        extraXTranslation += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(fromStitch.getStitchesBelow().length, fromStitch.getRowNum(), fromStitch.getWidth());
-                    }
-
-                    if (fromStitch.getRowNum() % 2 != 0)
-                    {
-                        //go right
-                        translation.x = fromStitch.getWidth() + extraXTranslation;
-                    }
-                    else
-                    {
-                        //go left
-                        translation.x = -toStitch.getWidth() + extraXTranslation;
-                    }
-                }
-            }
-            return translation;
         };
 
         this.renderNew = function renderNew(headStitch, tailStitch, canvasContext, renderContext)
@@ -203,8 +166,10 @@ define(["renderedStitch", "stitchUtils"], function (RenderedStitch, StitchUtils)
             }
 
             // #4. Draw each stitch at the appropriate angle
-            var translation = {x: renderContext.getStartXPos(), y: renderContext.getStartYPos()};
-            drawLoop(headStitch, translation, canvasContext);
+            drawLoop(headStitch, canvasContext, renderContext);
+
+//            foo(canvasContext, headStitch);
+
         };
 
         var foo = function foo(canvasContext, stitch)
@@ -230,30 +195,63 @@ define(["renderedStitch", "stitchUtils"], function (RenderedStitch, StitchUtils)
             continue
              */
 
-            //straight
-            canvasContext.translate(70, 240);
-            canvasContext.rotate(0 * Math.PI / 180);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+            if(!stitch.getIcon().complete)
+            {
+                setTimeout(function ()
+                {
+                    foo(canvasContext, stitch);
+                }, 100);
+            }
+            else
+            {
 
-            //increase
-            canvasContext.translate(stitch.getWidth(), stitch.getHeight());         //bottom corner
-            canvasContext.rotate(20 * Math.PI / 180);
-            canvasContext.drawImage(stitch.getIcon(), 0, -stitch.getHeight());      //offset by -height
 
-            //straight
-            canvasContext.translate(stitch.getWidth(), -stitch.getHeight());
-            canvasContext.rotate(0 * Math.PI / 180);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+                //straight
+                canvasContext.translate(150, 240);
+                canvasContext.rotate(0 * Math.PI / 180);
+                canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
+
+                canvasContext.translate(-stitch.getWidth(), 0);
+                canvasContext.rotate(0 * Math.PI / 180);
+                canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
+
+
+//                //increase
+//                canvasContext.translate(stitch.getWidth(), stitch.getHeight());         //bottom corner
+//                canvasContext.rotate(20 * Math.PI / 180);
+//                canvasContext.drawImage(stitch.getIcon(), 0, -stitch.getHeight());      //offset by -height
+//
+//                //increase
+//                canvasContext.translate(stitch.getWidth(), 0);         //already at bottom corner
+//                canvasContext.rotate(20 * Math.PI / 180);
+//                canvasContext.drawImage(stitch.getIcon(), 0, -stitch.getHeight());      //offset by -height
+
+//            //straight
+//            canvasContext.translate(stitch.getWidth(), -stitch.getHeight());
+//            canvasContext.rotate(0 * Math.PI / 180);
+//            canvasContext.drawImage(stitch.getIcon(), 0, 0);
 
             //decrease
-            canvasContext.translate(stitch.getWidth(), 0);
-            canvasContext.rotate(-20 * Math.PI / 180);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+            canvasContext.translate(-stitch.getWidth(), 0);
+            canvasContext.rotate(-30 * Math.PI / 180);
+            canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
 
-            //straight
-            canvasContext.translate(stitch.getWidth(), 0);
-            canvasContext.rotate(0 * Math.PI / 180);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+//                //increase
+//                canvasContext.translate(stitch.getWidth(), stitch.getHeight());         //already at bottom corner
+//                canvasContext.rotate(30 * Math.PI / 180);
+//                canvasContext.drawImage(stitch.getIcon(), 0, -stitch.getHeight());      //offset by -height
+//                canvasContext.translate(0, -stitch.getHeight());
+//
+//            //straight
+//            canvasContext.translate(stitch.getWidth(), 0);
+//            canvasContext.rotate(0 * Math.PI / 180);
+//            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+//
+//                //straight
+//                canvasContext.translate(stitch.getWidth(), 0);
+//                canvasContext.rotate(0 * Math.PI / 180);
+//                canvasContext.drawImage(stitch.getIcon(), 0, 0);
+            }
         };
 
         this.render = function render(headStitch, canvasContext, renderContext)

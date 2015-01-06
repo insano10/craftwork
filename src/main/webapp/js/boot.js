@@ -16,6 +16,7 @@ require(
             "chartRenderer":         "model/crochet/rendering/chartRenderer",
             "renderedStitch":        "model/crochet/rendering/renderedStitch",
             "renderContext":         "model/crochet/rendering/renderContext",
+            "renderTransforms":      "model/crochet/rendering/renderTransforms",
             "chartModel":            "model/crochet/chartModel",
             "instructionParser":     "model/crochet/instructionParser",
             "parseChainFactory":     "model/crochet/parseChainFactory",
