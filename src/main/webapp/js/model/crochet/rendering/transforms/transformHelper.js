@@ -17,7 +17,7 @@ define(["jquery", "oddRowTransforms", "evenRowTransforms"], function ($, OddRowT
 
     function getInitialTransform()
     {
-        return new OddRowTransforms.STRAIGHT();
+        return new OddRowTransforms.STRAIGHT(false);
     }
 
     function getNextState(currentState, action, newAngle, rowNum)

@@ -38,6 +38,15 @@ define(["jquery"], function ($)
             {
                 //go upwards
                 translation.y = -toStitch.getHeight();
+
+                if(toStitch.getRowNum() % 2 == 0)
+                {
+                    translation.x += toStitch.getWidth();
+                }
+                else
+                {
+                    translation.x -= toStitch.getWidth();
+                }
             }
             else
             {

@@ -8,7 +8,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(0);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+            canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
         }
 
         function up(previousStitch, stitch, relativeAngle, canvasContext)

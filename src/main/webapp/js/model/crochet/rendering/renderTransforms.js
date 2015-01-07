@@ -30,7 +30,7 @@ define(["jquery", "stitchUtils", "transformHelper"], function ($, StitchUtils, T
         return false;
     };
 
-    function getDrawTransform(currentState, fromAngle, toAngle, rowNum)
+    function getDrawTransform(currentState, fromAngle, toAngle, rowNum, nextRowNum)
     {
         if(currentState == null)
         {
@@ -42,17 +42,17 @@ define(["jquery", "stitchUtils", "transformHelper"], function ($, StitchUtils, T
         if (toAngle == fromAngle)
         {
             console.log("going straight");
-            return {"drawFunction": currentState.straight, "nextState": TransformHelper.getNextState(currentState, "straight", toAngle, rowNum)};
+            return {"drawFunction": currentState.straight, "nextState": TransformHelper.getNextState(currentState, "straight", toAngle, nextRowNum)};
         }
         else if (isGoingDown(fromAngle, toAngle, rowNum))
         {
             console.log("going down");
-            return {"drawFunction": currentState.down, "nextState": TransformHelper.getNextState(currentState, "down", toAngle, rowNum)};
+            return {"drawFunction": currentState.down, "nextState": TransformHelper.getNextState(currentState, "down", toAngle, nextRowNum)};
         }
         else if(isGoingUp(fromAngle, toAngle, rowNum))
         {
             console.log("going up");
-            return {"drawFunction": currentState.up, "nextState": TransformHelper.getNextState(currentState, "up", toAngle, rowNum)};
+            return {"drawFunction": currentState.up, "nextState": TransformHelper.getNextState(currentState, "up", toAngle, nextRowNum)};
         }
         else
         {

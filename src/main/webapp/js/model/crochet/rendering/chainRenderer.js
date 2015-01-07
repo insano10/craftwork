@@ -72,15 +72,16 @@ define(["renderedStitch", "stitchUtils", "renderTransforms"], function (Rendered
             console.log(stitch.toString() + " updated angle = " + stitchAngles[stitch.getId()]);
         };
 
-        var renderIcon = function renderIcon(previousStitch, stitch, renderContext, canvasContext)
+        var renderIcon = function renderIcon(stitch, renderContext, canvasContext)
         {
-            var fromAngle = previousStitch == null ? 0 : stitchAngles[previousStitch.getId()];
+            var fromAngle = stitch.getPreviousStitch() == null ? 0 : stitchAngles[stitch.getPreviousStitch().getId()];
+            var nextRowNum = stitch.getNextStitch() == null ? stitch.getRowNum() : stitch.getNextStitch().getRowNum();
             var toAngle = stitchAngles[stitch.getId()];
             var relativeAngle = stitchRelativeRotations[stitch.getId()];
 
-            var drawTransform = RenderTransforms.getDrawTransform(renderContext.getRenderTransform(), fromAngle, toAngle, stitch.getRowNum());
+            var drawTransform = RenderTransforms.getDrawTransform(renderContext.getRenderTransform(), fromAngle, toAngle, stitch.getRowNum(), nextRowNum);
 
-            drawTransform.drawFunction(previousStitch, stitch, relativeAngle, canvasContext);
+            drawTransform.drawFunction(stitch.getPreviousStitch(), stitch, relativeAngle, canvasContext);
             renderContext.setRenderTransform(drawTransform.nextState);
         };
 
@@ -91,7 +92,7 @@ define(["renderedStitch", "stitchUtils", "renderTransforms"], function (Rendered
             canvasContext.save();
             while(stitch != null)
             {
-                if(!draw(stitch.getPreviousStitch(), stitch, renderContext, canvasContext))
+                if(!draw(stitch, renderContext, canvasContext))
                 {
                     break;
                 }
@@ -113,11 +114,11 @@ define(["renderedStitch", "stitchUtils", "renderTransforms"], function (Rendered
             }
         };
 
-        var draw = function draw(previousStitch, stitch, renderContext, canvasContext)
+        var draw = function draw(stitch, renderContext, canvasContext)
         {
             if(stitch.getIcon().complete)
             {
-                renderIcon(previousStitch, stitch, renderContext, canvasContext);
+                renderIcon(stitch, renderContext, canvasContext);
                 return true;
             }
             return false;
