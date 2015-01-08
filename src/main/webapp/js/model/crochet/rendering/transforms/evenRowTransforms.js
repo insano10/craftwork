@@ -17,7 +17,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(relativeAngle * Math.PI / 180);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+            canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
         }
 
         function down(previousStitch, stitch, relativeAngle, canvasContext)
@@ -28,7 +28,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
 
             canvasContext.translate(translation.x, translation.y + stitchHeight); //bottom corner
             canvasContext.rotate(relativeAngle * Math.PI / 180);
-            canvasContext.drawImage(stitch.getIcon(), 0, -stitchHeight);      //offset by -height
+            canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), -stitchHeight);      //offset by -height
             canvasContext.translate(0, -stitchHeight); //return to top corner
         }
 
@@ -44,11 +44,11 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
     {
         function straight(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("EVEN_DOWN_DOWN: " + stitch.toString());
+            console.log("EVEN_DOWN_STR: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(0);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+            canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
         }
 
         function up(previousStitch, stitch, relativeAngle, canvasContext)
@@ -57,7 +57,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(relativeAngle * Math.PI / 180);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+            canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
         }
 
         function down(previousStitch, stitch, relativeAngle, canvasContext)
@@ -87,7 +87,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(0);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+            canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
         }
 
         function up(previousStitch, stitch, relativeAngle, canvasContext)
@@ -96,7 +96,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(relativeAngle * Math.PI / 180);
-            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+            canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
         }
 
         function down(previousStitch, stitch, relativeAngle, canvasContext)

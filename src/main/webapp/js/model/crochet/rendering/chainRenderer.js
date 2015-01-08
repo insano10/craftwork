@@ -216,38 +216,50 @@ define(["renderedStitch", "stitchUtils", "renderTransforms"], function (Rendered
                 canvasContext.rotate(0 * Math.PI / 180);
                 canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
 
-
-//                //increase
-//                canvasContext.translate(stitch.getWidth(), stitch.getHeight());         //bottom corner
-//                canvasContext.rotate(20 * Math.PI / 180);
-//                canvasContext.drawImage(stitch.getIcon(), 0, -stitch.getHeight());      //offset by -height
 //
 //                //increase
-//                canvasContext.translate(stitch.getWidth(), 0);         //already at bottom corner
+//                canvasContext.translate(-stitch.getWidth(), stitch.getHeight());         //bottom corner
 //                canvasContext.rotate(20 * Math.PI / 180);
-//                canvasContext.drawImage(stitch.getIcon(), 0, -stitch.getHeight());      //offset by -height
+//                canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), -stitch.getHeight());      //offset by -height
 
 //            //straight
 //            canvasContext.translate(stitch.getWidth(), -stitch.getHeight());
 //            canvasContext.rotate(0 * Math.PI / 180);
 //            canvasContext.drawImage(stitch.getIcon(), 0, 0);
+//
+//            //decrease
+//            canvasContext.translate(-stitch.getWidth(), 0);
+//            canvasContext.rotate(-30 * Math.PI / 180);
+//            canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
+//
+//                //decrease
+//                canvasContext.translate(-stitch.getWidth(), 0);
+//                canvasContext.rotate(-30 * Math.PI / 180);
+//                canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
+//
+                //down
+                canvasContext.translate(-stitch.getWidth(), stitch.getHeight());         //already at bottom corner
+                canvasContext.rotate(-30 * Math.PI / 180);
+                canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(),-stitch.getHeight());      //offset by -height
+                canvasContext.translate(0, -stitch.getHeight());
 
-            //decrease
+                //up
+                canvasContext.translate(-stitch.getWidth(), 0);         //already at bottom corner
+                canvasContext.rotate(60 * Math.PI / 180);
+                canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(),0);      //offset by -height
+
+                //down
+                canvasContext.translate(-stitch.getWidth(), stitch.getHeight());         //already at bottom corner
+                canvasContext.rotate(-30 * Math.PI / 180);
+                canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(),-stitch.getHeight());      //offset by -height
+                canvasContext.translate(0, -stitch.getHeight());
+
+
+                //straight
             canvasContext.translate(-stitch.getWidth(), 0);
-            canvasContext.rotate(-30 * Math.PI / 180);
+            canvasContext.rotate(0 * Math.PI / 180);
             canvasContext.drawImage(stitch.getIcon(), -stitch.getWidth(), 0);
 
-//                //increase
-//                canvasContext.translate(stitch.getWidth(), stitch.getHeight());         //already at bottom corner
-//                canvasContext.rotate(30 * Math.PI / 180);
-//                canvasContext.drawImage(stitch.getIcon(), 0, -stitch.getHeight());      //offset by -height
-//                canvasContext.translate(0, -stitch.getHeight());
-//
-//            //straight
-//            canvasContext.translate(stitch.getWidth(), 0);
-//            canvasContext.rotate(0 * Math.PI / 180);
-//            canvasContext.drawImage(stitch.getIcon(), 0, 0);
-//
 //                //straight
 //                canvasContext.translate(stitch.getWidth(), 0);
 //                canvasContext.rotate(0 * Math.PI / 180);

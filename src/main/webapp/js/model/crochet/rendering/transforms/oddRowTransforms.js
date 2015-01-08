@@ -44,7 +44,7 @@ define(["jquery", "stitchUtils"], function ($, StitchUtils)
     {
         function straight(previousStitch, stitch, relativeAngle, canvasContext)
         {
-            console.log("DOWN_DOWN: " + stitch.toString());
+            console.log("DOWN_STR: " + stitch.toString());
             var translation = StitchUtils.getTranslationFrom(previousStitch, stitch);
             canvasContext.translate(translation.x, translation.y);
             canvasContext.rotate(0);
