@@ -5,9 +5,9 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
         /*
             Increase stitch is a stitch attached to the same lower stitch as another
          */
-        function IncreaseStitch(rowNum, groupIndex)
+        function IncreaseStitch(chainIndex, rowNum, groupIndex)
         {
-            BaseStitch.call(this, "sc.png", 13, 13, rowNum, 0);
+            BaseStitch.call(this, chainIndex, "sc.png", 13, 13, rowNum, 0);
             this.groupIndex = groupIndex;
         }
 
@@ -91,7 +91,7 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
 
         IncreaseStitch.prototype.toString = function toString()
         {
-            return "INCREASE [id: " + this.getId() + ", row: " + this.rowNum + "]";
+            return "INCREASE [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
         };
 
         return IncreaseStitch;

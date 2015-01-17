@@ -4,7 +4,7 @@ define(["jquery"], function($)
     {
         var parse = function parse(line, rowNumber)
         {
-            var context = { rowNum: rowNumber };
+            var context = { chainIndex: 0, rowNum: rowNumber };
             parseChain.parse(line, context);
         };
 

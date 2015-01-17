@@ -2,9 +2,9 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 {
    return (function()
     {
-        function ChainUpStitch(rowNum)
+        function ChainUpStitch(chainIndex, rowNum)
         {
-            BaseStitch.call(this, "chain-up.png", 6, 13, rowNum, 8);
+            BaseStitch.call(this, chainIndex, "chain-up.png", 6, 13, rowNum, 8);
         }
 
         ChainUpStitch.prototype = Object.create(BaseStitch.prototype);
@@ -30,7 +30,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 
         ChainUpStitch.prototype.toString = function toString()
         {
-            return "CHAIN UP [id: " + this.getId() + ", row: " + this.rowNum + "]";
+            return "CHAIN UP [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
         };
 
         return ChainUpStitch;

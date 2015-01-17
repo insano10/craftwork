@@ -2,9 +2,9 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
 {
    return (function()
     {
-        function DecreaseStitch(width, rowNum)
+        function DecreaseStitch(chainIndex, width, rowNum)
         {
-            BaseStitch.call(this, "sc.png", 13, 13, rowNum, 0);
+            BaseStitch.call(this, chainIndex, "sc.png", 13, 13, rowNum, 0);
             this.width = width;
         }
 
@@ -49,7 +49,7 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
 
         DecreaseStitch.prototype.toString = function toString()
         {
-            return "DECREASE [id: " + this.getId() + ", row: " + this.rowNum + "]";
+            return "DECREASE [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
         };
 
         return DecreaseStitch;

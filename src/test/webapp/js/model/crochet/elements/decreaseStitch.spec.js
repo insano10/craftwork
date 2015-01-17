@@ -9,10 +9,10 @@ define(["jquery", "decreaseStitch", "singleStitch" ], function ($, DecreaseStitc
         beforeEach(function()
         {
             //create a chain of 10 sc
-            chain.push(new SingleStitch(1));
+            chain.push(new SingleStitch(0, 1));
             for(var i = 1; i<10 ; i++)
             {
-                chain.push(new SingleStitch(1));
+                chain.push(new SingleStitch(i, 1));
                 chain[i-1].setNextStitch(chain[i]);
                 chain[i].setPreviousStitch(chain[i-1]);
             }
@@ -21,7 +21,7 @@ define(["jquery", "decreaseStitch", "singleStitch" ], function ($, DecreaseStitc
 
         it("should connect to multiple stitches", function ()
         {
-            var stitch = new DecreaseStitch(3, 2);
+            var stitch = new DecreaseStitch(10, 3, 2);
 
             stitch.connectToRowBelow(tailOfChain);
 

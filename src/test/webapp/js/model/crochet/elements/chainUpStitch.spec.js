@@ -18,16 +18,16 @@ define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch,
         {
             //create a chain of 10 sc
             chain = [];
-            chain.push(new SingleStitch(1));
+            chain.push(new SingleStitch(0, 1));
             for(var i = 1; i<10 ; i++)
             {
-                addStitchToChain(new SingleStitch(1), chain);
+                addStitchToChain(new SingleStitch(i, 1), chain);
             }
         });
 
         it("should chain up 1", function ()
         {
-            var stitch = new ChainUpStitch(1);
+            var stitch = new ChainUpStitch(10, 1);
             addStitchToChain(stitch, chain);
 
             //chain up does not take a connection from the stitch below
@@ -38,9 +38,9 @@ define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch,
 
         it("should chain up 3", function ()
         {
-            var stitch = new ChainUpStitch(1);
-            var stitch2 = new ChainUpStitch(1);
-            var stitch3 = new ChainUpStitch(1);
+            var stitch = new ChainUpStitch(10, 1);
+            var stitch2 = new ChainUpStitch(11, 1);
+            var stitch3 = new ChainUpStitch(12, 1);
             addStitchToChain(stitch, chain);
             addStitchToChain(stitch2, chain);
             addStitchToChain(stitch3, chain);
@@ -55,10 +55,10 @@ define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch,
 
         it("should continue with stitches in first link of row after chain up", function ()
         {
-            var chainup = new ChainUpStitch(1);
+            var chainup = new ChainUpStitch(10, 1);
             addStitchToChain(chainup, chain);
 
-            var stitch = new SingleStitch(2);
+            var stitch = new SingleStitch(11, 2);
             addStitchToChain(stitch, chain);
 
             expect(chain[9].isAvailableForConnection()).toBe(false);

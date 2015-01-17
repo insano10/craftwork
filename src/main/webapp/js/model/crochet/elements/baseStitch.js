@@ -2,8 +2,9 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
 {
     return (function ()
     {
-        function Stitch(imgFile, imgWidth, imgHeight, rowNum, renderYOffset)
+        function Stitch(chainIndex, imgFile, imgWidth, imgHeight, rowNum, renderYOffset)
         {
+            this.chainIndex = chainIndex;
             this.id = StitchUtils.generateId();
             this.imgFile = imgFile;
             this.imgWidth = imgWidth;

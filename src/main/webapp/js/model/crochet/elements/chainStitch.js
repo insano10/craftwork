@@ -2,9 +2,9 @@ define(["jquery", "baseStitch", "renderedStitch"], function ($, BaseStitch, Rend
 {
    return (function()
     {
-        function ChainStitch(rowNum)
+        function ChainStitch(chainIndex, rowNum)
         {
-            BaseStitch.call(this, "chain.png", 13, 6, rowNum, 0);
+            BaseStitch.call(this, chainIndex, "chain.png", 13, 6, rowNum, 0);
         }
 
         ChainStitch.prototype = Object.create(BaseStitch.prototype);
@@ -39,7 +39,7 @@ define(["jquery", "baseStitch", "renderedStitch"], function ($, BaseStitch, Rend
 
         ChainStitch.prototype.toString = function toString()
         {
-            return "CHAIN [id: " + this.getId() + ", row: " + this.rowNum + "]";
+            return "CHAIN [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
         };
 
         return ChainStitch;

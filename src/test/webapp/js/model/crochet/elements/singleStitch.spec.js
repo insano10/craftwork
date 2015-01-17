@@ -9,10 +9,10 @@ define(["jquery", "singleStitch" ], function ($, SingleStitch)
         beforeEach(function()
         {
             //create a chain of 10 sc
-            chain.push(new SingleStitch(1));
+            chain.push(new SingleStitch(0, 1));
             for(var i = 1; i<10 ; i++)
             {
-                chain.push(new SingleStitch(1));
+                chain.push(new SingleStitch(i, 1));
                 chain[i-1].setNextStitch(chain[i]);
                 chain[i].setPreviousStitch(chain[i-1]);
             }
@@ -21,7 +21,7 @@ define(["jquery", "singleStitch" ], function ($, SingleStitch)
 
         it("should connect a stitch", function ()
         {
-            var stitch = new SingleStitch(2);
+            var stitch = new SingleStitch(10, 2);
             stitch.connectToRowBelow(tailOfChain);
 
             expect(chain[9].isAvailableForConnection()).toBe(false);

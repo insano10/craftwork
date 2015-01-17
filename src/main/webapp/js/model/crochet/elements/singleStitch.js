@@ -2,9 +2,9 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 {
    return (function()
     {
-        function SingleStitch(rowNum, renderYOffset)
+        function SingleStitch(chainIndex, rowNum, renderYOffset)
         {
-            BaseStitch.call(this, "sc.png", 13, 13, rowNum, renderYOffset);
+            BaseStitch.call(this, chainIndex, "sc.png", 13, 13, rowNum, renderYOffset);
         }
 
         SingleStitch.prototype = Object.create(BaseStitch.prototype);
@@ -12,7 +12,7 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
 
         SingleStitch.prototype.toString = function toString()
         {
-            return "SINGLE [id: " + this.getId() + ", row: " + this.rowNum + "]";
+            return "SINGLE [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
         };
 
         return SingleStitch;
