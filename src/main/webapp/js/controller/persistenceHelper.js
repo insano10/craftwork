@@ -48,7 +48,7 @@ define(["jquery"], function ($)
                 {
                     console.log('create response: ' + JSON.stringify(pattern));
 
-                    if(this.activePatternId == -1)
+                    if(helper.activePatternId == -1)
                     {
                         setPattern(helper, pattern);
                     }

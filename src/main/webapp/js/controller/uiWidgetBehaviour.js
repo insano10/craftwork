@@ -86,13 +86,6 @@ define(["jquery", "bootstrap"], function ($)
                 }
             });
 
-            $("#login-button").bind({
-                click: function (event)
-                {
-                    connectionHelper.authorise();
-                }
-            });
-
             var instructionsTitle = $("#instructions-title");
 
             instructionsTitle.tooltip({
@@ -108,6 +101,20 @@ define(["jquery", "bootstrap"], function ($)
             });
 
         };
+
+        this.attachSignInHandler = function attachSignInHandler()
+        {
+            gapi.signin2.render('login-button-div', {
+                'scope': 'https://www.googleapis.com/auth/plus.login',
+                'width': 170,
+                'height': 30,
+                'longtitle': true,
+                'theme': 'dark',
+                'onsuccess': connectionHelper.onSignInSuccess.bind(connectionHelper),
+                'onfailure': connectionHelper.onSignInFailure.bind(connectionHelper)
+            });
+
+        }
     }
 
     return UiWidgetBehaviours;

@@ -53,7 +53,15 @@ define(["jquery", "chainRenderer", "chartRenderer", "chartModel", "parseChainFac
 
                 view.initialise();
                 uiWidgetBehaviour.initialise();
-                connectionHelper.authorise();
+
+                gapi.load('auth2', function(){
+                    // Retrieve the singleton for the GoogleAuth library and set up the client.
+                    auth2 = gapi.auth2.init({
+                        client_id: '167961214562-grbr91oci2183eqd580k8r7vvfsqmvsi.apps.googleusercontent.com',
+                        cookiepolicy: 'single_host_origin'
+                    });
+                    uiWidgetBehaviour.attachSignInHandler();
+                });
             })
         };
 

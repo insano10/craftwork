@@ -4,7 +4,7 @@
 */
 .body
 {
-    background-color: #f3f5f7
+    background-color: #f3f5f7;
 }
 
 #site-wrapper
@@ -47,11 +47,15 @@
 #empty-workspace
 {
     display: none;
+    height:1024px;
+    z-index: -1;
 }
 
 #unauthorised-workspace
 {
     display: none;
+    height:1024px;
+    z-index: -1;
 }
 
 .main-content-div

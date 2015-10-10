@@ -51,6 +51,8 @@ public class FileBackedPatternStore implements PatternStore
     @Override
     public Pattern loadLatest(String userId)
     {
+        ensureUserDirectoryExists(userId);
+
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(PATTERN_FOLDER, userId)))
         {
             FileTime latestPatternTime = null;
@@ -83,6 +85,8 @@ public class FileBackedPatternStore implements PatternStore
     @Override
     public Collection<Pattern> loadPatterns(String userId)
     {
+        ensureUserDirectoryExists(userId);
+
         final List<Pattern> patterns = new ArrayList<>();
 
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(PATTERN_FOLDER, userId)))
@@ -106,6 +110,8 @@ public class FileBackedPatternStore implements PatternStore
     @Override
     public Pattern loadPattern(String userId, String patternId)
     {
+        ensureUserDirectoryExists(userId);
+
         try
         {
             Path patternFile = Paths.get(PATTERN_FOLDER, userId, patternId + ".ptn");
@@ -122,6 +128,8 @@ public class FileBackedPatternStore implements PatternStore
     @Override
     public void deletePattern(String userId, int patternId)
     {
+        ensureUserDirectoryExists(userId);
+
         try
         {
             LOGGER.info("Deleting pattern: " + patternId);
@@ -143,6 +151,18 @@ public class FileBackedPatternStore implements PatternStore
     {
         BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
         return LocalDateTime.ofInstant(attributes.lastModifiedTime().toInstant(), ZoneId.systemDefault());
+    }
+
+    private void ensureUserDirectoryExists(String userId)
+    {
+        try
+        {
+            Files.createDirectories(Paths.get(PATTERN_FOLDER, userId));
+        }
+        catch (IOException e)
+        {
+            LOGGER.error("Failed to create user directory", e);
+        }
     }
 
 }

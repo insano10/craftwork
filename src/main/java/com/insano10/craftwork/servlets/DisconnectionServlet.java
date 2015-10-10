@@ -16,11 +16,7 @@ import java.io.IOException;
 
 public class DisconnectionServlet extends HttpServlet
 {
-    private static final String REVOKE_URL_TEMPLATE = "https://accounts.google.com/o/oauth2/revoke?token=%s";
     private static final String TOKEN_ATTRIBUTE_ID = "token";
-
-    private static final HttpTransport TRANSPORT = new NetHttpTransport();
-    private static final JacksonFactory JSON_FACTORY = new JacksonFactory();
     private static final Gson GSON = new Gson();
 
     @Override
@@ -44,30 +40,9 @@ public class DisconnectionServlet extends HttpServlet
             return;
         }
 
-        try
-        {
-            // Build credential from stored token data.
-            GoogleCredential credential = new GoogleCredential.Builder()
-                    .setJsonFactory(JSON_FACTORY)
-                    .setTransport(TRANSPORT)
-                    .setClientSecrets(ClientApp.CLIENT_ID, ClientApp.CLIENT_SECRET).build()
-                    .setFromTokenResponse(JSON_FACTORY.fromString(
-                            tokenData, GoogleTokenResponse.class));
-
-            // Execute HTTP GET request to revoke current token.
-            GenericUrl revokeUrl = new GenericUrl(String.format(REVOKE_URL_TEMPLATE, credential.getAccessToken()));
-            TRANSPORT.createRequestFactory().buildGetRequest(revokeUrl).execute();
-
-            // Reset the user's session.
-            request.getSession().removeAttribute(TOKEN_ATTRIBUTE_ID);
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().print(GSON.toJson("Successfully disconnected."));
-        }
-        catch (IOException e)
-        {
-            // For whatever reason, the given token was invalid.
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().print(GSON.toJson("Failed to revoke token for given user."));
-        }
+        // Reset the user's session.
+        request.getSession().removeAttribute(TOKEN_ATTRIBUTE_ID);
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().print(GSON.toJson("Successfully disconnected."));
     }
 }

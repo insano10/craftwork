@@ -1,12 +1,8 @@
-define(["jquery"], function ($)
-{
-    return (function ()
-    {
+define(["jquery"], function ($) {
+    return (function () {
         var LATEST_PATTERN_ID = null;
-        var NEEDS_TO_LOGIN = true; //todo: google api bug seems to require this, has it been fixed yet? And even if not does it need to be static?
 
-        function ConnectionHelper(persistenceHelper, view)
-        {
+        function ConnectionHelper(persistenceHelper, view) {
             this.persistenceHelper = persistenceHelper;
             this.view = view;
         }
@@ -18,102 +14,67 @@ define(["jquery"], function ($)
          */
         function partial(func /*, 0..n args */) {
             var args = Array.prototype.slice.call(arguments, 1);
-            return function() {
+            return function () {
                 var newArgs = Array.prototype.slice.call(arguments);
                 var allArguments = newArgs.concat(args);
                 return func.apply(this, allArguments);
             };
         }
 
-        var onAuthTokenRetrieved = function onAuthTokenRetrieved(authResult, connectionHelper)
-        {
-            //remove this field to stop the js trying to interact with the cross domain login popup
-            delete authResult['g-oauth-window'];
-
-            if (authResult['status']['signed_in'] && authResult['status']['method'] == 'PROMPT')
-            {
-                if(NEEDS_TO_LOGIN)
-                {
-                    //success
-                    loginWithAuthToken(authResult, connectionHelper);
-
-                    //render the profile data from Google+.
-                    var getProfileCallback = partial(renderProfile, connectionHelper);
-                    gapi.client.load('plus', 'v1', getProfileCallback);
-                    NEEDS_TO_LOGIN = false;
-                }
-            }
-            else
-            {
-                //error
-                console.log('Error signing in: ' + authResult['error']);
-                connectionHelper.view.userUnauthorised();
-            }
-        };
-
-        var loginWithAuthToken = function loginWithAuthToken(authResult, helper)
-        {
+        var loginWithAuthToken = function loginWithAuthToken(authTokenId, userProfile, helper) {
             $.ajax({
-                type:        'POST',
-                url:         window.location.href.split("#")[0] + 'connect',
+                type: 'POST',
+                url: window.location.href.split("#")[0] + 'connect',
                 contentType: 'application/octet-stream; charset=utf-8',
                 processData: false,
-                data:        authResult.code,
-                success:     function (result)
-                {
+                data: authTokenId,
+                success: function (result) {
                     helper.view.userAuthorised();
+                    helper.view.renderUserProfile(userProfile);
+
                     helper.persistenceHelper.loadPatterns();
                     helper.persistenceHelper.loadPattern(LATEST_PATTERN_ID);
                 }
             });
         };
 
-        var renderProfile = function renderProfile(helper)
-        {
-            var request = gapi.client.plus.people.get({'userId': 'me'});
-
-            request.execute(function (profile)
-            {
-                helper.view.renderUserProfile(profile);
-            });
+        ConnectionHelper.prototype.onSignInSuccess = function onSignInSuccess(googleUser) {
+            var idToken = googleUser.getAuthResponse().id_token;
+            loginWithAuthToken(idToken, googleUser.getBasicProfile(), this);
         };
 
-        ConnectionHelper.prototype.authorise = function authorise()
-        {
-            var onAuthTokenRetrievedCallback = partial(onAuthTokenRetrieved, this);
-
-            gapi.auth.signIn(
-                {
-                    "callback": onAuthTokenRetrievedCallback,
-                    "clientid": "167961214562-grbr91oci2183eqd580k8r7vvfsqmvsi.apps.googleusercontent.com",
-                    "scope": "https://www.googleapis.com/auth/plus.login",
-                    "requestvisibleactions": "http://schema.org/AddAction",
-                    "cookiepolicy": "single_host_origin"
-                }
-            );
+        ConnectionHelper.prototype.onSignInFailure = function onSignInFailure(error) {
+            console.log("Error signing in: " + error);
+            this.view.userUnauthorised();
         };
 
-        ConnectionHelper.prototype.disconnectServer = function disconnectServer()
-        {
-            // Revoke the server tokens
+        ConnectionHelper.prototype.disconnectServer = function disconnectServer() {
+
             var helper = this;
-            $.ajax({
-                type:    'POST',
-                url:     window.location.href.split("#")[0] + 'disconnect',
-                async:   false,
-                success: function (result)
-                {
-                    console.log('revoke response: ' + result);
-                    helper.view.userUnauthorised();
-                    NEEDS_TO_LOGIN = true;
-                },
-                error:   function (e)
-                {
-                    console.log("Failed to logout: " + e);
-                }
+
+            // Revoke the server token
+            var auth2 = gapi.auth2.getAuthInstance();
+
+            auth2.signOut().then(function () {
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: window.location.href.split("#")[0] + 'disconnect',
+                    async: false,
+                    success: function (result) {
+
+                        console.log('User signed out');
+                        helper.view.userUnauthorised();
+                    },
+                    error: function (e) {
+                        console.log("Failed to logout: " + e);
+                    }
+                });
             });
+
         };
 
         return ConnectionHelper;
     })();
-}) ;
+});

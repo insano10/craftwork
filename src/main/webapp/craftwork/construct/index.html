@@ -6,10 +6,12 @@
         <link rel="stylesheet" href="../../js/lib/bootstrap-3.3.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="../../css/craftwork.css">
 
-        <script type='text/javascript' src="../../js/lib/google-client.min.js"></script>
         <script type='text/javascript' src="../../js/lib/jquery-2.1.0.min.js"></script>
         <script type='text/javascript' src="../../js/lib/bootstrap-3.3.0/js/bootstrap.min.js"></script>
         <script type='text/javascript' src="../../js/lib/requirejs-2.1.14.min.js" data-main="../../js/boot.js"></script>
+
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     </head>
     <body class="body">
 
@@ -33,9 +35,7 @@
                     <li><a id="logout-option" class="option-text" href="#">Logout</a></li>
                 </ul>
             </div>
-            <div id="login-button-div">
-                <img id="login-button" src="../../images/signin.png">
-            </div>
+            <div id="login-button-div"></div>
         </div>
 
         <div id="site-wrapper">
@@ -107,14 +107,13 @@
                         </div>
                     </div>
                 </div>
+                <div id="empty-workspace">
+                    <span>Please create a new pattern to continue</span>
+                </div>
+                <div id="unauthorised-workspace">
+                    <span>Please login to continue</span>
+                </div>
             </div>
-        </div>
-
-        <div id="empty-workspace">
-            <span>Please create a new pattern to continue</span>
-        </div>
-        <div id="unauthorised-workspace">
-            <span>Please login to continue</span>
         </div>
 
     </body>

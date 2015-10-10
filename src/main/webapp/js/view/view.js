@@ -114,11 +114,11 @@ define(["jquery", "bootstrap"], function ($)
             }
 
             var profileImage = $("#profile-image");
-            profileImage.attr("src", profile.image.url);
-            profileImage.attr("alt", profile.displayName);
-            profileImage.attr("title", profile.displayName);
+            profileImage.attr("src", profile.getImageUrl());
+            profileImage.attr("alt", profile.getName());
+            profileImage.attr("title", profile.getName());
 
-            $("#profile-name").text(profile.displayName);
+            $("#profile-name").text(profile.getName());
         };
 
         this.updateMyPatternList = function updateMyPatternList(patterns)
