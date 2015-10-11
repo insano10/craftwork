@@ -4,46 +4,59 @@ define(["jquery"], function ($)
     {
         this.stitches = stitches;
 
-        var renderIcon = function renderIcon(canvasContext, icon, renderedStitch)
+        var iconsReady = function iconsReady(stitches)
         {
-            console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos() + " at angle " + renderedStitch.getRenderAngle());
-
-            canvasContext.save();
-
-            canvasContext.translate(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint());
-            canvasContext.rotate(renderedStitch.getRenderAngle() * Math.PI / 180);
-            canvasContext.drawImage(icon, renderedStitch.getXRenderPointAfterTranslation(), renderedStitch.getYRenderPointAfterTranslation() - renderedStitch.getRenderYOffset());
-
-            canvasContext.restore();
+            for (var i = 0; i < stitches.length; i++)
+            {
+                if (!stitches[i].icon.complete)
+                {
+                    return false;
+                }
+            }
+            return true;
         };
 
-        this.renderIconAndConnections = function renderIconAndConnections(canvasContext, renderContext, icon, attempts, renderedStitch)
+        var doRender = function doRender(canvasContext, renderContext, stitches)
         {
-            if (!icon.complete && attempts < 10)
+            for (var i = 0; i < stitches.length; i++)
+            {
+                var renderedStitch = renderContext.getRenderedStitchFor(stitches[i]);
+
+                console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos() + " at angle " + renderedStitch.getRenderAngle());
+
+                canvasContext.save();
+
+                canvasContext.translate(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint());
+                canvasContext.rotate(renderedStitch.getRenderAngle() * Math.PI / 180);
+                canvasContext.drawImage(stitches[i].icon, renderedStitch.getXRenderPointAfterTranslation(), renderedStitch.getYRenderPointAfterTranslation() - renderedStitch.getRenderYOffset());
+
+                canvasContext.restore();
+            }
+        };
+
+        this.renderStitches = function renderStitches(canvasContext, renderContext, stitches, attempts)
+        {
+            if (!iconsReady(stitches) && attempts < 10)
             {
                 var renderer = this;
                 setTimeout(function ()
                            {
-                               renderer.renderIconAndConnections(canvasContext, renderContext, icon, (attempts + 1), renderedStitch);
+                               renderer.renderStitches(canvasContext, renderContext, stitches, (attempts + 1));
                            }, 100);
             }
-            else if (icon.complete)
+            else if (iconsReady(stitches))
             {
-                renderIcon(canvasContext, icon, renderedStitch);
+                doRender(canvasContext, renderContext, stitches);
             }
             else
             {
-                console.error("failed to load icon " + this.icon.src);
+                console.error("failed to load icons");
             }
         };
 
         this.render = function render(canvasContext, renderContext)
         {
-            for (var i = 0; i < this.stitches.length; i++)
-            {
-                var renderedStitch = renderContext.getRenderedStitchFor(this.stitches[i]);
-                this.renderIconAndConnections(canvasContext, renderContext, this.stitches[i].getIcon(), 0, renderedStitch);
-            }
+            this.renderStitches(canvasContext, renderContext, this.stitches, 0);
         };
     }
 
