@@ -1,4 +1,5 @@
-define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($, SingleStitchRenderer, IncreaseStitchRenderer)
+define(["jquery", "singleStitchRenderer", "increaseStitchRenderer", "stitchPreRenderHelper", "increaseStitchPreRenderHelper"],
+    function ($, SingleStitchRenderer, IncreaseStitchRenderer, StitchPreRenderHelper, IncreaseStitchPreRenderHelper)
 {
     function RenderGroup(type)
     {
@@ -7,6 +8,7 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($
         this.previousGroup = null;
         this.nextGroup = null;
         this.renderer = null;
+        this.preRenderHelper = null;
 
         this.accept = function accept(stitch)
         {
@@ -33,10 +35,12 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($
             if (this.type == "INCREASE")
             {
                 this.renderer = new IncreaseStitchRenderer(this.stitches);
+                this.preRenderHelper = new IncreaseStitchPreRenderHelper();
             }
             else
             {
                 this.renderer = new SingleStitchRenderer(this.stitches[0]);
+                this.preRenderHelper = new StitchPreRenderHelper();
             }
         };
 
@@ -54,7 +58,8 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($
         {
             for (var i = 0; i < this.stitches.length; i++)
             {
-                this.stitches[i].calculateStartingAngle(renderContext);
+                this.preRenderHelper.calculateStartingAngle(this.stitches[i], renderContext);
+
             }
 
             if (this.nextGroup != null)
@@ -67,7 +72,7 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($
         {
             for (var i = 0; i < this.stitches.length; i++)
             {
-                this.stitches[i].calculateRelativeAngle(renderContext);
+                this.preRenderHelper.calculateRelativeAngle(this.stitches[i], renderContext);
             }
 
             if (this.nextGroup != null)
@@ -80,7 +85,7 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($
         {
             for (var i = 0; i < this.stitches.length; i++)
             {
-                this.stitches[i].calculatePosition(renderContext);
+                this.preRenderHelper.calculatePosition(this.stitches[i], renderContext);
             }
 
             if (this.nextGroup != null)

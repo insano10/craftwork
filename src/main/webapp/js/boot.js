@@ -16,10 +16,12 @@ require(
             "renderedStitch":        "model/crochet/rendering/renderedStitch",
             "renderContext":         "model/crochet/rendering/renderContext",
 
-            "modelRenderer":          "model/crochet/newRendering/modelRenderer",
-            "renderGroup":            "model/crochet/newRendering/renderGroup",
-            "increaseStitchRenderer": "model/crochet/newRendering/increaseStitchRenderer",
-            "singleStitchRenderer":   "model/crochet/newRendering/singleStitchRenderer",
+            "modelRenderer":                 "model/crochet/newRendering/modelRenderer",
+            "renderGroup":                   "model/crochet/newRendering/renderGroup",
+            "increaseStitchRenderer":        "model/crochet/newRendering/increaseStitchRenderer",
+            "singleStitchRenderer":          "model/crochet/newRendering/singleStitchRenderer",
+            "stitchPreRenderHelper":         "model/crochet/newRendering/stitchPreRenderHelper",
+            "increaseStitchPreRenderHelper": "model/crochet/newRendering/increaseStitchPreRenderHelper",
 
 
             "chartModel":        "model/crochet/chartModel",

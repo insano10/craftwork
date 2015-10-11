@@ -56,38 +56,6 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
             }
         };
 
-        IncreaseStitch.prototype.getAngleOfRotation = function getAngleOfRotation(stitch, renderContext)
-        {
-            var lastStitch = stitch.getPreviousStitch();
-
-            if (lastStitch != null)
-            {
-                var angle = renderContext.getRenderedStitchFor(lastStitch).getRenderAngle();
-
-                if(this.groupIndex > 0)
-                {
-                    if(this.rowNum%2 != 0)
-                    {
-                        angle += 10;
-                    }
-                    else
-                    {
-                        angle -= 10;
-                    }
-                    console.log("increase detected, angle is now: " + angle);
-                }
-                else
-                {
-                    console.log("first stitch of an increase, keeping the angle at: " + angle);
-                }
-
-                return angle;
-            }
-            else
-            {
-                return 0;
-            }
-        };
 
         IncreaseStitch.prototype.toString = function toString()
         {
@@ -97,6 +65,12 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
         IncreaseStitch.prototype.getType = function getType()
         {
             return "INCREASE";
+        };
+
+        //todo: ewwww
+        IncreaseStitch.prototype.getGroupIndex = function getGroupIndex()
+        {
+            return this.groupIndex;
         };
 
         return IncreaseStitch;
