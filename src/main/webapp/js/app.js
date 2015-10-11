@@ -2,9 +2,9 @@
  This is the main app entry point from boot.js (loaded by require.js)
  */
 
-define(["jquery", "chainRenderer", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser",
+define(["jquery", "chartRenderer", "chartModel", "parseChainFactory", "instructionParser", "keyListener", "instructionEvaluator", "rowNumberSynchroniser",
         "persistenceHelper", "connectionHelper", "view", "uiWidgetBehaviour"],
-    function ($, ChainRenderer, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator, RowNumberSynchroniser,
+    function ($, ChartRenderer, ChartModel, ParseChainFactory, InstructionParser, KeyListener, InstructionEvaluator, RowNumberSynchroniser,
               PersistenceHelper, ConnectionHelper, View, UiWidgetBehaviour)
     {
         var toggleLogging = function toggleLogging()
@@ -31,9 +31,8 @@ define(["jquery", "chainRenderer", "chartRenderer", "chartModel", "parseChainFac
 
                 toggleLogging();
 
-                var chainRenderer = new ChainRenderer();
                 var chartRenderer = new ChartRenderer();
-                var chartModel = new ChartModel(chainRenderer);
+                var chartModel = new ChartModel();
                 var keyListener = new KeyListener();
                 var parseChain = new ParseChainFactory().createParseChain(chartModel);
 

@@ -33,6 +33,11 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
             return "CHAIN UP [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
         };
 
+        ChainUpStitch.prototype.getType = function getType()
+        {
+            return "CHAIN_UP";
+        };
+
         return ChainUpStitch;
 
     })();

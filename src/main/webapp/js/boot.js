@@ -12,7 +12,6 @@ require(
             "persistenceHelper":     "controller/persistenceHelper",
             "rowNumberSynchroniser": "controller/rowNumberSynchroniser",
             "uiWidgetBehaviour":     "controller/uiWidgetBehaviour",
-            "chainRenderer":         "model/crochet/rendering/chainRenderer",
             "chartRenderer":         "model/crochet/rendering/chartRenderer",
             "renderedStitch":        "model/crochet/rendering/renderedStitch",
             "renderContext":         "model/crochet/rendering/renderContext",
@@ -20,6 +19,11 @@ require(
             "oddRowTransforms":      "model/crochet/rendering/transforms/oddRowTransforms",
             "evenRowTransforms":     "model/crochet/rendering/transforms/evenRowTransforms",
             "transformHelper":       "model/crochet/rendering/transforms/transformHelper",
+
+            "modelRenderer":         "model/crochet/newRendering/modelRenderer",
+            "renderGroup":           "model/crochet/newRendering/renderGroup",
+
+
             "chartModel":            "model/crochet/chartModel",
             "instructionParser":     "model/crochet/instructionParser",
             "parseChainFactory":     "model/crochet/parseChainFactory",

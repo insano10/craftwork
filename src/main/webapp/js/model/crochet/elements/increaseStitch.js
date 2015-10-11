@@ -94,6 +94,11 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
             return "INCREASE [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
         };
 
+        IncreaseStitch.prototype.getType = function getType()
+        {
+            return "INCREASE";
+        };
+
         return IncreaseStitch;
 
     })();

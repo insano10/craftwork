@@ -69,6 +69,11 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
             return "DECREASE [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
         };
 
+        DecreaseStitch.prototype.getType = function getType()
+        {
+            return "DECREASE";
+        };
+
         return DecreaseStitch;
 
     })();

@@ -15,6 +15,11 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
             return "SINGLE [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
         };
 
+        SingleStitch.prototype.getType = function getType()
+        {
+            return "SINGLE";
+        };
+
         return SingleStitch;
 
     })();

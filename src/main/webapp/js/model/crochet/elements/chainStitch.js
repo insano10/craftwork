@@ -42,6 +42,11 @@ define(["jquery", "baseStitch", "renderedStitch"], function ($, BaseStitch, Rend
             return "CHAIN [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
         };
 
+        ChainStitch.prototype.getType = function getType()
+        {
+            return "CHAIN";
+        };
+
         return ChainStitch;
 
     })();

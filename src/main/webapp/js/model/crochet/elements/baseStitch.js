@@ -76,6 +76,11 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             return this.id;
         };
 
+        Stitch.prototype.getType = function getType()
+        {
+            throw "getType must be implemented in concrete stitch implementation";
+        };
+
         Stitch.prototype.renderRelativeTo = function renderRelativeTo()
         {
             return true;
