@@ -9,7 +9,7 @@ define(["jquery"], function ($)
 
         this.accept = function accept(stitch)
         {
-            if(stitch.getType() == "INCREASE" && this.type == "INCREASE")
+            if (stitch.getType() == "INCREASE" && this.type == "INCREASE")
             {
                 //group allows multiple stitches of the same type
                 this.stitches.push(stitch);
@@ -18,7 +18,7 @@ define(["jquery"], function ($)
             else
             {
                 //group allows 1 stitch only
-                if(this.stitches.length == 0)
+                if (this.stitches.length == 0)
                 {
                     this.stitches.push(stitch);
                     return true;
@@ -39,7 +39,15 @@ define(["jquery"], function ($)
 
         this.render = function render(canvasContext, renderContext)
         {
-            this.stitches[0].render(canvasContext, renderContext);
+            for (var i = 0; i < this.stitches.length; i++)
+            {
+                this.stitches[i].render(canvasContext, renderContext);
+            }
+
+            if(this.nextGroup != null)
+            {
+                this.nextGroup.render(canvasContext, renderContext);
+            }
         };
     }
 

@@ -422,11 +422,6 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
         {
             var renderedStitch = renderContext.getRenderedStitchFor(this);
             this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0, renderedStitch);
-
-            if (this.nextStitch != null)
-            {
-                this.nextStitch.render(canvasContext, renderContext);
-            }
         };
 
         Stitch.prototype.notifyStitchAboveRenderingDataUpdated = function notifyStitchAboveRenderingDataUpdated(renderedStitchAbove, renderContext)

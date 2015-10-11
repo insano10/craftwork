@@ -29,7 +29,7 @@ define(["jquery", "renderGroup"], function ($, RenderGroup)
                 var currentRenderGroup = headRenderGroup;
                 var currentStitch = headStitch;
 
-                do
+                while(currentStitch != null)
                 {
                     if (currentRenderGroup.accept(currentStitch))
                     {
@@ -42,8 +42,7 @@ define(["jquery", "renderGroup"], function ($, RenderGroup)
                         currentRenderGroup.setNextGroup(renderGroup);
                         currentRenderGroup = renderGroup;
                     }
-
-                } while (currentStitch.getNextStitch() != null);
+                }
 
                 //precalculate positions and angles before rendering
                 headStitch.calculateStartingAngle(renderContext);
