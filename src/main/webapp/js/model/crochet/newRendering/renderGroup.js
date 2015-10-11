@@ -6,6 +6,7 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($
         this.stitches = [];
         this.previousGroup = null;
         this.nextGroup = null;
+        this.renderer = null;
 
         this.accept = function accept(stitch)
         {
@@ -25,6 +26,18 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($
                 }
             }
             return false;
+        };
+
+        this.close = function close()
+        {
+            if (this.type == "INCREASE")
+            {
+                this.renderer = new IncreaseStitchRenderer(this.stitches);
+            }
+            else
+            {
+                this.renderer = new SingleStitchRenderer(this.stitches[0]);
+            }
         };
 
         this.setPreviousGroup = function setPreviousGroup(group)
@@ -78,18 +91,7 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($
 
         this.render = function render(canvasContext, renderContext)
         {
-            var renderer;
-
-            if (this.type == "INCREASE")
-            {
-                renderer = new IncreaseStitchRenderer(this.stitches);
-            }
-            else
-            {
-                renderer = new SingleStitchRenderer(this.stitches[0]);
-            }
-
-            renderer.render(canvasContext, renderContext);
+            this.renderer.render(canvasContext, renderContext);
 
             if (this.nextGroup != null)
             {

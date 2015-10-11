@@ -37,12 +37,15 @@ define(["jquery", "renderGroup"], function ($, RenderGroup)
                     }
                     else
                     {
+                        currentRenderGroup.close();
+
                         var renderGroup = new RenderGroup(currentStitch.getType());
                         renderGroup.setPreviousGroup(currentRenderGroup);
                         currentRenderGroup.setNextGroup(renderGroup);
                         currentRenderGroup = renderGroup;
                     }
                 }
+                currentRenderGroup.close();
 
                 //precalculate positions and angles before rendering
                 headRenderGroup.preRender1(renderContext);
