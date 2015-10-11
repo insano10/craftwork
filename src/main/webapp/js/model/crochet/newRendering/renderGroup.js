@@ -1,4 +1,4 @@
-define(["jquery", "singleStitchRenderer"], function ($, SingleStitchRenderer)
+define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($, SingleStitchRenderer, IncreaseStitchRenderer)
 {
     function RenderGroup(type)
     {
@@ -39,20 +39,18 @@ define(["jquery", "singleStitchRenderer"], function ($, SingleStitchRenderer)
 
         this.render = function render(canvasContext, renderContext)
         {
+            var renderer;
+
             if(this.type == "INCREASE")
             {
-                //todo: swap out for increase renderer
-                for (var i = 0; i < this.stitches.length; i++)
-                {
-                    var renderer = new SingleStitchRenderer(this.stitches[i]);
-                    renderer.render(canvasContext, renderContext);
-                }
+                renderer = new IncreaseStitchRenderer(this.stitches);
             }
             else
             {
-                var renderer = new SingleStitchRenderer(this.stitches[0]);
-                renderer.render(canvasContext, renderContext);
+                renderer = new SingleStitchRenderer(this.stitches[0]);
             }
+
+            renderer.render(canvasContext, renderContext);
 
             if(this.nextGroup != null)
             {

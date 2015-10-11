@@ -1,7 +1,7 @@
 require(
     {
         shim:  {
-            "bootstrap": { "deps": ['jquery'] }
+            "bootstrap": {"deps": ['jquery']}
         },
         paths: {
             "jquery":                "lib/jquery-2.1.0.min",
@@ -20,22 +20,23 @@ require(
             "evenRowTransforms":     "model/crochet/rendering/transforms/evenRowTransforms",
             "transformHelper":       "model/crochet/rendering/transforms/transformHelper",
 
-            "modelRenderer":         "model/crochet/newRendering/modelRenderer",
-            "renderGroup":           "model/crochet/newRendering/renderGroup",
-            "singleStitchRenderer":  "model/crochet/newRendering/singleStitchRenderer",
+            "modelRenderer":          "model/crochet/newRendering/modelRenderer",
+            "renderGroup":            "model/crochet/newRendering/renderGroup",
+            "increaseStitchRenderer": "model/crochet/newRendering/increaseStitchRenderer",
+            "singleStitchRenderer":   "model/crochet/newRendering/singleStitchRenderer",
 
 
-            "chartModel":            "model/crochet/chartModel",
-            "instructionParser":     "model/crochet/instructionParser",
-            "parseChainFactory":     "model/crochet/parseChainFactory",
-            "stitchUtils":           "model/crochet/stitchUtils",
-            "baseStitch":            "model/crochet/elements/baseStitch",
-            "singleStitch":          "model/crochet/elements/singleStitch",
-            "chainStitch":           "model/crochet/elements/chainStitch",
-            "decreaseStitch":        "model/crochet/elements/decreaseStitch",
-            "increaseStitch":        "model/crochet/elements/increaseStitch",
-            "chainUpStitch":         "model/crochet/elements/chainUpStitch",
-            "view":                  "view/view"
+            "chartModel":        "model/crochet/chartModel",
+            "instructionParser": "model/crochet/instructionParser",
+            "parseChainFactory": "model/crochet/parseChainFactory",
+            "stitchUtils":       "model/crochet/stitchUtils",
+            "baseStitch":        "model/crochet/elements/baseStitch",
+            "singleStitch":      "model/crochet/elements/singleStitch",
+            "chainStitch":       "model/crochet/elements/chainStitch",
+            "decreaseStitch":    "model/crochet/elements/decreaseStitch",
+            "increaseStitch":    "model/crochet/elements/increaseStitch",
+            "chainUpStitch":     "model/crochet/elements/chainUpStitch",
+            "view":              "view/view"
         }
     },
     ["app"],
