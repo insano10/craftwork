@@ -15,10 +15,6 @@ require(
             "chartRenderer":         "model/crochet/rendering/chartRenderer",
             "renderedStitch":        "model/crochet/rendering/renderedStitch",
             "renderContext":         "model/crochet/rendering/renderContext",
-            "renderTransforms":      "model/crochet/rendering/renderTransforms",
-            "oddRowTransforms":      "model/crochet/rendering/transforms/oddRowTransforms",
-            "evenRowTransforms":     "model/crochet/rendering/transforms/evenRowTransforms",
-            "transformHelper":       "model/crochet/rendering/transforms/transformHelper",
 
             "modelRenderer":          "model/crochet/newRendering/modelRenderer",
             "renderGroup":            "model/crochet/newRendering/renderGroup",

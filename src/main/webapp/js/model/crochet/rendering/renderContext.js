@@ -8,7 +8,6 @@ define(["jquery"], function($)
         this.lastRenderedStitch = null;
         this.maxRowNum = 0;
         this.rowHeights = {};
-        this.renderTransform = null;
 
         this.getStartXPos = function getStartXPos()
         {
@@ -18,16 +17,6 @@ define(["jquery"], function($)
         this.getStartYPos = function getStartYPos()
         {
             return this.startYPos;
-        };
-
-        this.getRenderTransform = function getRenderTransform()
-        {
-            return this.renderTransform;
-        };
-
-        this.setRenderTransform = function setRenderTransform(transform)
-        {
-            this.renderTransform = transform;
         };
 
         this.getRenderedStitchFor = function getRenderedStitchFor(stitch)
