@@ -7,7 +7,7 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
          */
         function IncreaseStitch(chainIndex, rowNum, groupIndex)
         {
-            BaseStitch.call(this, chainIndex, "sc.png", 13, 13, rowNum, 0);
+            BaseStitch.call(this, chainIndex, "sc-multi.png", 13, 13, rowNum, 0);
             this.groupIndex = groupIndex;
         }
 
