@@ -38,12 +38,10 @@ define(["jquery"], function ($) {
         this.render = function render(canvasContext, renderContext) {
             console.log("populating rendering data");
 
-            headStitch.populateRenderingData(renderContext, true);
             if (headStitch != null) {
                 headStitch.calculateStartingAngle(renderContext);
                 headStitch.calculateRelativeAngle(renderContext);
                 headStitch.calculatePosition(renderContext);
-//                tailStitch.lineUpStitches(renderContext);
 
                 renderRowNumbers(canvasContext, renderContext);
                 headStitch.render(canvasContext, renderContext);

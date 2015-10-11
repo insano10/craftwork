@@ -59,13 +59,13 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             canvasContext.drawImage(icon, renderedStitch.getXRenderPointAfterTranslation(), renderedStitch.getYRenderPointAfterTranslation() - renderedStitch.getRenderYOffset());
 
             //circle shows the rotation point of the stitch
-            canvasContext.beginPath();
-            canvasContext.arc(0, 0, 2, 0, 2 * Math.PI, false);
-            canvasContext.fillStyle = 'green';
-            canvasContext.fill();
-            canvasContext.lineWidth = 1;
-            canvasContext.strokeStyle = '#003300';
-            canvasContext.stroke();
+            //canvasContext.beginPath();
+            //canvasContext.arc(0, 0, 2, 0, 2 * Math.PI, false);
+            //canvasContext.fillStyle = 'green';
+            //canvasContext.fill();
+            //canvasContext.lineWidth = 1;
+            //canvasContext.strokeStyle = '#003300';
+            //canvasContext.stroke();
 
             canvasContext.restore();
         };
@@ -198,7 +198,7 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             else if (icon.complete)
             {
                 renderIcon(canvasContext, this.icon, renderedStitch);
-                renderConnectionLines(canvasContext, renderContext, renderedStitch, this.stitchesBelow);
+                //renderConnectionLines(canvasContext, renderContext, renderedStitch, this.stitchesBelow);
             }
             else
             {
@@ -412,47 +412,6 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                 this.nextStitch.calculatePosition(renderContext);
             }
         };
-
-        Stitch.prototype.lineUpStitches = function lineUpStitches(renderContext)
-        {
-            var oldMe = renderContext.getRenderedStitchFor(this);
-
-            var renderPosition =
-            {
-                x: oldMe.getXPos(),
-                y: oldMe.getYPos()
-            };
-
-            console.log(this.toString() + " was at position " + JSON.stringify(renderPosition));
-
-
-            if(this.getStitchesBelow().length == 1)
-            {
-                console.log("Lining up " + this.toString() + " with " + this.getStitchesBelow()[0].toString());
-
-                var stitchBelow = renderContext.getRenderedStitchFor(this.getStitchesBelow()[0]);
-
-                renderPosition.x = stitchBelow.getXPos() + Math.sin(oldMe.getRenderAngle()*Math.PI/180) * this.imgHeight;
-                renderPosition.y = stitchBelow.getYPos() - (Math.cos(oldMe.getRenderAngle()*Math.PI/180) * this.imgHeight);// + stitchBelow.getYRotationLength();
-            }
-            else
-            {
-                console.log("Lining up " + this.toString() + " between multiple stitches");
-                renderPosition.x += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.getStitchesBelow().length, this.rowNum, this.imgWidth);
-            }
-
-            var newMe = new RenderedStitch(renderPosition, oldMe.getRenderAngle(), this.imgWidth, this.imgHeight, this.rowNum, this.renderYOffset);
-
-            console.log(this.toString() + " is now at position " + JSON.stringify(renderPosition));
-
-            renderContext.addRenderedStitch(this.getId(), newMe);
-
-            if (this.previousStitch != null)
-            {
-                this.previousStitch.lineUpStitches(renderContext);
-            }
-        };
-
 
         Stitch.prototype.render = function render(canvasContext, renderContext)
         {
