@@ -58,6 +58,15 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             canvasContext.rotate(renderedStitch.getRenderAngle() * Math.PI / 180);
             canvasContext.drawImage(icon, renderedStitch.getXRenderPointAfterTranslation(), renderedStitch.getYRenderPointAfterTranslation() - renderedStitch.getRenderYOffset());
 
+            //circle shows the rotation point of the stitch
+            canvasContext.beginPath();
+            canvasContext.arc(0, 0, 2, 0, 2 * Math.PI, false);
+            canvasContext.fillStyle = 'green';
+            canvasContext.fill();
+            canvasContext.lineWidth = 1;
+            canvasContext.strokeStyle = '#003300';
+            canvasContext.stroke();
+
             canvasContext.restore();
         };
 
@@ -212,7 +221,7 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
 
                 if (previousStitch.rowNum < this.rowNum)
                 {
-                    //above previous stitch
+                    //first stitch in the row, render above previous stitch
                     xPos = previousRenderInfo.getXPos();
                 }
                 else
@@ -313,8 +322,11 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
                 x: this.getRenderXPos(renderContext),
                 y: this.getRenderYPos(renderContext)
             };
+
             var angleOfRotation = this.getAngleOfRotation(this, renderContext);
             var renderedStitch = new RenderedStitch(renderPosition, angleOfRotation, this.imgWidth, this.imgHeight, this.rowNum, this.renderYOffset);
+
+            console.log(this.toString() + " is at position " + JSON.stringify(renderPosition) + " with angle " + angleOfRotation);
 
             renderContext.addRenderedStitch(this.getId(), renderedStitch);
 
@@ -332,6 +344,116 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             }
         };
 
+        Stitch.prototype.calculateStartingAngle = function calculateStartingAngle(renderContext)
+        {
+            var renderPosition =
+            {
+                x: 0,
+                y: 0
+            };
+
+            var angleOfRotation = this.getAngleOfRotation(this, renderContext);
+            var renderedStitch = new RenderedStitch(renderPosition, angleOfRotation, this.imgWidth, this.imgHeight, this.rowNum, this.renderYOffset);
+            renderContext.addRenderedStitch(this.getId(), renderedStitch);
+
+            console.log(this.toString() + " has starting angle " + angleOfRotation);
+
+            if (this.nextStitch != null)
+            {
+                this.nextStitch.calculateStartingAngle(renderContext);
+            }
+        };
+
+        Stitch.prototype.calculateRelativeAngle = function calculateRelativeAngle(renderContext)
+        {
+            var relativeAngle = renderContext.getRenderedStitchFor(this).getRenderAngle();
+
+            var stitchesAbove = this.getStitchesAbove();
+            var stitchesBelow = this.getStitchesBelow();
+
+            //ask the stitch above what angle this stich should be connected at
+            if(stitchesAbove.length == 1 && stitchesBelow.length <= 1)
+            {
+                relativeAngle = stitchesAbove[0].getConnectionAngleFor(this, renderContext);
+
+                var renderedStitch = new RenderedStitch({x:0,y:0}, relativeAngle, this.imgWidth, this.imgHeight, this.rowNum, this.renderYOffset);
+                renderContext.addRenderedStitch(this.getId(), renderedStitch);
+            }
+            else
+            {
+                console.log(this.toString() + " is not a single stitch. Not updating relative angle");
+            }
+
+            console.log(this.toString() + " has relative angle " + relativeAngle);
+
+            if (this.nextStitch != null)
+            {
+                this.nextStitch.calculateRelativeAngle(renderContext);
+            }
+        };
+
+        Stitch.prototype.calculatePosition = function calculatePosition(renderContext)
+        {
+            var renderPosition =
+            {
+                x: this.getRenderXPos(renderContext),
+                y: this.getRenderYPos(renderContext)
+            };
+
+            var oldMe = renderContext.getRenderedStitchFor(this);
+            var newMe = new RenderedStitch(renderPosition, oldMe.getRenderAngle(), this.imgWidth, this.imgHeight, this.rowNum, this.renderYOffset);
+
+            console.log(this.toString() + " is at position " + JSON.stringify(renderPosition) + " with angle " + newMe.getRenderAngle());
+
+            renderContext.addRenderedStitch(this.getId(), newMe);
+
+            if (this.nextStitch != null)
+            {
+                this.nextStitch.calculatePosition(renderContext);
+            }
+        };
+
+        Stitch.prototype.lineUpStitches = function lineUpStitches(renderContext)
+        {
+            var oldMe = renderContext.getRenderedStitchFor(this);
+
+            var renderPosition =
+            {
+                x: oldMe.getXPos(),
+                y: oldMe.getYPos()
+            };
+
+            console.log(this.toString() + " was at position " + JSON.stringify(renderPosition));
+
+
+            if(this.getStitchesBelow().length == 1)
+            {
+                console.log("Lining up " + this.toString() + " with " + this.getStitchesBelow()[0].toString());
+
+                var stitchBelow = renderContext.getRenderedStitchFor(this.getStitchesBelow()[0]);
+
+                renderPosition.x = stitchBelow.getXPos() + Math.sin(oldMe.getRenderAngle()*Math.PI/180) * this.imgHeight;
+                renderPosition.y = stitchBelow.getYPos() - (Math.cos(oldMe.getRenderAngle()*Math.PI/180) * this.imgHeight);// + stitchBelow.getYRotationLength();
+            }
+            else
+            {
+                console.log("Lining up " + this.toString() + " between multiple stitches");
+                renderPosition.x += StitchUtils.getXOffsetForStitchBeingRenderedWithinASpaceForMultipleStitches(this.getStitchesBelow().length, this.rowNum, this.imgWidth);
+            }
+
+            var newMe = new RenderedStitch(renderPosition, oldMe.getRenderAngle(), this.imgWidth, this.imgHeight, this.rowNum, this.renderYOffset);
+
+            console.log(this.toString() + " is now at position " + JSON.stringify(renderPosition));
+
+            renderContext.addRenderedStitch(this.getId(), newMe);
+
+            if (this.previousStitch != null)
+            {
+                this.previousStitch.lineUpStitches(renderContext);
+            }
+        };
+
+
         Stitch.prototype.render = function render(canvasContext, renderContext)
         {
             var renderedStitch = renderContext.getRenderedStitchFor(this);
@@ -346,6 +468,12 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
         Stitch.prototype.notifyStitchAboveRenderingDataUpdated = function notifyStitchAboveRenderingDataUpdated(renderedStitchAbove, renderContext)
         {
             //no-op
+        };
+
+        Stitch.prototype.getConnectionAngleFor = function getConnectionAngleFor(stitchBelow, renderContext)
+        {
+            //connect using the angle of this stitch
+            return renderContext.getRenderedStitchFor(this).getRenderAngle();
         };
 
         Stitch.prototype.toString = function toString()

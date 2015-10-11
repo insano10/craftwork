@@ -2,8 +2,8 @@ define(["renderContext"], function (RenderContext)
 {
     function ChartRenderer()
     {
-        var START_X_OFFSET = 70;
-        var START_Y_OFFSET = -50;
+        var START_X_OFFSET = 200;
+        var START_Y_OFFSET = -200;
         var MAX_X_POS = 0;
         var MAX_Y_POS = 0;
 
@@ -81,21 +81,21 @@ define(["renderContext"], function (RenderContext)
 
         this.renderModel = function renderModel(model)
         {
-                var chartCanvas = document.getElementById("chart-canvas");
-                var ctx = chartCanvas.getContext("2d");
+            var chartCanvas = document.getElementById("chart-canvas");
+            var ctx = chartCanvas.getContext("2d");
 
-                ctx.save();
-                ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+            ctx.save();
+            ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-                var renderContext = new RenderContext(START_X_OFFSET, MAX_Y_POS + START_Y_OFFSET);
+            var renderContext = new RenderContext(START_X_OFFSET, MAX_Y_POS + START_Y_OFFSET);
 
-                renderStartArrow(ctx, renderContext);
+            renderStartArrow(ctx, renderContext);
 
-                model.render(ctx, renderContext);
+            model.render(ctx, renderContext);
 
-                renderEndArrow(ctx, renderContext);
+            renderEndArrow(ctx, renderContext);
 
-                ctx.restore();
+            ctx.restore();
         };
     }
 
