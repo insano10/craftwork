@@ -280,11 +280,6 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             renderContext.addRenderedStitch(this.getId(), renderedStitch);
 
             console.log(this.toString() + " has starting angle " + angleOfRotation);
-
-            if (this.nextStitch != null)
-            {
-                this.nextStitch.calculateStartingAngle(renderContext);
-            }
         };
 
         Stitch.prototype.calculateRelativeAngle = function calculateRelativeAngle(renderContext)
@@ -308,11 +303,6 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             }
 
             console.log(this.toString() + " has relative angle " + relativeAngle);
-
-            if (this.nextStitch != null)
-            {
-                this.nextStitch.calculateRelativeAngle(renderContext);
-            }
         };
 
         Stitch.prototype.calculatePosition = function calculatePosition(renderContext)
@@ -329,11 +319,6 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             console.log(this.toString() + " is at position " + JSON.stringify(renderPosition) + " with angle " + newMe.getRenderAngle());
 
             renderContext.addRenderedStitch(this.getId(), newMe);
-
-            if (this.nextStitch != null)
-            {
-                this.nextStitch.calculatePosition(renderContext);
-            }
         };
 
         Stitch.prototype.getConnectionAngleFor = function getConnectionAngleFor(stitchBelow, renderContext)

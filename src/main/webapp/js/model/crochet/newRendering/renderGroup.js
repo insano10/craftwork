@@ -37,11 +37,50 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($
             this.nextGroup = group;
         };
 
+        this.preRender1 = function preRender1(renderContext)
+        {
+            for (var i = 0; i < this.stitches.length; i++)
+            {
+                this.stitches[i].calculateStartingAngle(renderContext);
+            }
+
+            if (this.nextGroup != null)
+            {
+                this.nextGroup.preRender1(renderContext);
+            }
+        };
+
+        this.preRender2 = function preRender2(renderContext)
+        {
+            for (var i = 0; i < this.stitches.length; i++)
+            {
+                this.stitches[i].calculateRelativeAngle(renderContext);
+            }
+
+            if (this.nextGroup != null)
+            {
+                this.nextGroup.preRender2(renderContext);
+            }
+        };
+
+        this.preRender3 = function preRender3(renderContext)
+        {
+            for (var i = 0; i < this.stitches.length; i++)
+            {
+                this.stitches[i].calculatePosition(renderContext);
+            }
+
+            if (this.nextGroup != null)
+            {
+                this.nextGroup.preRender3(renderContext);
+            }
+        };
+
         this.render = function render(canvasContext, renderContext)
         {
             var renderer;
 
-            if(this.type == "INCREASE")
+            if (this.type == "INCREASE")
             {
                 renderer = new IncreaseStitchRenderer(this.stitches);
             }
@@ -52,7 +91,7 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer"], function ($
 
             renderer.render(canvasContext, renderContext);
 
-            if(this.nextGroup != null)
+            if (this.nextGroup != null)
             {
                 this.nextGroup.render(canvasContext, renderContext);
             }

@@ -45,10 +45,9 @@ define(["jquery", "renderGroup"], function ($, RenderGroup)
                 }
 
                 //precalculate positions and angles before rendering
-                headStitch.calculateStartingAngle(renderContext);
-                headStitch.calculateRelativeAngle(renderContext);
-                headStitch.calculatePosition(renderContext);
-
+                headRenderGroup.preRender1(renderContext);
+                headRenderGroup.preRender2(renderContext);
+                headRenderGroup.preRender3(renderContext);
                 headRenderGroup.render(canvasContext, renderContext);
                 renderRowNumbers(canvasContext, renderContext);
             }
