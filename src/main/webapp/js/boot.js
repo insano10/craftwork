@@ -22,6 +22,7 @@ require(
 
             "modelRenderer":         "model/crochet/newRendering/modelRenderer",
             "renderGroup":           "model/crochet/newRendering/renderGroup",
+            "singleStitchRenderer":  "model/crochet/newRendering/singleStitchRenderer",
 
 
             "chartModel":            "model/crochet/chartModel",

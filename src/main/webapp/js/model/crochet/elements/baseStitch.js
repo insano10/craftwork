@@ -34,46 +34,14 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             return stitch;
         };
 
-        var renderConnectionLines = function renderConnectionLines(canvasContext, renderContext, thisRenderedStitch, stitchesBelow)
-        {
-            $.each(stitchesBelow, function (idx, stitch)
-            {
-                var stitchBelow = renderContext.getRenderedStitchFor(stitch);
-
-                canvasContext.beginPath();
-
-                canvasContext.moveTo(thisRenderedStitch.getMidXPos(), thisRenderedStitch.getMidYPos());
-                canvasContext.lineTo(stitchBelow.getMidXPos(), stitchBelow.getMidYPos());
-                canvasContext.stroke();
-            });
-        };
-
-        var renderIcon = function renderIcon(canvasContext, icon, renderedStitch)
-        {
-            console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos() + " at angle " + renderedStitch.getRenderAngle());
-
-            canvasContext.save();
-
-            canvasContext.translate(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint());
-            canvasContext.rotate(renderedStitch.getRenderAngle() * Math.PI / 180);
-            canvasContext.drawImage(icon, renderedStitch.getXRenderPointAfterTranslation(), renderedStitch.getYRenderPointAfterTranslation() - renderedStitch.getRenderYOffset());
-
-            //circle shows the rotation point of the stitch
-            //canvasContext.beginPath();
-            //canvasContext.arc(0, 0, 2, 0, 2 * Math.PI, false);
-            //canvasContext.fillStyle = 'green';
-            //canvasContext.fill();
-            //canvasContext.lineWidth = 1;
-            //canvasContext.strokeStyle = '#003300';
-            //canvasContext.stroke();
-
-            canvasContext.restore();
-        };
-
-
         Stitch.prototype.getId = function getId()
         {
             return this.id;
+        };
+
+        Stitch.prototype.getIcon = function getIcon()
+        {
+            return this.icon;
         };
 
         Stitch.prototype.getType = function getType()
@@ -190,27 +158,6 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             return this.rowNum;
         };
 
-        Stitch.prototype.renderIconAndConnections = function renderIconAndConnections(canvasContext, renderContext, icon, attempts, renderedStitch)
-        {
-            if (!icon.complete && attempts < 10)
-            {
-                var stitch = this;
-                setTimeout(function ()
-                {
-                    stitch.renderIconAndConnections(canvasContext, renderContext, icon, (attempts + 1), renderedStitch);
-                }, 100);
-            }
-            else if (icon.complete)
-            {
-                renderIcon(canvasContext, this.icon, renderedStitch);
-                //renderConnectionLines(canvasContext, renderContext, renderedStitch, this.stitchesBelow);
-            }
-            else
-            {
-                console.error("failed to load icon " + this.icon.src);
-            }
-        };
-
         Stitch.prototype.getRenderXPos = function getRenderXPos(renderContext)
         {
             var xPos = 0;
@@ -320,35 +267,6 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             }
         };
 
-        Stitch.prototype.populateRenderingData = function populateRenderingData(renderContext, notifyStitchesBelow)
-        {
-            var renderPosition =
-            {
-                x: this.getRenderXPos(renderContext),
-                y: this.getRenderYPos(renderContext)
-            };
-
-            var angleOfRotation = this.getAngleOfRotation(this, renderContext);
-            var renderedStitch = new RenderedStitch(renderPosition, angleOfRotation, this.imgWidth, this.imgHeight, this.rowNum, this.renderYOffset);
-
-            console.log(this.toString() + " is at position " + JSON.stringify(renderPosition) + " with angle " + angleOfRotation);
-
-            renderContext.addRenderedStitch(this.getId(), renderedStitch);
-
-            if (notifyStitchesBelow)
-            {
-                $.each(this.getStitchesBelow(), function (idx, stitch)
-                {
-                    stitch.notifyStitchAboveRenderingDataUpdated(renderedStitch, renderContext);
-                });
-            }
-
-            if (this.nextStitch != null)
-            {
-                this.nextStitch.populateRenderingData(renderContext, notifyStitchesBelow);
-            }
-        };
-
         Stitch.prototype.calculateStartingAngle = function calculateStartingAngle(renderContext)
         {
             var renderPosition =
@@ -416,17 +334,6 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
             {
                 this.nextStitch.calculatePosition(renderContext);
             }
-        };
-
-        Stitch.prototype.render = function render(canvasContext, renderContext)
-        {
-            var renderedStitch = renderContext.getRenderedStitchFor(this);
-            this.renderIconAndConnections(canvasContext, renderContext, this.icon, 0, renderedStitch);
-        };
-
-        Stitch.prototype.notifyStitchAboveRenderingDataUpdated = function notifyStitchAboveRenderingDataUpdated(renderedStitchAbove, renderContext)
-        {
-            //no-op
         };
 
         Stitch.prototype.getConnectionAngleFor = function getConnectionAngleFor(stitchBelow, renderContext)
