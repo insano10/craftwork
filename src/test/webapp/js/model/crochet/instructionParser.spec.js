@@ -8,7 +8,7 @@ define(["jquery", "parseChainFactory", "instructionParser"], function($, ParseCh
         beforeEach(function() {
 
             stubRenderer = jasmine.createSpyObj("chartRenderer", ["renderModel"]);
-            stubModel = jasmine.createSpyObj("chartModel", ["addStitch", "clear", "redrawChart"]);
+            stubModel = jasmine.createSpyObj("chartModel", ["addStitch", "clear", "redrawChart", "modelComplete"]);
 
             var parseChain = new ParseChainFactory().createParseChain(stubModel);
             parser = new InstructionParser(stubModel, stubRenderer, parseChain);

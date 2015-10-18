@@ -1,13 +1,14 @@
-define(["jquery", "modelRenderer"], function ($, ModelRenderer)
+define(["jquery", "modelRenderer", "stitchGroup"], function ($, ModelRenderer, StitchGroup)
 {
     function ChartModel()
     {
-        var headStitch = null;
+        var headStitchGroup = null;
+        var tailStitchGroup = null;
         var tailStitch = null;
 
         this.clear = function clear()
         {
-            headStitch = null;
+            headStitchGroup = null;
             tailStitch = null;
         };
 
@@ -15,10 +16,12 @@ define(["jquery", "modelRenderer"], function ($, ModelRenderer)
         {
             console.log("Appending stitch " + stitch.toString());
 
-            if (headStitch == null)
+            if (headStitchGroup == null)
             {
-                headStitch = stitch;
                 tailStitch = stitch;
+
+                headStitchGroup = new StitchGroup(stitch.getType());
+                tailStitchGroup = headStitchGroup;
             }
             else
             {
@@ -26,12 +29,27 @@ define(["jquery", "modelRenderer"], function ($, ModelRenderer)
                 stitch.connectToRowBelow(tailStitch);
                 tailStitch = stitch;
             }
+
+            if (!tailStitchGroup.accept(stitch))
+            {
+                tailStitchGroup.close();
+
+                var stitchGroup = new StitchGroup(stitch.getType());
+                tailStitchGroup.setNextGroup(stitchGroup);
+                tailStitchGroup = stitchGroup;
+                tailStitchGroup.accept(stitch);
+            }
+        };
+
+        this.modelComplete = function modelComplete()
+        {
+            tailStitchGroup.close();
         };
 
         this.render = function render(canvasContext, renderContext)
         {
             var modelRenderer = new ModelRenderer();
-            modelRenderer.render(headStitch, canvasContext, renderContext);
+            modelRenderer.render(headStitchGroup, canvasContext, renderContext);
         };
     }
 

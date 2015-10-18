@@ -20,6 +20,7 @@ define(["jquery"], function($)
                 }
             });
 
+            chartModel.modelComplete();
             chartRenderer.renderModel(chartModel);
         };
     }

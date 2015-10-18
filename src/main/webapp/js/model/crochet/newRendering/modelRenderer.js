@@ -17,35 +17,12 @@ define(["jquery", "stitchGroup", "renderingUtils"], function ($, StitchGroup, Re
             }
         };
 
-        this.render = function addStitch(headStitch, canvasContext, renderContext)
+        this.render = function addStitch(headStitchGroup, canvasContext, renderContext)
         {
             console.log("Rendering model");
 
-            if (headStitch != null)
+            if (headStitchGroup != null)
             {
-                //split stitches into render groups
-                var headStitchGroup = new StitchGroup(headStitch.getType());
-
-                var currentStitchGroup = headStitchGroup;
-                var currentStitch = headStitch;
-
-                while(currentStitch != null)
-                {
-                    if (currentStitchGroup.accept(currentStitch))
-                    {
-                        currentStitch = currentStitch.getNextStitch();
-                    }
-                    else
-                    {
-                        currentStitchGroup.close();
-
-                        var renderGroup = new StitchGroup(currentStitch.getType());
-                        currentStitchGroup.setNextGroup(renderGroup);
-                        currentStitchGroup = renderGroup;
-                    }
-                }
-                currentStitchGroup.close();
-
                 //precalculate positions and angles before rendering
                 headStitchGroup.preRender1(renderContext);
                 headStitchGroup.preRender2(renderContext);
