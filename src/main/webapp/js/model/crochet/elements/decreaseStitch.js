@@ -11,23 +11,6 @@ define(["jquery", "baseStitch", "decreaseStitchGroup"], function ($, BaseStitch,
         DecreaseStitch.prototype = Object.create(BaseStitch.prototype);
         DecreaseStitch.prototype.constructor = DecreaseStitch;
 
-        DecreaseStitch.prototype.getConnectionAngleFor = function getConnectionAngleFor(stitchBelow, renderContext)
-        {
-            var baseAngle = renderContext.getRenderedStitchFor(this).getRenderAngle();
-
-            console.log("Searching for " + stitchBelow.toString());
-            $.each(this.getStitchesBelow(), function(idx, stitch) {
-
-                if(stitch === stitchBelow)
-                {
-                    console.log("Matched with " + stitch.toString());
-                    baseAngle += (10 * idx);
-                }
-            });
-
-            return baseAngle;
-        };
-
         DecreaseStitch.prototype.toString = function toString()
         {
             return "DECREASE [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";

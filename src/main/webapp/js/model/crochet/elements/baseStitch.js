@@ -121,8 +121,19 @@ define(["jquery", "stitchUtils", "stitchGroup"], function ($, StitchUtils, Stitc
 
         Stitch.prototype.getConnectionAngleFor = function getConnectionAngleFor(stitchBelow, renderContext)
         {
-            //connect using the angle of this stitch
-            return renderContext.getRenderedStitchFor(this).getRenderAngle();
+            var baseAngle = renderContext.getRenderedStitchFor(this).getRenderAngle();
+
+            console.log("Searching for " + stitchBelow.toString());
+            $.each(this.getStitchesBelow(), function(idx, stitch) {
+
+                if(stitch === stitchBelow)
+                {
+                    console.log("Matched with " + stitch.toString());
+                    baseAngle += (10 * idx);
+                }
+            });
+
+            return baseAngle;
         };
 
         Stitch.prototype.createStitchGroup = function createStitchGroup()
