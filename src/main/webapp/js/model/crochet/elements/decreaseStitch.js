@@ -1,4 +1,4 @@
-define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchUtils)
+define(["jquery", "baseStitch", "decreaseStitchGroup"], function ($, BaseStitch, DecreaseStitchGroup)
 {
    return (function()
     {
@@ -10,42 +10,6 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
 
         DecreaseStitch.prototype = Object.create(BaseStitch.prototype);
         DecreaseStitch.prototype.constructor = DecreaseStitch;
-
-        DecreaseStitch.prototype.connectToRowBelow = function connectToRowBelow(chainTail)
-        {
-            var candidateStitch = chainTail;
-            var connectionsLeftToMake = this.width;
-
-            while(candidateStitch != null)
-            {
-                if(this.rowNum > candidateStitch.getRowNum())
-                {
-                    //row below this stitch
-                    if(candidateStitch.isAvailableForConnection())
-                    {
-                        console.log("Connecting stitch " + this.toString() + " to stitch " + candidateStitch.toString());
-                        candidateStitch.setStitchAbove(this);
-                        this.setStitchBelow(candidateStitch);
-                        connectionsLeftToMake--;
-
-                        if(connectionsLeftToMake <= 0)
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        console.log("not free, continuing");
-                    }
-                }
-                candidateStitch = candidateStitch.getPreviousStitch();
-            }
-
-            if(candidateStitch == null && this.rowNum > 1)
-            {
-                console.error("Could not find connecting stitch for " + this.toString());
-            }
-        };
 
         DecreaseStitch.prototype.getConnectionAngleFor = function getConnectionAngleFor(stitchBelow, renderContext)
         {
@@ -72,6 +36,11 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
         DecreaseStitch.prototype.getType = function getType()
         {
             return "DECREASE";
+        };
+
+        DecreaseStitch.prototype.createStitchGroup = function createStitchGroup()
+        {
+            return new DecreaseStitchGroup(this.rowNum, this.width);
         };
 
         return DecreaseStitch;

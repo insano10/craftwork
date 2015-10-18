@@ -1,4 +1,4 @@
-define(["jquery", "singleStitch" ], function ($, SingleStitch)
+define(["jquery", "singleStitch", "stitchGroup" ], function ($, SingleStitch, StitchGroup)
 {
 
     describe("SingleStitch", function ()
@@ -22,7 +22,10 @@ define(["jquery", "singleStitch" ], function ($, SingleStitch)
         it("should connect a stitch", function ()
         {
             var stitch = new SingleStitch(10, 2);
-            stitch.connectToRowBelow(tailOfChain);
+
+            var group = new StitchGroup(stitch.getRowNum());
+            group.addToGroup(stitch);
+            group.close(tailOfChain);
 
             expect(chain[9].isAvailableForConnection()).toBe(false);
             expect(chain[9].getStitchesAbove().length).toEqual(1);

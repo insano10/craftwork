@@ -1,4 +1,4 @@
-define(["jquery", "decreaseStitch", "singleStitch" ], function ($, DecreaseStitch, SingleStitch)
+define(["jquery", "decreaseStitch", "singleStitch", "decreaseStitchGroup" ], function ($, DecreaseStitch, SingleStitch, DecreaseStitchGroup)
 {
 
     describe("DecreaseStitch", function ()
@@ -23,7 +23,9 @@ define(["jquery", "decreaseStitch", "singleStitch" ], function ($, DecreaseStitc
         {
             var stitch = new DecreaseStitch(10, 3, 2);
 
-            stitch.connectToRowBelow(tailOfChain);
+            var group = new DecreaseStitchGroup(stitch.getRowNum(), 3);
+            group.addToGroup(stitch);
+            group.close(tailOfChain);
 
             expect(chain[9].isAvailableForConnection()).toBe(false);
             expect(chain[8].isAvailableForConnection()).toBe(false);

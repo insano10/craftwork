@@ -1,4 +1,4 @@
-define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch, SingleStitch)
+define(["jquery", "chainUpStitch", "singleStitch", "stitchGroup" ], function ($, ChainUpStitch, SingleStitch, StitchGroup)
 {
 
     describe("ChainUpStitch", function ()
@@ -8,9 +8,12 @@ define(["jquery", "chainUpStitch", "singleStitch" ], function ($, ChainUpStitch,
 
         function addStitchToChain(stitch, chain)
         {
+            var group = new StitchGroup(stitch.getRowNum());
+            group.addToGroup(stitch);
+            group.close(tailOfChain);
+
             chain.push(stitch);
             chain[chain.length - 2].setNextStitch(chain[chain.length - 1]);
-            stitch.connectToRowBelow(tailOfChain);
             tailOfChain = stitch;
         }
 

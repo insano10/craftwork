@@ -14,49 +14,6 @@ define(["jquery", "baseStitch", "increaseStitchGroup"], function ($, BaseStitch,
         IncreaseStitch.prototype = Object.create(BaseStitch.prototype);
         IncreaseStitch.prototype.constructor = IncreaseStitch;
 
-        IncreaseStitch.prototype.connectToRowBelow = function connectToRowBelow(chainTail)
-        {
-            var candidateStitch = chainTail;
-
-            while(candidateStitch != null)
-            {
-                if(this.rowNum > candidateStitch.getRowNum())
-                {
-                    //row below this stitch
-                    if(this.groupIndex == 0 && candidateStitch.isAvailableForConnection())
-                    {
-                        //connect to the next available stitch
-                        console.log("Connecting primary stitch " + this.toString() + " to stitch " + candidateStitch.toString());
-                        candidateStitch.setStitchAbove(this);
-                        this.setStitchBelow(candidateStitch);
-                        break;
-                    }
-                    else if(this.groupIndex > 0)
-                    {
-                        if(candidateStitch.getPreviousStitch() != null && candidateStitch.getPreviousStitch().isAvailableForConnection())
-                        {
-                            //connect to the first stitch that already has stitches connected
-                            console.log("Connecting secondary stitch " + this.toString() + " to stitch " + candidateStitch.toString());
-                            candidateStitch.setStitchAbove(this);
-                            this.setStitchBelow(candidateStitch);
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        console.log("not free, continuing");
-                    }
-                }
-                candidateStitch = candidateStitch.getPreviousStitch();
-            }
-
-            if(candidateStitch == null && this.rowNum > 1)
-            {
-                console.error("Could not find connecting stitch for " + this.toString());
-            }
-        };
-
-
         IncreaseStitch.prototype.toString = function toString()
         {
             return "INCREASE [id: " + this.getId() + ", index: " + this.chainIndex + ", row: " + this.rowNum + "]";
@@ -75,7 +32,7 @@ define(["jquery", "baseStitch", "increaseStitchGroup"], function ($, BaseStitch,
 
         IncreaseStitch.prototype.createStitchGroup = function createStitchGroup()
         {
-            return new IncreaseStitchGroup();
+            return new IncreaseStitchGroup(this.rowNum);
         };
 
         return IncreaseStitch;

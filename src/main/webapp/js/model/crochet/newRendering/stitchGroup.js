@@ -2,9 +2,10 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
 {
     return (function ()
     {
-        function StitchGroup()
+        function StitchGroup(rowNum)
         {
             this.id = StitchUtils.generateId();
+            this.rowNum = rowNum;
             this.stitches = [];
             this.nextGroup = null;
             this.renderer = new StitchRenderer();
@@ -26,7 +27,40 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
         {
             for (var i = 0; i < this.stitches.length; i++)
             {
-                this.stitches[i].connectToRowBelow(tailStitch);
+                this.connectStitchToRowBelow(this.stitches[i], tailStitch, i);
+            }
+        };
+
+        StitchGroup.prototype.connectStitchToRowBelow = function connectStitchToRowBelow(stitch, chainTail, groupIndex)
+        {
+            if(stitch.renderRelativeTo())
+            {
+                var candidateStitch = chainTail;
+
+                while (candidateStitch != null)
+                {
+                    if (this.rowNum > candidateStitch.getRowNum())
+                    {
+                        //row below this stitch
+                        if (candidateStitch.isAvailableForConnection())
+                        {
+                            console.log("Connecting stitch " + stitch.toString() + " to stitch " + candidateStitch.toString());
+                            candidateStitch.setStitchAbove(stitch);
+                            stitch.setStitchBelow(candidateStitch);
+                            break;
+                        }
+                        else
+                        {
+                            console.log("not free, continuing");
+                        }
+                    }
+                    candidateStitch = candidateStitch.getPreviousStitch();
+                }
+
+                if (candidateStitch == null && this.rowNum > 1)
+                {
+                    console.error("Could not find connecting stitch for " + stitch.toString());
+                }
             }
         };
 

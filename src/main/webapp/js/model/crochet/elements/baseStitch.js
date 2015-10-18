@@ -90,36 +90,6 @@ define(["jquery", "stitchUtils", "stitchGroup"], function ($, StitchUtils, Stitc
             return this.stitchesAbove.length == 0;
         };
 
-        Stitch.prototype.connectToRowBelow = function connectToRowBelow(chainTail)
-        {
-            var candidateStitch = chainTail;
-
-            while(candidateStitch != null)
-            {
-                if(this.rowNum > candidateStitch.getRowNum())
-                {
-                    //row below this stitch
-                    if(candidateStitch.isAvailableForConnection())
-                    {
-                        console.log("Connecting stitch " + this.toString() + " to stitch " + candidateStitch.toString());
-                        candidateStitch.setStitchAbove(this);
-                        this.setStitchBelow(candidateStitch);
-                        break;
-                    }
-                    else
-                    {
-                        console.log("not free, continuing");
-                    }
-                }
-                candidateStitch = candidateStitch.getPreviousStitch();
-            }
-
-            if(candidateStitch == null && this.rowNum > 1)
-            {
-                console.error("Could not find connecting stitch for " + this.toString());
-            }
-        };
-
         Stitch.prototype.setNextStitch = function setNextStitch(stitch)
         {
             if (this.nextStitch == null)
@@ -157,7 +127,7 @@ define(["jquery", "stitchUtils", "stitchGroup"], function ($, StitchUtils, Stitc
 
         Stitch.prototype.createStitchGroup = function createStitchGroup()
         {
-            return new StitchGroup();
+            return new StitchGroup(this.rowNum);
         };
 
         Stitch.prototype.toString = function toString()

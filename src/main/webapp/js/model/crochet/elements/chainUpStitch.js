@@ -16,13 +16,6 @@ define(["jquery", "baseStitch"], function ($, BaseStitch)
             return false;
         };
 
-        ChainUpStitch.prototype.connectToRowBelow = function connectToRowBelow(chainTail)
-        {
-            //no op
-            //chain up does not count towards connections in the mesh and are only a means of
-            //extending upwards at the end of a row
-        };
-
         ChainUpStitch.prototype.renderRelativeTo = function renderRelativeTo()
         {
             return false;
