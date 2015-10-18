@@ -35,6 +35,7 @@ define(["jquery", "modelRenderer", "stitchGroup", "increaseStitchGroup"], functi
             }
             else
             {
+                //close current stitch group and start another with the new stitch
                 tailStitchGroup.close(tailStitch);
 
                 var stitchGroup = stitch.createStitchGroup();
