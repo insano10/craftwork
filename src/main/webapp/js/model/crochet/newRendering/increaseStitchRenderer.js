@@ -2,9 +2,9 @@ define(["jquery", "stitchRenderer"], function ($, StitchRenderer)
 {
     return (function ()
     {
-        function IncreaseStitchRenderer(stitches)
+        function IncreaseStitchRenderer()
         {
-            StitchRenderer.call(this, stitches);
+            StitchRenderer.call(this);
         }
 
         IncreaseStitchRenderer.prototype = Object.create(StitchRenderer.prototype);

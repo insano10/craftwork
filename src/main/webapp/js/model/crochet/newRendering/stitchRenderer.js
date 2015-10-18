@@ -2,9 +2,9 @@ define(["jquery", "renderingUtils"], function ($, RenderingUtils)
 {
     return (function ()
     {
-        function StitchRenderer(stitches)
+        function StitchRenderer()
         {
-            this.stitches = stitches;
+
         }
 
         var iconsReady = function iconsReady(stitches)
@@ -63,9 +63,9 @@ define(["jquery", "renderingUtils"], function ($, RenderingUtils)
             }
         };
 
-        StitchRenderer.prototype.render = function render(canvasContext, renderContext)
+        StitchRenderer.prototype.render = function render(stitches, canvasContext, renderContext)
         {
-            this.renderStitches(canvasContext, renderContext, this.stitches, 0);
+            this.renderStitches(canvasContext, renderContext, stitches, 0);
         };
 
         StitchRenderer.prototype.getXPos = function getXPos(stitch, renderContext)

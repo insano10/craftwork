@@ -7,8 +7,8 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
             this.id = StitchUtils.generateId();
             this.stitches = [];
             this.nextGroup = null;
-            this.renderer = null;
-            this.preRenderHelper = null;
+            this.renderer = new StitchRenderer();
+            this.preRenderHelper = new StitchPreRenderHelper();
         }
 
         StitchGroup.prototype.accept = function accept(stitch)
@@ -24,11 +24,6 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
 
         StitchGroup.prototype.close = function close(tailStitch)
         {
-            //todo move these into constructor
-            this.renderer = new StitchRenderer(this.stitches);
-            this.preRenderHelper = new StitchPreRenderHelper();
-
-            //connect to row below
             for (var i = 0; i < this.stitches.length; i++)
             {
                 this.stitches[i].connectToRowBelow(tailStitch);
@@ -101,7 +96,7 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
 
         StitchGroup.prototype.render = function render(canvasContext, renderContext)
         {
-            this.renderer.render(canvasContext, renderContext);
+            this.renderer.render(this.stitches, canvasContext, renderContext);
 
             if (this.nextGroup != null)
             {
