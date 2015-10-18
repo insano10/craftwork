@@ -17,7 +17,7 @@ require(
             "renderContext":         "model/crochet/rendering/renderContext",
 
             "modelRenderer":                 "model/crochet/newRendering/modelRenderer",
-            "renderGroup":                   "model/crochet/newRendering/renderGroup",
+            "stitchGroup":                   "model/crochet/newRendering/stitchGroup",
             "stitchRenderer":                "model/crochet/newRendering/stitchRenderer",
             "increaseStitchRenderer":        "model/crochet/newRendering/increaseStitchRenderer",
             "stitchPreRenderHelper":         "model/crochet/newRendering/stitchPreRenderHelper",

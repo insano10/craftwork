@@ -1,7 +1,7 @@
 define(["jquery", "stitchRenderer", "increaseStitchRenderer", "stitchPreRenderHelper", "increaseStitchPreRenderHelper", "renderingUtils"],
     function ($, StitchRenderer, IncreaseStitchRenderer, StitchPreRenderHelper, IncreaseStitchPreRenderHelper, RenderingUtils)
 {
-    function RenderGroup(type)
+    function StitchGroup(type)
     {
         this.type = type;
         this.stitches = [];
@@ -44,9 +44,9 @@ define(["jquery", "stitchRenderer", "increaseStitchRenderer", "stitchPreRenderHe
             }
         };
 
-        this.setPreviousGroup = function setPreviousGroup(group)
+        this.getStitches = function getStitches()
         {
-            this.previousGroup = group;
+            return this.stitches;
         };
 
         this.setNextGroup = function setNextGroup(group)
@@ -105,7 +105,7 @@ define(["jquery", "stitchRenderer", "increaseStitchRenderer", "stitchPreRenderHe
         };
     }
 
-    return RenderGroup;
+    return StitchGroup;
 });
 
 

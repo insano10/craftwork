@@ -1,4 +1,4 @@
-define(["jquery", "renderGroup", "renderingUtils"], function ($, RenderGroup, RenderingUtils)
+define(["jquery", "stitchGroup", "renderingUtils"], function ($, StitchGroup, RenderingUtils)
 {
     function ModelRenderer()
     {
@@ -24,34 +24,33 @@ define(["jquery", "renderGroup", "renderingUtils"], function ($, RenderGroup, Re
             if (headStitch != null)
             {
                 //split stitches into render groups
-                var headRenderGroup = new RenderGroup(headStitch.getType());
+                var headStitchGroup = new StitchGroup(headStitch.getType());
 
-                var currentRenderGroup = headRenderGroup;
+                var currentStitchGroup = headStitchGroup;
                 var currentStitch = headStitch;
 
                 while(currentStitch != null)
                 {
-                    if (currentRenderGroup.accept(currentStitch))
+                    if (currentStitchGroup.accept(currentStitch))
                     {
                         currentStitch = currentStitch.getNextStitch();
                     }
                     else
                     {
-                        currentRenderGroup.close();
+                        currentStitchGroup.close();
 
-                        var renderGroup = new RenderGroup(currentStitch.getType());
-                        renderGroup.setPreviousGroup(currentRenderGroup);
-                        currentRenderGroup.setNextGroup(renderGroup);
-                        currentRenderGroup = renderGroup;
+                        var renderGroup = new StitchGroup(currentStitch.getType());
+                        currentStitchGroup.setNextGroup(renderGroup);
+                        currentStitchGroup = renderGroup;
                     }
                 }
-                currentRenderGroup.close();
+                currentStitchGroup.close();
 
                 //precalculate positions and angles before rendering
-                headRenderGroup.preRender1(renderContext);
-                headRenderGroup.preRender2(renderContext);
-                headRenderGroup.preRender3(renderContext);
-                headRenderGroup.render(canvasContext, renderContext);
+                headStitchGroup.preRender1(renderContext);
+                headStitchGroup.preRender2(renderContext);
+                headStitchGroup.preRender3(renderContext);
+                headStitchGroup.render(canvasContext, renderContext);
                 renderRowNumbers(canvasContext, renderContext);
             }
         };
