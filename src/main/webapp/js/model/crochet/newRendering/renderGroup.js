@@ -99,7 +99,7 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer", "stitchPreRe
             if(RenderingUtils.DEBUG_RENDER)
             {
                 var firstRenderedStitch = renderContext.getRenderedStitchFor(this.stitches[0]);
-                RenderingUtils.renderGridLine(canvasContext, firstRenderedStitch);
+                RenderingUtils.renderGridLines(canvasContext, firstRenderedStitch);
                 RenderingUtils.renderStitchOrigin(canvasContext, firstRenderedStitch);
             }
 
