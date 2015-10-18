@@ -22,10 +22,17 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
             this.stitches.push(stitch);
         };
 
-        StitchGroup.prototype.close = function close()
+        StitchGroup.prototype.close = function close(tailStitch)
         {
+            //todo move these into constructor
             this.renderer = new StitchRenderer(this.stitches);
             this.preRenderHelper = new StitchPreRenderHelper();
+
+            //connect to row below
+            for (var i = 0; i < this.stitches.length; i++)
+            {
+                this.stitches[i].connectToRowBelow(tailStitch);
+            }
         };
 
         StitchGroup.prototype.getStitches = function getStitches()

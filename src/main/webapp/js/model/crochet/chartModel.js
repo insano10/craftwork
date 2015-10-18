@@ -26,7 +26,6 @@ define(["jquery", "modelRenderer", "stitchGroup", "increaseStitchGroup"], functi
             else
             {
                 tailStitch.setNextStitch(stitch, rowNum);
-                stitch.connectToRowBelow(tailStitch);
                 tailStitch = stitch;
             }
 
@@ -36,7 +35,7 @@ define(["jquery", "modelRenderer", "stitchGroup", "increaseStitchGroup"], functi
             }
             else
             {
-                tailStitchGroup.close();
+                tailStitchGroup.close(tailStitch);
 
                 var stitchGroup = stitch.createStitchGroup();
                 stitchGroup.addToGroup(stitch);
