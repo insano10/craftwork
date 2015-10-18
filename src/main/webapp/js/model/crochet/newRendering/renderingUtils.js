@@ -23,13 +23,13 @@ define(["jquery"], function ($)
         canvasContext.restore();
     }
 
-    function renderStitchOrigin(canvasContext, renderedStitch)
+    function renderStitchRotationPoint(canvasContext, renderedStitch)
     {
         console.log("origin: " +renderedStitch.getXPos() + ", " + renderedStitch.getYPos());
         canvasContext.save();
 
         canvasContext.beginPath();
-        canvasContext.arc(renderedStitch.getXPos(), renderedStitch.getYPos(), 2, 0, 2 * Math.PI, false);
+        canvasContext.arc(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint(), 2, 0, 2 * Math.PI, false);
         canvasContext.fillStyle = 'green';
         canvasContext.fill();
         canvasContext.lineWidth = 1;
@@ -41,7 +41,7 @@ define(["jquery"], function ($)
 
     return {
         renderGridLines: renderGridLines,
-        renderStitchOrigin: renderStitchOrigin,
+        renderStitchRotationPoint: renderStitchRotationPoint,
         DEBUG_RENDER: DEBUG_RENDER
     };
 });

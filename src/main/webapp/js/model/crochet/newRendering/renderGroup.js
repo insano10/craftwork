@@ -96,13 +96,6 @@ define(["jquery", "stitchRenderer", "increaseStitchRenderer", "stitchPreRenderHe
 
         this.render = function render(canvasContext, renderContext)
         {
-            if(RenderingUtils.DEBUG_RENDER)
-            {
-                var firstRenderedStitch = renderContext.getRenderedStitchFor(this.stitches[0]);
-                RenderingUtils.renderGridLines(canvasContext, firstRenderedStitch);
-                RenderingUtils.renderStitchOrigin(canvasContext, firstRenderedStitch);
-            }
-
             this.renderer.render(canvasContext, renderContext);
 
             if (this.nextGroup != null)

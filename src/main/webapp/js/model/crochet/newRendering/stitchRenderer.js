@@ -1,4 +1,4 @@
-define(["jquery", "renderedStitch"], function ($, RenderedStitch)
+define(["jquery", "renderingUtils"], function ($, RenderingUtils)
 {
     return (function ()
     {
@@ -26,6 +26,12 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
                 var renderedStitch = renderContext.getRenderedStitchFor(stitches[i]);
 
                 console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos() + " at angle " + renderedStitch.getRenderAngle());
+
+                if(RenderingUtils.DEBUG_RENDER)
+                {
+                    RenderingUtils.renderGridLines(canvasContext, renderedStitch);
+                    RenderingUtils.renderStitchRotationPoint(canvasContext, renderedStitch);
+                }
 
                 canvasContext.save();
 
