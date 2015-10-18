@@ -1,5 +1,6 @@
 define(["jquery"], function ($)
 {
+    var DEBUG_RENDER = true;
 
     function renderGridLine(canvasContext, renderedStitch)
     {
@@ -32,7 +33,8 @@ define(["jquery"], function ($)
 
     return {
         renderGridLine: renderGridLine,
-        renderStitchOrigin: renderStitchOrigin
+        renderStitchOrigin: renderStitchOrigin,
+        DEBUG_RENDER: DEBUG_RENDER
     };
 });
 

@@ -1,8 +1,6 @@
 define(["jquery", "singleStitchRenderer", "increaseStitchRenderer", "stitchPreRenderHelper", "increaseStitchPreRenderHelper", "renderingUtils"],
     function ($, SingleStitchRenderer, IncreaseStitchRenderer, StitchPreRenderHelper, IncreaseStitchPreRenderHelper, RenderingUtils)
 {
-    var DEBUG_RENDER = true;
-
     function RenderGroup(type)
     {
         this.type = type;
@@ -98,14 +96,14 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer", "stitchPreRe
 
         this.render = function render(canvasContext, renderContext)
         {
-            this.renderer.render(canvasContext, renderContext);
-
-            if(DEBUG_RENDER)
+            if(RenderingUtils.DEBUG_RENDER)
             {
                 var firstRenderedStitch = renderContext.getRenderedStitchFor(this.stitches[0]);
                 RenderingUtils.renderGridLine(canvasContext, firstRenderedStitch);
                 RenderingUtils.renderStitchOrigin(canvasContext, firstRenderedStitch);
             }
+
+            this.renderer.render(canvasContext, renderContext);
 
             if (this.nextGroup != null)
             {

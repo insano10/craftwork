@@ -1,4 +1,4 @@
-define(["jquery", "renderGroup"], function ($, RenderGroup)
+define(["jquery", "renderGroup", "renderingUtils"], function ($, RenderGroup, RenderingUtils)
 {
     function ModelRenderer()
     {
