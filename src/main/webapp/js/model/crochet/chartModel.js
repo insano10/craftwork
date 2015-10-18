@@ -12,7 +12,7 @@ define(["jquery", "modelRenderer", "stitchGroup", "increaseStitchGroup"], functi
             tailStitch = null;
         };
 
-        this.addStitch = function addStitch(stitch, rowNum)
+        this.addStitch = function addStitch(stitch)
         {
             console.log("Appending stitch " + stitch.toString());
 
@@ -25,7 +25,7 @@ define(["jquery", "modelRenderer", "stitchGroup", "increaseStitchGroup"], functi
             }
             else
             {
-                tailStitch.setNextStitch(stitch, rowNum);
+                tailStitch.setNextStitch(stitch, stitch.getRowNum());
                 tailStitch = stitch;
             }
 
