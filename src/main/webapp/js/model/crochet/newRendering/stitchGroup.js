@@ -65,11 +65,6 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
             }
         };
 
-        StitchGroup.prototype.getStitches = function getStitches()
-        {
-            return this.stitches;
-        };
-
         StitchGroup.prototype.setNextGroup = function setNextGroup(group)
         {
             this.nextGroup = group;
