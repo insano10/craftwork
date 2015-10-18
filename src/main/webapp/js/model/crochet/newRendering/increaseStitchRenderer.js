@@ -1,66 +1,18 @@
-define(["jquery"], function ($)
+define(["jquery", "stitchRenderer"], function ($, StitchRenderer)
 {
-    function IncreaseStitchRenderer(stitches)
+    return (function ()
     {
-        this.stitches = stitches;
-
-        var iconsReady = function iconsReady(stitches)
+        function IncreaseStitchRenderer(stitches)
         {
-            for (var i = 0; i < stitches.length; i++)
-            {
-                if (!stitches[i].icon.complete)
-                {
-                    return false;
-                }
-            }
-            return true;
-        };
+            StitchRenderer.call(this, stitches);
+        }
 
-        var doRender = function doRender(canvasContext, renderContext, stitches)
-        {
-            for (var i = 0; i < stitches.length; i++)
-            {
-                var renderedStitch = renderContext.getRenderedStitchFor(stitches[i]);
+        IncreaseStitchRenderer.prototype = Object.create(StitchRenderer.prototype);
+        IncreaseStitchRenderer.prototype.constructor = IncreaseStitchRenderer;
 
-                console.log("drawing icon at " + renderedStitch.getXPos() + ", " + renderedStitch.getYPos() + " at angle " + renderedStitch.getRenderAngle());
+        return IncreaseStitchRenderer;
 
-                canvasContext.save();
-
-                canvasContext.translate(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint());
-                canvasContext.rotate(renderedStitch.getRenderAngle() * Math.PI / 180);
-                canvasContext.drawImage(stitches[i].icon, renderedStitch.getXRenderPointAfterTranslation(), renderedStitch.getYRenderPointAfterTranslation() - renderedStitch.getRenderYOffset());
-
-                canvasContext.restore();
-            }
-        };
-
-        this.renderStitches = function renderStitches(canvasContext, renderContext, stitches, attempts)
-        {
-            if (!iconsReady(stitches) && attempts < 10)
-            {
-                var renderer = this;
-                setTimeout(function ()
-                           {
-                               renderer.renderStitches(canvasContext, renderContext, stitches, (attempts + 1));
-                           }, 100);
-            }
-            else if (iconsReady(stitches))
-            {
-                doRender(canvasContext, renderContext, stitches);
-            }
-            else
-            {
-                console.error("failed to load icons");
-            }
-        };
-
-        this.render = function render(canvasContext, renderContext)
-        {
-            this.renderStitches(canvasContext, renderContext, this.stitches, 0);
-        };
-    }
-
-    return IncreaseStitchRenderer;
+    })();
 });
 
 

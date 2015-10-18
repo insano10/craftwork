@@ -1,5 +1,5 @@
-define(["jquery", "singleStitchRenderer", "increaseStitchRenderer", "stitchPreRenderHelper", "increaseStitchPreRenderHelper", "renderingUtils"],
-    function ($, SingleStitchRenderer, IncreaseStitchRenderer, StitchPreRenderHelper, IncreaseStitchPreRenderHelper, RenderingUtils)
+define(["jquery", "stitchRenderer", "increaseStitchRenderer", "stitchPreRenderHelper", "increaseStitchPreRenderHelper", "renderingUtils"],
+    function ($, StitchRenderer, IncreaseStitchRenderer, StitchPreRenderHelper, IncreaseStitchPreRenderHelper, RenderingUtils)
 {
     function RenderGroup(type)
     {
@@ -39,7 +39,7 @@ define(["jquery", "singleStitchRenderer", "increaseStitchRenderer", "stitchPreRe
             }
             else
             {
-                this.renderer = new SingleStitchRenderer(this.stitches[0]);
+                this.renderer = new StitchRenderer(this.stitches);
                 this.preRenderHelper = new StitchPreRenderHelper();
             }
         };

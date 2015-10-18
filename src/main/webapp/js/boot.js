@@ -18,8 +18,8 @@ require(
 
             "modelRenderer":                 "model/crochet/newRendering/modelRenderer",
             "renderGroup":                   "model/crochet/newRendering/renderGroup",
+            "stitchRenderer":                "model/crochet/newRendering/stitchRenderer",
             "increaseStitchRenderer":        "model/crochet/newRendering/increaseStitchRenderer",
-            "singleStitchRenderer":          "model/crochet/newRendering/singleStitchRenderer",
             "stitchPreRenderHelper":         "model/crochet/newRendering/stitchPreRenderHelper",
             "increaseStitchPreRenderHelper": "model/crochet/newRendering/increaseStitchPreRenderHelper",
             "renderingUtils":                "model/crochet/newRendering/renderingUtils",
