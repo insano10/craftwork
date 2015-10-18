@@ -2,7 +2,8 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
 {
     return (function ()
     {
-        var STITCH_SPACER = 5;
+        var HORIZONTAL_STITCH_SPACER = 7;
+        var VERTICAL_STITCH_SPACER = 5;
 
         function StitchPreRenderHelper()
         {
@@ -143,12 +144,12 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
                     if (stitch.getRowNum() % 2 != 0)
                     {
                         //to the right
-                        xPos = previousRenderInfo.getXPos() + previousStitch.getWidth() + STITCH_SPACER - xOffsetForAngle;
+                        xPos = previousRenderInfo.getXPos() + previousStitch.getWidth() + HORIZONTAL_STITCH_SPACER - xOffsetForAngle;
                     }
                     else
                     {
                         //to the left
-                        xPos = previousRenderInfo.getXPos() - stitch.getWidth() - STITCH_SPACER + xOffsetForAngle;
+                        xPos = previousRenderInfo.getXPos() - stitch.getWidth() - HORIZONTAL_STITCH_SPACER + xOffsetForAngle;
                     }
                 }
             }
@@ -172,7 +173,7 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
                 if (previousStitch.getRowNum() < stitch.getRowNum())
                 {
                     //move up
-                    yPos = previousRenderInfo.getYPos() - stitch.getHeight();
+                    yPos = previousRenderInfo.getYPos() - stitch.getHeight() - VERTICAL_STITCH_SPACER;
                 }
                 else
                 {
