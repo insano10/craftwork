@@ -33,25 +33,43 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
             {
                 var angle = renderContext.getRenderedStitchFor(lastStitch).getRenderAngle();
 
-                if (lastStitch.getStitchesBelow().length > 1)
+                if (groupIndex > 0)
                 {
-                    //decrease angle by 10 degrees for each decrease
+                    //this is an increase stitch with an index greater than 0
                     if (stitch.getRowNum() % 2 != 0)
                     {
-                        //to the right
-                        angle -= (10 * (lastStitch.getStitchesBelow().length - 1));
+                        angle += 10;
                     }
                     else
                     {
-                        //to the left
-                        angle += (10 * (lastStitch.getStitchesBelow().length - 1));
+                        angle -= 10;
                     }
-                    console.log("decrease detected, angle is now: " + angle);
+                    console.log("increase detected, angle is now: " + angle);
                 }
                 else
                 {
-                    console.log("normal stitch, maintaining angle of: " + angle);
+                    if (lastStitch.getStitchesBelow().length > 1)
+                    {
+                        //this is a decrease stitch
+                        //decrease angle by 10 degrees for each decrease
+                        if (stitch.getRowNum() % 2 != 0)
+                        {
+                            //to the right
+                            angle -= (10 * (lastStitch.getStitchesBelow().length - 1));
+                        }
+                        else
+                        {
+                            //to the left
+                            angle += (10 * (lastStitch.getStitchesBelow().length - 1));
+                        }
+                        console.log("decrease detected, angle is now: " + angle);
+                    }
+                    else
+                    {
+                        console.log("normal stitch, maintaining angle of: " + angle);
+                    }
                 }
+
                 return angle;
             }
             else
