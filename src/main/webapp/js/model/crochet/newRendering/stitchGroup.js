@@ -7,6 +7,7 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
             this.id = StitchUtils.generateId();
             this.rowNum = rowNum;
             this.stitches = [];
+            this.previousGroup = null;
             this.nextGroup = null;
             this.renderer = new StitchRenderer();
             this.preRenderHelper = new StitchPreRenderHelper();
@@ -72,6 +73,16 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
         StitchGroup.prototype.setNextGroup = function setNextGroup(group)
         {
             this.nextGroup = group;
+        };
+
+        StitchGroup.prototype.setPreviousGroup = function setPreviousGroup(group)
+        {
+            this.previousGroup = group;
+        };
+
+        StitchGroup.prototype.getPreviousGroup = function getPreviousGroup()
+        {
+            return this.previousGroup;
         };
 
         StitchGroup.prototype.printStitches = function printStitches()

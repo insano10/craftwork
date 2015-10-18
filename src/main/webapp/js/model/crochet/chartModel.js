@@ -42,6 +42,7 @@ define(["jquery", "modelRenderer", "stitchGroup", "increaseStitchGroup"], functi
                 stitchGroup.addToGroup(stitch);
 
                 tailStitchGroup.setNextGroup(stitchGroup);
+                stitchGroup.setPreviousGroup(tailStitchGroup);
                 tailStitchGroup = stitchGroup;
             }
         };
