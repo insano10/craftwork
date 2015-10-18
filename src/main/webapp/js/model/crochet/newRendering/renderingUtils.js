@@ -10,15 +10,15 @@ define(["jquery"], function ($)
 
         //vertical
         canvasContext.beginPath();
-        canvasContext.moveTo(renderedStitch.getXPos(), renderedStitch.getYPos() + 100);
-        canvasContext.lineTo(renderedStitch.getXPos(), renderedStitch.getYPos() - 100);
+        canvasContext.moveTo(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint() + 200);
+        canvasContext.lineTo(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint() - 200);
         canvasContext.stroke();
 
         //horizontal
-        canvasContext.beginPath();
-        canvasContext.moveTo(renderedStitch.getXPos() + 100, renderedStitch.getYPos());
-        canvasContext.lineTo(renderedStitch.getXPos() - 100, renderedStitch.getYPos());
-        canvasContext.stroke();
+        //canvasContext.beginPath();
+        //canvasContext.moveTo(renderedStitch.getXRotationPoint() + 200, renderedStitch.getYRotationPoint());
+        //canvasContext.lineTo(renderedStitch.getXRotationPoint() - 200, renderedStitch.getYRotationPoint());
+        //canvasContext.stroke();
 
         canvasContext.restore();
     }
