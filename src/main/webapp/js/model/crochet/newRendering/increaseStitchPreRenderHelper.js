@@ -10,7 +10,7 @@ define(["jquery", "stitchPreRenderHelper", "renderedStitch"], function ($, Stitc
         IncreaseStitchPreRenderHelper.prototype = Object.create(StitchPreRenderHelper.prototype);
         IncreaseStitchPreRenderHelper.prototype.constructor = IncreaseStitchPreRenderHelper;
 
-        IncreaseStitchPreRenderHelper.prototype.getAngleOfRotation = function getAngleOfRotation(stitch, renderContext)
+        IncreaseStitchPreRenderHelper.prototype.getAngleOfRotation = function getAngleOfRotation(stitch, renderContext, groupIndex)
         {
             var lastStitch = stitch.getPreviousStitch();
 
@@ -18,7 +18,7 @@ define(["jquery", "stitchPreRenderHelper", "renderedStitch"], function ($, Stitc
             {
                 var angle = renderContext.getRenderedStitchFor(lastStitch).getRenderAngle();
 
-                if (stitch.getGroupIndex() > 0)
+                if (groupIndex > 0)
                 {
                     if (stitch.getRowNum() % 2 != 0)
                     {

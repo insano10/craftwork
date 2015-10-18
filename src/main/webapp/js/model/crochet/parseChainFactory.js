@@ -86,7 +86,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
 
                 for (var stitchNum = 0; stitchNum < stitchCount; stitchNum++)
                 {
-                    chartModel.addStitch(new IncreaseStitch(context.chainIndex, context.rowNum, stitchNum));
+                    chartModel.addStitch(new IncreaseStitch(context.chainIndex, context.rowNum));
                     context.chainIndex++;
                 }
                 return true;

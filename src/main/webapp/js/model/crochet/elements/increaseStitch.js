@@ -5,10 +5,9 @@ define(["jquery", "baseStitch", "increaseStitchGroup"], function ($, BaseStitch,
         /*
             Increase stitch is a stitch attached to the same lower stitch as another
          */
-        function IncreaseStitch(chainIndex, rowNum, groupIndex)
+        function IncreaseStitch(chainIndex, rowNum)
         {
             BaseStitch.call(this, chainIndex, "sc-multi.png", 13, 13, rowNum, 0);
-            this.groupIndex = groupIndex;
         }
 
         IncreaseStitch.prototype = Object.create(BaseStitch.prototype);
@@ -22,12 +21,6 @@ define(["jquery", "baseStitch", "increaseStitchGroup"], function ($, BaseStitch,
         IncreaseStitch.prototype.getType = function getType()
         {
             return "INCREASE";
-        };
-
-        //todo: ewwww
-        IncreaseStitch.prototype.getGroupIndex = function getGroupIndex()
-        {
-            return this.groupIndex;
         };
 
         IncreaseStitch.prototype.createStitchGroup = function createStitchGroup()

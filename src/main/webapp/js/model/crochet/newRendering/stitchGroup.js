@@ -92,7 +92,7 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
         {
             for (var i = 0; i < this.stitches.length; i++)
             {
-                this.preRenderHelper.calculateStartingAngle(this.stitches[i], renderContext);
+                this.preRenderHelper.calculateStartingAngle(this.stitches[i], renderContext, i);
 
             }
 

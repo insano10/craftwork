@@ -25,7 +25,7 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
             return stitch;
         };
 
-        StitchPreRenderHelper.prototype.getAngleOfRotation = function getAngleOfRotation(stitch, renderContext)
+        StitchPreRenderHelper.prototype.getAngleOfRotation = function getAngleOfRotation(stitch, renderContext, groupIndex)
         {
             var lastStitch = stitch.getPreviousStitch();
 
@@ -60,7 +60,7 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
             }
         };
 
-        StitchPreRenderHelper.prototype.calculateStartingAngle = function calculateStartingAngle(stitch, renderContext)
+        StitchPreRenderHelper.prototype.calculateStartingAngle = function calculateStartingAngle(stitch, renderContext, groupIndex)
         {
             var renderPosition =
             {
@@ -68,7 +68,7 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
                 y: 0
             };
 
-            var angleOfRotation = this.getAngleOfRotation(stitch, renderContext);
+            var angleOfRotation = this.getAngleOfRotation(stitch, renderContext, groupIndex);
             var renderedStitch = new RenderedStitch(renderPosition, angleOfRotation, stitch.getWidth(), stitch.getHeight(), stitch.getRowNum(), stitch.getRenderYOffset());
             renderContext.addRenderedStitch(stitch.getId(), renderedStitch);
 
