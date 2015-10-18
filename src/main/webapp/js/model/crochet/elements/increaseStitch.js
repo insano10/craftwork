@@ -1,4 +1,4 @@
-define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchUtils)
+define(["jquery", "baseStitch", "increaseStitchGroup"], function ($, BaseStitch, IncreaseStitchGroup)
 {
    return (function()
     {
@@ -71,6 +71,11 @@ define(["jquery", "baseStitch", "stitchUtils"], function ($, BaseStitch, StitchU
         IncreaseStitch.prototype.getGroupIndex = function getGroupIndex()
         {
             return this.groupIndex;
+        };
+
+        IncreaseStitch.prototype.createStitchGroup = function createStitchGroup()
+        {
+            return new IncreaseStitchGroup();
         };
 
         return IncreaseStitch;

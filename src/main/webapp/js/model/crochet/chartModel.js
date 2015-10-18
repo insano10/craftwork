@@ -1,4 +1,4 @@
-define(["jquery", "modelRenderer", "stitchGroup"], function ($, ModelRenderer, StitchGroup)
+define(["jquery", "modelRenderer", "stitchGroup", "increaseStitchGroup"], function ($, ModelRenderer, StitchGroup, IncreaseStitchGroup)
 {
     function ChartModel()
     {
@@ -20,7 +20,7 @@ define(["jquery", "modelRenderer", "stitchGroup"], function ($, ModelRenderer, S
             {
                 tailStitch = stitch;
 
-                headStitchGroup = new StitchGroup(stitch.getType());
+                headStitchGroup = stitch.createStitchGroup();
                 tailStitchGroup = headStitchGroup;
             }
             else
@@ -30,14 +30,19 @@ define(["jquery", "modelRenderer", "stitchGroup"], function ($, ModelRenderer, S
                 tailStitch = stitch;
             }
 
-            if (!tailStitchGroup.accept(stitch))
+            if (tailStitchGroup.accept(stitch))
+            {
+                tailStitchGroup.addToGroup(stitch);
+            }
+            else
             {
                 tailStitchGroup.close();
 
-                var stitchGroup = new StitchGroup(stitch.getType());
+                var stitchGroup = stitch.createStitchGroup();
+                stitchGroup.addToGroup(stitch);
+
                 tailStitchGroup.setNextGroup(stitchGroup);
                 tailStitchGroup = stitchGroup;
-                tailStitchGroup.accept(stitch);
             }
         };
 

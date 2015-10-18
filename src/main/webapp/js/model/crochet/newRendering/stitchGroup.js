@@ -1,60 +1,58 @@
-define(["jquery", "stitchRenderer", "increaseStitchRenderer", "stitchPreRenderHelper", "increaseStitchPreRenderHelper", "renderingUtils"],
-    function ($, StitchRenderer, IncreaseStitchRenderer, StitchPreRenderHelper, IncreaseStitchPreRenderHelper, RenderingUtils)
+define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], function ($, StitchRenderer, StitchPreRenderHelper, StitchUtils)
 {
-    function StitchGroup(type)
+    return (function ()
     {
-        this.type = type;
-        this.stitches = [];
-        this.previousGroup = null;
-        this.nextGroup = null;
-        this.renderer = null;
-        this.preRenderHelper = null;
-
-        this.accept = function accept(stitch)
+        function StitchGroup()
         {
-            if (stitch.getType() == "INCREASE" && this.type == "INCREASE")
-            {
-                //group allows multiple stitches of the same type
-                this.stitches.push(stitch);
-                return true;
-            }
-            else
-            {
-                //group allows 1 stitch only
-                if (this.stitches.length == 0)
-                {
-                    this.stitches.push(stitch);
-                    return true;
-                }
-            }
-            return false;
+            this.id = StitchUtils.generateId();
+            this.stitches = [];
+            this.nextGroup = null;
+            this.renderer = null;
+            this.preRenderHelper = null;
+        }
+
+        StitchGroup.prototype.accept = function accept(stitch)
+        {
+            //group allows 1 stitch only
+            return this.stitches.length == 0;
         };
 
-        this.close = function close()
+        StitchGroup.prototype.addToGroup = function addToGroup(stitch)
         {
-            if (this.type == "INCREASE")
-            {
-                this.renderer = new IncreaseStitchRenderer(this.stitches);
-                this.preRenderHelper = new IncreaseStitchPreRenderHelper();
-            }
-            else
-            {
-                this.renderer = new StitchRenderer(this.stitches);
-                this.preRenderHelper = new StitchPreRenderHelper();
-            }
+            this.stitches.push(stitch);
         };
 
-        this.getStitches = function getStitches()
+        StitchGroup.prototype.close = function close()
+        {
+            this.renderer = new StitchRenderer(this.stitches);
+            this.preRenderHelper = new StitchPreRenderHelper();
+        };
+
+        StitchGroup.prototype.getStitches = function getStitches()
         {
             return this.stitches;
         };
 
-        this.setNextGroup = function setNextGroup(group)
+        StitchGroup.prototype.setNextGroup = function setNextGroup(group)
         {
             this.nextGroup = group;
         };
 
-        this.preRender1 = function preRender1(renderContext)
+        StitchGroup.prototype.printStitches = function printStitches()
+        {
+            console.log("Stitch group");
+            for (var i = 0; i < this.stitches.length; i++)
+            {
+                console.log(this.stitches[i].toString());
+            }
+
+            if (this.nextGroup != null)
+            {
+                this.nextGroup.printStitches();
+            }
+        };
+
+        StitchGroup.prototype.preRender1 = function preRender1(renderContext)
         {
             for (var i = 0; i < this.stitches.length; i++)
             {
@@ -68,7 +66,7 @@ define(["jquery", "stitchRenderer", "increaseStitchRenderer", "stitchPreRenderHe
             }
         };
 
-        this.preRender2 = function preRender2(renderContext)
+        StitchGroup.prototype.preRender2 = function preRender2(renderContext)
         {
             for (var i = 0; i < this.stitches.length; i++)
             {
@@ -81,7 +79,7 @@ define(["jquery", "stitchRenderer", "increaseStitchRenderer", "stitchPreRenderHe
             }
         };
 
-        this.preRender3 = function preRender3(renderContext)
+        StitchGroup.prototype.preRender3 = function preRender3(renderContext)
         {
             for (var i = 0; i < this.stitches.length; i++)
             {
@@ -94,7 +92,7 @@ define(["jquery", "stitchRenderer", "increaseStitchRenderer", "stitchPreRenderHe
             }
         };
 
-        this.render = function render(canvasContext, renderContext)
+        StitchGroup.prototype.render = function render(canvasContext, renderContext)
         {
             this.renderer.render(canvasContext, renderContext);
 
@@ -103,9 +101,10 @@ define(["jquery", "stitchRenderer", "increaseStitchRenderer", "stitchPreRenderHe
                 this.nextGroup.render(canvasContext, renderContext);
             }
         };
-    }
 
-    return StitchGroup;
+        return StitchGroup;
+
+    })();
 });
 
 

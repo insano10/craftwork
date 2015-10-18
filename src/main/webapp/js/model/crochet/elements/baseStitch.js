@@ -1,4 +1,4 @@
-define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, RenderedStitch)
+define(["jquery", "stitchUtils", "stitchGroup"], function ($, StitchUtils, StitchGroup)
 {
     return (function ()
     {
@@ -153,6 +153,11 @@ define(["jquery", "stitchUtils", "renderedStitch"], function ($, StitchUtils, Re
         {
             //connect using the angle of this stitch
             return renderContext.getRenderedStitchFor(this).getRenderAngle();
+        };
+
+        Stitch.prototype.createStitchGroup = function createStitchGroup()
+        {
+            return new StitchGroup();
         };
 
         Stitch.prototype.toString = function toString()
