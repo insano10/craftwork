@@ -48,7 +48,7 @@ define(["jquery", "modelRenderer", "stitchGroup", "increaseStitchGroup"], functi
 
         this.modelComplete = function modelComplete()
         {
-            tailStitchGroup.close();
+            tailStitchGroup.close(tailStitch);
         };
 
         this.render = function render(canvasContext, renderContext)

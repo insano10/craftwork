@@ -4,7 +4,7 @@ define(["jquery", "baseStitch", "decreaseStitchGroup"], function ($, BaseStitch,
     {
         function DecreaseStitch(chainIndex, width, rowNum)
         {
-            BaseStitch.call(this, chainIndex, "sc.png", 13, 13, rowNum, 0);
+            BaseStitch.call(this, chainIndex, "sc-multi.png", 13, 13, rowNum, 0);
             this.width = width;
         }
 
