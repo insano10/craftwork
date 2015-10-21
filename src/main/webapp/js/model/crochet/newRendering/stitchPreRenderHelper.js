@@ -14,9 +14,9 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
         {
             var stitch = startingStitch.getPreviousStitch();
 
-            while(stitch != null)
+            while (stitch != null)
             {
-                if(stitch.renderRelativeTo())
+                if (stitch.renderRelativeTo())
                 {
                     break;
                 }
@@ -25,57 +25,48 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
             return stitch;
         };
 
-        StitchPreRenderHelper.prototype.getAngleOfRotation = function getAngleOfRotation(stitch, renderContext, groupIndex)
+        StitchPreRenderHelper.prototype.getAngleOfRotation = function getAngleOfRotation(previousAngle, renderContext, groupIndex, rowNum, stitchesBelow)
         {
-            var lastStitch = stitch.getPreviousStitch();
+            var angle = previousAngle;
 
-            if (lastStitch != null)
+            if (groupIndex > 0)
             {
-                var angle = renderContext.getRenderedStitchFor(lastStitch).getRenderAngle();
-
-                if (groupIndex > 0)
+                //this is an increase stitch with an index greater than 0
+                if (rowNum % 2 != 0)
                 {
-                    //this is an increase stitch with an index greater than 0
-                    if (stitch.getRowNum() % 2 != 0)
-                    {
-                        angle += 10;
-                    }
-                    else
-                    {
-                        angle -= 10;
-                    }
-                    console.log("increase detected, angle is now: " + angle);
+                    angle += 10;
                 }
                 else
                 {
-                    if (lastStitch.getStitchesBelow().length > 1)
-                    {
-                        //this is a decrease stitch
-                        //decrease angle by 10 degrees for each decrease
-                        if (stitch.getRowNum() % 2 != 0)
-                        {
-                            //to the right
-                            angle -= (10 * (lastStitch.getStitchesBelow().length - 1));
-                        }
-                        else
-                        {
-                            //to the left
-                            angle += (10 * (lastStitch.getStitchesBelow().length - 1));
-                        }
-                        console.log("decrease detected, angle is now: " + angle);
-                    }
-                    else
-                    {
-                        console.log("normal stitch, maintaining angle of: " + angle);
-                    }
+                    angle -= 10;
                 }
-
-                return angle;
+                console.log("increase detected, angle is now: " + angle);
             }
             else
             {
-                return 0;
+                if (stitchesBelow > 1)
+                {
+                    //this is a decrease stitch
+                    //decrease angle by 10 degrees for each decrease
+                    if (rowNum % 2 != 0)
+                    {
+                        //to the right
+                        angle -= (10 * (stitchesBelow - 1));
+                    }
+                    else
+                    {
+                        //to the left
+                        angle += (10 * (stitchesBelow - 1));
+                    }
+                    console.log("decrease detected, angle is now: " + angle);
+                }
+                else
+                {
+                    console.log("normal stitch, maintaining angle of: " + angle);
+                }
             }
+
+            return angle;
         };
 
         StitchPreRenderHelper.prototype.calculateStartingAngle = function calculateStartingAngle(stitch, renderContext, groupIndex)
@@ -86,7 +77,15 @@ define(["jquery", "renderedStitch"], function ($, RenderedStitch)
                 y: 0
             };
 
-            var angleOfRotation = this.getAngleOfRotation(stitch, renderContext, groupIndex);
+            var lastStitch = stitch.getPreviousStitch();
+
+            var angleOfRotation = 0;
+            if (lastStitch != null)
+            {
+                var previousAngle = renderContext.getRenderedStitchFor(lastStitch).getRenderAngle();
+                angleOfRotation = this.getAngleOfRotation(previousAngle, renderContext, groupIndex, lastStitch.getRowNum(), lastStitch.getStitchesBelow().length);
+            }
+
             var renderedStitch = new RenderedStitch(renderPosition, angleOfRotation, stitch.getWidth(), stitch.getHeight(), stitch.getRowNum(), stitch.getRenderYOffset());
             renderContext.addRenderedStitch(stitch.getId(), renderedStitch);
 
