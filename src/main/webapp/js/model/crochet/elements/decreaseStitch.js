@@ -21,11 +21,6 @@ define(["jquery", "baseStitch", "decreaseStitchGroup"], function ($, BaseStitch,
             return "DECREASE";
         };
 
-        DecreaseStitch.prototype.createStitchGroup = function createStitchGroup()
-        {
-            return new DecreaseStitchGroup(this.rowNum, this.width);
-        };
-
         return DecreaseStitch;
 
     })();

@@ -45,6 +45,7 @@ require.config(
             "increaseStitchRenderer":        "src/main/webapp/js/model/crochet/newRendering/increaseStitchRenderer",
             "stitchPreRenderHelper":         "src/main/webapp/js/model/crochet/newRendering/stitchPreRenderHelper",
             "increaseStitchPreRenderHelper": "src/main/webapp/js/model/crochet/newRendering/increaseStitchPreRenderHelper",
+            "renderedStitchGroup":           "src/main/webapp/js/model/crochet/newRendering/renderedStitchGroup",
             "renderingUtils":                "src/main/webapp/js/model/crochet/newRendering/renderingUtils"
         },
 

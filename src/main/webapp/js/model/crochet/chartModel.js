@@ -12,7 +12,7 @@ define(["jquery", "modelRenderer", "stitchGroup", "increaseStitchGroup"], functi
 
         this.addStitchGroup = function addStitchGroup(stitchGroup)
         {
-            if(headStitchGroup == null)
+            if (headStitchGroup == null)
             {
                 headStitchGroup = stitchGroup;
                 tailStitchGroup = stitchGroup;

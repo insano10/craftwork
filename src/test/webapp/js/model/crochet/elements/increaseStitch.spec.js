@@ -1,10 +1,10 @@
-define(["jquery", "increaseStitch", "singleStitch", "increaseStitchGroup" ], function ($, IncreaseStitch, SingleStitch, IncreaseStitchGroup)
+define(["jquery", "increaseStitch", "singleStitch", "increaseStitchGroup", "stitchGroup", "chartModel" ], function ($, IncreaseStitch, SingleStitch, IncreaseStitchGroup, StitchGroup, ChartModel)
 {
 
-    describe("IncreaseStitch", function ()
+   describe("IncreaseStitch", function ()
     {
         var chain = [];
-        var tailOfChain;
+        var chartModel = new ChartModel();
 
         beforeEach(function()
         {
@@ -12,11 +12,11 @@ define(["jquery", "increaseStitch", "singleStitch", "increaseStitchGroup" ], fun
             chain.push(new SingleStitch(0, 1));
             for(var i = 1; i<10 ; i++)
             {
-                chain.push(new SingleStitch(1, 1));
-                chain[i-1].setNextStitch(chain[i]);
-                chain[i].setPreviousStitch(chain[i-1]);
+                var stitch = new SingleStitch(i, 1);
+                chartModel.addStitchGroup(new StitchGroup(stitch.getRowNum(), [stitch]));
+
+                chain.push(stitch);
             }
-            tailOfChain = chain[9];
         });
 
         it("should connect multiple stitches to the same stich", function ()
@@ -25,11 +25,8 @@ define(["jquery", "increaseStitch", "singleStitch", "increaseStitchGroup" ], fun
             var increase2 = new IncreaseStitch(11, 2, 1);
             var increase3 = new IncreaseStitch(12, 2, 2);
 
-            var group = new IncreaseStitchGroup(2);
-            group.addToGroup(increase1);
-            group.addToGroup(increase2);
-            group.addToGroup(increase3);
-            group.close(tailOfChain);
+            var group = new IncreaseStitchGroup(2, [increase1, increase2, increase3]);
+            chartModel.addStitchGroup(group);
 
             expect(chain[9].isAvailableForConnection()).toBe(false);
             expect(chain[8].isAvailableForConnection()).toBe(true);

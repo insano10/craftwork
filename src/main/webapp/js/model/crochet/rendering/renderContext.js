@@ -5,7 +5,9 @@ define(["jquery"], function($)
         this.startXPos = startXPos;
         this.startYPos = startYPos;
         this.stitches = {};
+        this.stitchGroups = {};
         this.lastRenderedStitch = null;
+        this.lastRenderedStitchGroup = null;
         this.maxRowNum = 0;
         this.rowHeights = {};
 
@@ -24,21 +26,26 @@ define(["jquery"], function($)
             return this.stitches[stitch.getId()];
         };
 
+        this.getRenderedStitchGroupFor = function getRenderedStitchGroupFor(stitchGroup)
+        {
+            return this.stitchGroups[stitchGroup.getId()];
+        };
+
         this.getLastRenderedStitch = function getLastRenderedStitch()
         {
             return this.lastRenderedStitch;
         };
 
-        this.addRenderedStitch = function addRenderedStitch(id, renderedStitch)
+        this.addRenderedStitchGroup = function addRenderedStitchGroup(id, renderedStitchGroup)
         {
-            this.stitches[id] = renderedStitch;
-            this.lastRenderedStitch = renderedStitch;
-            this.updateRowInfo(renderedStitch);
+            this.stitchGroups[id] = renderedStitchGroup;
+            this.lastRenderedStitchGroup = renderedStitchGroup;
+            this.updateRowInfo(renderedStitchGroup);
         };
 
-        this.updateRowInfo = function updateRowInfo(renderedStitch)
+        this.updateRowInfo = function updateRowInfo(renderedStitchGroup)
         {
-            var rowNum = renderedStitch.getRowNum();
+            var rowNum = renderedStitchGroup.getRowNum();
             if(rowNum > this.maxRowNum)
             {
                 this.maxRowNum = rowNum;
@@ -46,10 +53,10 @@ define(["jquery"], function($)
 
             if(this.rowHeights[rowNum] == null)
             {
-                this.rowHeights[rowNum] = renderedStitch.getHeight();
+                this.rowHeights[rowNum] = renderedStitchGroup.getHeight();
             }
 
-            this.rowHeights[rowNum] = Math.max(this.rowHeights[rowNum], renderedStitch.getHeight());
+            this.rowHeights[rowNum] = Math.max(this.rowHeights[rowNum], renderedStitchGroup.getHeight());
         };
 
         this.getMaxRowNum = function getMaxRowNum()

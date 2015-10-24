@@ -1,12 +1,12 @@
-define(["jquery", "parseChainFactory", "singleStitch", "chainStitch", "decreaseStitch", "increaseStitch", "chainUpStitch"],
-    function ($, ParseChainFactory, SingleStitch, ChainStitch, DecreaseStitch, IncreaseStitch, ChainUpStitch)
+define(["jquery", "parseChainFactory", "singleStitch", "chainStitch", "decreaseStitch", "increaseStitch", "chainUpStitch", "stitchGroup", "increaseStitchGroup", "decreaseStitchGroup"],
+    function ($, ParseChainFactory, SingleStitch, ChainStitch, DecreaseStitch, IncreaseStitch, ChainUpStitch, StitchGroup, IncreaseStitchGroup, DecreaseStitchGroup)
 {
     var stubModel;
     var parseChain;
 
     beforeEach(function ()
     {
-        stubModel = jasmine.createSpyObj("chartModel", ["addStitch", "clear", "redrawChart"]);
+        stubModel = jasmine.createSpyObj("chartModel", ["addStitchGroup", "clear", "redrawChart"]);
         parseChain = new ParseChainFactory().createParseChain(stubModel);
     });
 
@@ -19,8 +19,8 @@ define(["jquery", "parseChainFactory", "singleStitch", "chainStitch", "decreaseS
 
             parseChain.parse("chain 5", context);
 
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.any(ChainStitch));
-            expect(stubModel.addStitch.calls.count()).toEqual(5);
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.any(StitchGroup));
+            expect(stubModel.addStitchGroup.calls.count()).toEqual(5);
         });
 
         it("should parse a single crochet phrase", function ()
@@ -29,8 +29,8 @@ define(["jquery", "parseChainFactory", "singleStitch", "chainStitch", "decreaseS
 
             parseChain.parse("2sc", context);
 
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.any(SingleStitch));
-            expect(stubModel.addStitch.calls.count()).toEqual(2);
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.any(StitchGroup));
+            expect(stubModel.addStitchGroup.calls.count()).toEqual(2);
         });
 
         it("should parse a single crochet increase phrase", function ()
@@ -39,8 +39,8 @@ define(["jquery", "parseChainFactory", "singleStitch", "chainStitch", "decreaseS
 
             parseChain.parse("3 sc in next sc", context);
 
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.any(IncreaseStitch));
-            expect(stubModel.addStitch.calls.count()).toEqual(3);
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.any(IncreaseStitchGroup));
+            expect(stubModel.addStitchGroup.calls.count()).toEqual(1);
         });
 
         it("should parse a single crochet decrease phrase", function ()
@@ -49,8 +49,8 @@ define(["jquery", "parseChainFactory", "singleStitch", "chainStitch", "decreaseS
 
             parseChain.parse("1sc in next 2sc", context);
 
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.any(DecreaseStitch));
-            expect(stubModel.addStitch.calls.count()).toEqual(1);
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.any(DecreaseStitchGroup));
+            expect(stubModel.addStitchGroup.calls.count()).toEqual(1);
         });
 
         it("should parse a chain up phrase", function ()
@@ -59,8 +59,8 @@ define(["jquery", "parseChainFactory", "singleStitch", "chainStitch", "decreaseS
 
             parseChain.parse("chup 3", context);
 
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.any(ChainUpStitch));
-            expect(stubModel.addStitch.calls.count()).toEqual(3);
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.any(StitchGroup));
+            expect(stubModel.addStitchGroup.calls.count()).toEqual(3);
         });
 
         it("should not parse invalid phrase", function ()
@@ -76,11 +76,11 @@ define(["jquery", "parseChainFactory", "singleStitch", "chainStitch", "decreaseS
 
             parseChain.parse("2sc in next sc then 2sc then 1sc in next 3sc, chup2", context);
 
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.any(IncreaseStitch));
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.any(SingleStitch));
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.any(DecreaseStitch));
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.any(ChainUpStitch));
-            expect(stubModel.addStitch.calls.count()).toEqual(7);
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.any(IncreaseStitchGroup));
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.any(StitchGroup));
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.any(DecreaseStitchGroup));
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.any(StitchGroup));
+            expect(stubModel.addStitchGroup.calls.count()).toEqual(6);
         });
 
     });

@@ -25,6 +25,7 @@ require(
             "stitchPreRenderHelper":         "model/crochet/newRendering/stitchPreRenderHelper",
             "increaseStitchPreRenderHelper": "model/crochet/newRendering/increaseStitchPreRenderHelper",
             "renderingUtils":                "model/crochet/newRendering/renderingUtils",
+            "renderedStitchGroup":           "model/crochet/newRendering/renderedStitchGroup",
 
 
             "chartModel":        "model/crochet/chartModel",

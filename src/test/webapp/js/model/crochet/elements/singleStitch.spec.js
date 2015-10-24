@@ -1,31 +1,29 @@
-define(["jquery", "singleStitch", "stitchGroup" ], function ($, SingleStitch, StitchGroup)
+define(["jquery", "singleStitch", "stitchGroup", "chartModel" ], function ($, SingleStitch, StitchGroup, ChartModel)
 {
 
     describe("SingleStitch", function ()
     {
         var chain = [];
-        var tailOfChain;
+        var chartModel = new ChartModel();
 
         beforeEach(function()
         {
+
             //create a chain of 10 sc
             chain.push(new SingleStitch(0, 1));
             for(var i = 1; i<10 ; i++)
             {
-                chain.push(new SingleStitch(i, 1));
-                chain[i-1].setNextStitch(chain[i]);
-                chain[i].setPreviousStitch(chain[i-1]);
+                var stitch = new SingleStitch(i, 1);
+                chartModel.addStitchGroup(new StitchGroup(stitch.getRowNum(), [stitch]));
+                chain.push(stitch);
             }
-            tailOfChain = chain[9];
         });
 
         it("should connect a stitch", function ()
         {
             var stitch = new SingleStitch(10, 2);
 
-            var group = new StitchGroup(stitch.getRowNum());
-            group.addToGroup(stitch);
-            group.close(tailOfChain);
+            chartModel.addStitchGroup(new StitchGroup(stitch.getRowNum(), [stitch]));
 
             expect(chain[9].isAvailableForConnection()).toBe(false);
             expect(chain[9].getStitchesAbove().length).toEqual(1);

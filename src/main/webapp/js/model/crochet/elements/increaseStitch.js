@@ -23,11 +23,6 @@ define(["jquery", "baseStitch", "increaseStitchGroup"], function ($, BaseStitch,
             return "INCREASE";
         };
 
-        IncreaseStitch.prototype.createStitchGroup = function createStitchGroup()
-        {
-            return new IncreaseStitchGroup(this.rowNum);
-        };
-
         return IncreaseStitch;
 
     })();

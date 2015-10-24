@@ -129,7 +129,6 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
                 var stitchCount = match[1];
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new ChainUpStitch(context.chainIndex, context.rowNum));
                     chartModel.addStitchGroup(new StitchGroup(context.rowNum, [new ChainUpStitch(context.chainIndex, context.rowNum)]));
                     context.chainIndex++;
                 }

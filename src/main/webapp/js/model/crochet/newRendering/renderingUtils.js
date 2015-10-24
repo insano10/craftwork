@@ -1,8 +1,11 @@
 define(["jquery"], function ($)
 {
+    var HORIZONTAL_STITCH_GROUP_SPACER = 7;
+    var VERTICAL_STITCH_GROUP_SPACER = 5;
+
     var DEBUG_RENDER = true;
 
-    function renderGridLines(canvasContext, renderedStitch)
+    function renderGridLines(canvasContext, stitchGroup)
     {
         canvasContext.save();
 
@@ -10,15 +13,9 @@ define(["jquery"], function ($)
 
         //vertical
         canvasContext.beginPath();
-        canvasContext.moveTo(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint() + 200);
-        canvasContext.lineTo(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint() - 200);
+        canvasContext.moveTo(stitchGroup.getXPos(), stitchGroup.getYPos() + 200);
+        canvasContext.lineTo(stitchGroup.getXPos(), stitchGroup.getYPos() - 200);
         canvasContext.stroke();
-
-        //horizontal
-        //canvasContext.beginPath();
-        //canvasContext.moveTo(renderedStitch.getXRotationPoint() + 200, renderedStitch.getYRotationPoint());
-        //canvasContext.lineTo(renderedStitch.getXRotationPoint() - 200, renderedStitch.getYRotationPoint());
-        //canvasContext.stroke();
 
         canvasContext.restore();
     }
@@ -42,7 +39,9 @@ define(["jquery"], function ($)
     return {
         renderGridLines: renderGridLines,
         renderStitchRotationPoint: renderStitchRotationPoint,
-        DEBUG_RENDER: DEBUG_RENDER
+        DEBUG_RENDER: DEBUG_RENDER,
+        HORIZONTAL_STITCH_GROUP_SPACER: HORIZONTAL_STITCH_GROUP_SPACER,
+        VERTICAL_STITCH_GROUP_SPACER: VERTICAL_STITCH_GROUP_SPACER
     };
 });
 

@@ -17,6 +17,7 @@ define(["jquery", "stitchUtils", "stitchGroup"], function ($, StitchUtils, Stitc
             this.stitchesBelow = [];
             this.icon = new Image();
             this.icon.src = "../../../../images/" + this.imgFile;
+            this.group = null;
         }
 
         Stitch.prototype.getId = function getId()
@@ -53,6 +54,16 @@ define(["jquery", "stitchUtils", "stitchGroup"], function ($, StitchUtils, Stitc
         Stitch.prototype.getHeight = function getHeight()
         {
             return this.imgHeight;
+        };
+
+        Stitch.prototype.setStitchGroup = function setStitchGroup(stitchGroup)
+        {
+            this.group = stitchGroup;
+        };
+
+        Stitch.prototype.getStitchGroup = function getStitchGroup()
+        {
+            return this.group;
         };
 
         Stitch.prototype.setPreviousStitch = function setPreviousStitch(stitch)
@@ -117,28 +128,6 @@ define(["jquery", "stitchUtils", "stitchGroup"], function ($, StitchUtils, Stitc
         Stitch.prototype.getRowNum = function getRowNum()
         {
             return this.rowNum;
-        };
-
-        Stitch.prototype.getConnectionAngleFor = function getConnectionAngleFor(stitchBelow, renderContext)
-        {
-            var baseAngle = renderContext.getRenderedStitchFor(this).getRenderAngle();
-
-            console.log("Searching for " + stitchBelow.toString());
-            $.each(this.getStitchesBelow(), function(idx, stitch) {
-
-                if(stitch === stitchBelow)
-                {
-                    console.log("Matched with " + stitch.toString());
-                    baseAngle += (10 * idx);
-                }
-            });
-
-            return baseAngle;
-        };
-
-        Stitch.prototype.createStitchGroup = function createStitchGroup()
-        {
-            return new StitchGroup(this.rowNum);
         };
 
         Stitch.prototype.toString = function toString()

@@ -1,10 +1,10 @@
-define(["jquery", "decreaseStitch", "singleStitch", "decreaseStitchGroup" ], function ($, DecreaseStitch, SingleStitch, DecreaseStitchGroup)
+define(["jquery", "decreaseStitch", "singleStitch", "decreaseStitchGroup", "stitchGroup", "chartModel" ], function ($, DecreaseStitch, SingleStitch, DecreaseStitchGroup, StitchGroup, ChartModel)
 {
 
     describe("DecreaseStitch", function ()
     {
         var chain = [];
-        var tailOfChain;
+        var chartModel = new ChartModel;
 
         beforeEach(function()
         {
@@ -12,20 +12,18 @@ define(["jquery", "decreaseStitch", "singleStitch", "decreaseStitchGroup" ], fun
             chain.push(new SingleStitch(0, 1));
             for(var i = 1; i<10 ; i++)
             {
-                chain.push(new SingleStitch(i, 1));
-                chain[i-1].setNextStitch(chain[i]);
-                chain[i].setPreviousStitch(chain[i-1]);
+                var stitch = new SingleStitch(i, 1);
+                chartModel.addStitchGroup(new StitchGroup(stitch.getRowNum(), [stitch]));
+
+                chain.push(stitch);
             }
-            tailOfChain = chain[9];
         });
 
         it("should connect to multiple stitches", function ()
         {
             var stitch = new DecreaseStitch(10, 3, 2);
 
-            var group = new DecreaseStitchGroup(stitch.getRowNum(), 3);
-            group.addToGroup(stitch);
-            group.close(tailOfChain);
+            chartModel.addStitchGroup(new DecreaseStitchGroup(stitch.getRowNum(), [stitch], 3));
 
             expect(chain[9].isAvailableForConnection()).toBe(false);
             expect(chain[8].isAvailableForConnection()).toBe(false);

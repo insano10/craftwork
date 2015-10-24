@@ -1,20 +1,17 @@
-define(["jquery", "chainUpStitch", "singleStitch", "stitchGroup" ], function ($, ChainUpStitch, SingleStitch, StitchGroup)
+define(["jquery", "chainUpStitch", "singleStitch", "stitchGroup", "chartModel" ], function ($, ChainUpStitch, SingleStitch, StitchGroup, ChartModel)
 {
 
     describe("ChainUpStitch", function ()
     {
         var chain = [];
-        var tailOfChain;
+        var chartModel = new ChartModel();
 
         function addStitchToChain(stitch, chain)
         {
-            var group = new StitchGroup(stitch.getRowNum());
-            group.addToGroup(stitch);
-            group.close(tailOfChain);
+            var group = new StitchGroup(stitch.getRowNum(), [stitch]);
+            chartModel.addStitchGroup(group);
 
             chain.push(stitch);
-            chain[chain.length - 2].setNextStitch(chain[chain.length - 1]);
-            tailOfChain = stitch;
         }
 
         beforeEach(function()

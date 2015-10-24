@@ -8,7 +8,7 @@ define(["jquery", "parseChainFactory", "instructionParser"], function($, ParseCh
         beforeEach(function() {
 
             stubRenderer = jasmine.createSpyObj("chartRenderer", ["renderModel"]);
-            stubModel = jasmine.createSpyObj("chartModel", ["addStitch", "clear", "redrawChart", "modelComplete"]);
+            stubModel = jasmine.createSpyObj("chartModel", ["addStitchGroup", "clear", "redrawChart", "modelComplete"]);
 
             var parseChain = new ParseChainFactory().createParseChain(stubModel);
             parser = new InstructionParser(stubModel, stubRenderer, parseChain);
@@ -18,20 +18,20 @@ define(["jquery", "parseChainFactory", "instructionParser"], function($, ParseCh
 
             parser.parseInstructions(["2 sc", "1 sc"]);
 
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 2}));
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 2}));
         });
 
         it("should parse multiple valid lines and ignore invalid ones", function() {
 
             parser.parseInstructions(["chain 2", "invalid", " 2sc"]);
 
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 1}));
 
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 3}));
-            expect(stubModel.addStitch).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 3}));
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 3}));
+            expect(stubModel.addStitchGroup).toHaveBeenCalledWith(jasmine.objectContaining({rowNum: 3}));
         });
 
     });
