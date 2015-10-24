@@ -2,30 +2,28 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
 {
     return (function ()
     {
-        function StitchGroup(rowNum)
+        function StitchGroup(rowNum, stitches)
         {
             this.id = StitchUtils.generateId();
             this.rowNum = rowNum;
-            this.stitches = [];
+            this.stitches = stitches;
             this.previousGroup = null;
             this.nextGroup = null;
             this.renderer = new StitchRenderer();
             this.preRenderHelper = new StitchPreRenderHelper();
+
+            //join the stitches together
+            for (var i = 0; i < stitches.length-1; i++)
+            {
+                stitches[i].setNextStitch(stitches[i+1]);
+                stitches[i+1].setPreviousStitch(stitches[i]);
+            }
         }
 
-        StitchGroup.prototype.accept = function accept(stitch)
+        StitchGroup.prototype.attachToChain = function attachToChain()
         {
-            //group allows 1 stitch only
-            return this.stitches.length == 0;
-        };
+            var tailStitch = this.stitches[0].getPreviousStitch();
 
-        StitchGroup.prototype.addToGroup = function addToGroup(stitch)
-        {
-            this.stitches.push(stitch);
-        };
-
-        StitchGroup.prototype.close = function close(tailStitch)
-        {
             for (var i = 0; i < this.stitches.length; i++)
             {
                 this.connectStitchToRowBelow(this.stitches[i], tailStitch, i);
@@ -34,7 +32,7 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
 
         StitchGroup.prototype.connectStitchToRowBelow = function connectStitchToRowBelow(stitch, chainTail, groupIndex)
         {
-            if(stitch.renderRelativeTo())
+            if (stitch.renderRelativeTo())
             {
                 var candidateStitch = chainTail;
 
@@ -68,6 +66,10 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
         StitchGroup.prototype.setNextGroup = function setNextGroup(group)
         {
             this.nextGroup = group;
+
+            //join the last stitch in this group to the first stitch in the next group
+            this.stitches[this.stitches.length-1].setNextStitch(group.getStitches()[0]);
+            group.getStitches()[0].setPreviousStitch(this.stitches[this.stitches.length-1]);
         };
 
         StitchGroup.prototype.setPreviousGroup = function setPreviousGroup(group)
@@ -80,18 +82,9 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils"], fun
             return this.previousGroup;
         };
 
-        StitchGroup.prototype.printStitches = function printStitches()
+        StitchGroup.prototype.getStitches = function getStitches()
         {
-            console.log("Stitch group");
-            for (var i = 0; i < this.stitches.length; i++)
-            {
-                console.log(this.stitches[i].toString());
-            }
-
-            if (this.nextGroup != null)
-            {
-                this.nextGroup.printStitches();
-            }
+            return this.stitches;
         };
 
         StitchGroup.prototype.preRender1 = function preRender1(renderContext)

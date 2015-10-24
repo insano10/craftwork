@@ -2,9 +2,9 @@ define(["jquery", "stitchGroup", "stitchRenderer", "stitchPreRenderHelper"], fun
 {
     return (function ()
     {
-        function DecreaseStitchGroup(rowNum, width)
+        function DecreaseStitchGroup(rowNum, stitches, width)
         {
-            StitchGroup.call(this, rowNum);
+            StitchGroup.call(this, rowNum, stitches);
 
             this.width = width;
             this.renderer = new StitchRenderer();

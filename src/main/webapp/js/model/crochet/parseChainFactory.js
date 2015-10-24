@@ -1,5 +1,5 @@
-define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", "increaseStitch", "decreaseStitch"],
-    function ($, BaseStitch, SingleStitch, ChainStitch, ChainUpStitch, IncreaseStitch, DecreaseStitch)
+define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", "increaseStitch", "decreaseStitch", "stitchGroup", "increaseStitchGroup", "decreaseStitchGroup"],
+    function ($, BaseStitch, SingleStitch, ChainStitch, ChainUpStitch, IncreaseStitch, DecreaseStitch, StitchGroup, IncreaseStitchGroup, DecreaseStitchGroup)
 {
 
     function SubPhraseParser(parseChain)
@@ -40,7 +40,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new ChainStitch(context.chainIndex, context.rowNum));
+                    chartModel.addStitchGroup(new StitchGroup(context.rowNum, [new ChainStitch(context.chainIndex, context.rowNum)]));
                     context.chainIndex++;
                 }
                 return true;
@@ -63,7 +63,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
-                    chartModel.addStitch(new SingleStitch(context.chainIndex, context.rowNum));
+                    chartModel.addStitchGroup(new StitchGroup(context.rowNum, [new SingleStitch(context.chainIndex, context.rowNum)]));
                     context.chainIndex++;
                 }
                 return true;
@@ -84,11 +84,13 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
             {
                 var stitchCount = match[1];
 
+                var stitches = [];
                 for (var stitchNum = 0; stitchNum < stitchCount; stitchNum++)
                 {
-                    chartModel.addStitch(new IncreaseStitch(context.chainIndex, context.rowNum));
+                    stitches.push(new IncreaseStitch(context.chainIndex, context.rowNum));
                     context.chainIndex++;
                 }
+                chartModel.addStitchGroup(new IncreaseStitchGroup(context.rowNum, stitches));
                 return true;
             }
             return false;
@@ -106,7 +108,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
             if (match != null)
             {
                 var stitchCount = match[1];
-                chartModel.addStitch(new DecreaseStitch(context.chainIndex, stitchCount, context.rowNum));
+                chartModel.addStitchGroup(new DecreaseStitchGroup(context.rowNum, [new DecreaseStitch(context.chainIndex, stitchCount, context.rowNum)], stitchCount));
                 context.chainIndex++;
                 return true;
             }
@@ -128,6 +130,7 @@ define(["jquery", "baseStitch", "singleStitch", "chainStitch", "chainUpStitch", 
                 for (var rowIdx = 0; rowIdx < stitchCount; rowIdx++)
                 {
                     chartModel.addStitch(new ChainUpStitch(context.chainIndex, context.rowNum));
+                    chartModel.addStitchGroup(new StitchGroup(context.rowNum, [new ChainUpStitch(context.chainIndex, context.rowNum)]));
                     context.chainIndex++;
                 }
                 return true;

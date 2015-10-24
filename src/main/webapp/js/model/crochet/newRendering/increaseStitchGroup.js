@@ -2,9 +2,9 @@ define(["jquery", "stitchGroup", "increaseStitchRenderer", "increaseStitchPreRen
 {
     return (function ()
     {
-        function IncreaseStitchGroup(rowNum)
+        function IncreaseStitchGroup(rowNum, stitches)
         {
-            StitchGroup.call(this, rowNum);
+            StitchGroup.call(this, rowNum, stitches);
 
             this.renderer = new IncreaseStitchRenderer();
             this.preRenderHelper = new IncreaseStitchPreRenderHelper();
@@ -12,13 +12,6 @@ define(["jquery", "stitchGroup", "increaseStitchRenderer", "increaseStitchPreRen
 
         IncreaseStitchGroup.prototype = Object.create(StitchGroup.prototype);
         IncreaseStitchGroup.prototype.constructor = IncreaseStitchGroup;
-
-
-        IncreaseStitchGroup.prototype.accept = function accept(stitch)
-        {
-            //only accept increase stitches
-            return stitch.getType() == "INCREASE";
-        };
 
         IncreaseStitchGroup.prototype.connectStitchToRowBelow = function connectStitchToRowBelow(stitch, chainTail, groupIndex)
         {
