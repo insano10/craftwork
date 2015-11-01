@@ -70,11 +70,6 @@ define(["jquery", "stitchGroup", "stitchRenderer", "stitchPreRenderHelper"], fun
             return angle;
         };
 
-        DecreaseStitchGroup.prototype.calculateRelativeAngle = function calculateRelativeAngle(renderContext)
-        {
-            console.log(this.toString() + " is not a single stitch group. Not updating relative angle");
-        };
-
         return DecreaseStitchGroup;
 
     })();

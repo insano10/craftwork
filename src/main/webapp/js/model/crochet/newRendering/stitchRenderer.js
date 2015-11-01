@@ -33,7 +33,7 @@ define(["jquery", "renderingUtils"], function ($, RenderingUtils)
 
             canvasContext.strokeStyle = '#000000';
 
-            console.log("translating to [" + renderStitchGroup.getXRotationPoint() + ", " + renderStitchGroup.getYRotationPoint() + "]");
+            console.log("row: " + renderStitchGroup.getRowNum() + " - translating to [" + renderStitchGroup.getXRotationPoint() + ", " + renderStitchGroup.getYRotationPoint() + "]");
 
             canvasContext.translate(renderStitchGroup.getXRotationPoint(), renderStitchGroup.getYRotationPoint());
             canvasContext.rotate(renderStitchGroup.getRenderAngle() * Math.PI / 180);
@@ -45,37 +45,23 @@ define(["jquery", "renderingUtils"], function ($, RenderingUtils)
             console.log("drawing box: pos [" + startX + ", " + startY + "]," +
                         " width [" + renderStitchGroup.getWidth() + ", " + renderStitchGroup.getHeight() + "] at angle [" + renderStitchGroup.getRenderAngle() + "]");
 
-            canvasContext.beginPath();
-            //canvasContext.moveTo(0, 0);
-            canvasContext.moveTo(startX, startY);
-            canvasContext.lineTo(startX + renderStitchGroup.getWidth(), startY);
-            canvasContext.lineTo(startX + renderStitchGroup.getWidth(), startY + renderStitchGroup.getHeight());
-            canvasContext.lineTo(startX, startY + renderStitchGroup.getHeight());
-            canvasContext.lineTo(startX, startY);
-            canvasContext.stroke();
+            drawLine(canvasContext,
+                     startX, startY,
+                     startX + renderStitchGroup.getWidth(), startY, '#000000');
+
+            drawLine(canvasContext,
+                     startX + renderStitchGroup.getWidth(), startY,
+                     startX + renderStitchGroup.getWidth(), startY + renderStitchGroup.getHeight(), '#FF0000');
+
+            drawLine(canvasContext,
+                     startX + renderStitchGroup.getWidth(), startY + renderStitchGroup.getHeight(),
+                     startX, startY + renderStitchGroup.getHeight(), '#00FF00');
+
+            drawLine(canvasContext,
+                     startX, startY + renderStitchGroup.getHeight(),
+                     startX, startY, '#0000FF');
 
             canvasContext.restore();
-
-            //for (var i = 0; i < stitches.length; i++)
-            //{
-            //    var renderedStitchGroup = renderContext.getRenderedStitchGroupFor(stitchGroup);
-            //
-            //    console.log("drawing stitch group at " + renderedStitchGroup.getXPos() + ", " + renderedStitchGroup.getYPos() + " at angle " + renderedStitchGroup.getRenderAngle());
-            //
-            //    if(RenderingUtils.DEBUG_RENDER)
-            //    {
-            //        RenderingUtils.renderGridLines(canvasContext, renderedStitchGroup);
-            //        RenderingUtils.renderStitchRotationPoint(canvasContext, renderedStitchGroup);
-            //    }
-            //
-            //    canvasContext.save();
-            //
-            //    canvasContext.translate(renderedStitch.getXRotationPoint(), renderedStitch.getYRotationPoint());
-            //    canvasContext.rotate(renderedStitch.getRenderAngle() * Math.PI / 180);
-            //    canvasContext.drawImage(stitches[i].icon, renderedStitch.getXRenderPointAfterTranslation(), renderedStitch.getYRenderPointAfterTranslation() - renderedStitch.getRenderYOffset());
-            //
-            //    canvasContext.restore();
-            //}
         };
 
         StitchRenderer.prototype.renderStitchGroup = function renderStitchGroup(canvasContext, renderContext, stitchGroup, attempts)
@@ -101,6 +87,15 @@ define(["jquery", "renderingUtils"], function ($, RenderingUtils)
         StitchRenderer.prototype.render = function render(canvasContext, renderContext, stitchGroup)
         {
             this.renderStitchGroup(canvasContext, renderContext, stitchGroup, 0);
+        };
+
+        var drawLine = function drawLine(canvasContext, x1, y1, x2, y2, colour)
+        {
+            canvasContext.strokeStyle = colour;
+            canvasContext.beginPath();
+            canvasContext.moveTo(x1, y1);
+            canvasContext.lineTo(x2, y2);
+            canvasContext.stroke();
         };
 
         return StitchRenderer;

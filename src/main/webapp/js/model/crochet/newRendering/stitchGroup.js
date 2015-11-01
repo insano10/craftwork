@@ -148,21 +148,16 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils", "ren
             //ask the group above what angle this group should be connected at
             if (this.groupAbove != null)
             {
-
-                var relativeAngle = renderContext.getRenderedStitchGroupFor(this.groupAbove).getRenderAngle();
-
-                var renderedStitchGroup = new RenderedStitchGroup({
-                    x: 0,
-                    y: 0
-                }, relativeAngle, this.getWidth(), this.getHeight(), this.getRowNum(), this.getYOffset());
-
-                renderContext.addRenderedStitchGroup(this.getId(), renderedStitchGroup);
-
-                console.log(this.toString() + " has relative angle " + relativeAngle);
+                inheritRenderAngleFromOtherGroup(this, this.groupAbove, renderContext);
             }
             else
             {
-                console.log(this.toString() + " has no group above, not calculating relative angle");
+                console.log(this.toString() + " has no group above, using angle below (if there is one)");
+
+                if(this.groupBelow != null)
+                {
+                    inheritRenderAngleFromOtherGroup(this, this.groupBelow, renderContext);
+                }
             }
         };
 
@@ -219,6 +214,25 @@ define(["jquery", "stitchRenderer", "stitchPreRenderHelper", "stitchUtils", "ren
             {
                 this.nextGroup.render(canvasContext, renderContext);
             }
+        };
+
+        StitchGroup.prototype.toString = function toString()
+        {
+            return "StitchGroup [" + this.rowNum + "] - stitchCount = " + this.stitches.length;
+        };
+
+        var inheritRenderAngleFromOtherGroup = function inheritRenderAngleFromOtherGroup(thisGroup, otherGroup, renderContext)
+        {
+            var relativeAngle = renderContext.getRenderedStitchGroupFor(otherGroup).getRenderAngle();
+
+            var renderedStitchGroup = new RenderedStitchGroup({
+                x: 0,
+                y: 0
+            }, relativeAngle, thisGroup.getWidth(), thisGroup.getHeight(), thisGroup.getRowNum(), thisGroup.getYOffset());
+
+            renderContext.addRenderedStitchGroup(thisGroup.getId(), renderedStitchGroup);
+
+            console.log(thisGroup.toString() + " has relative angle " + relativeAngle);
         };
 
 
