@@ -58,17 +58,17 @@ define(["jquery", "renderedStitch", "renderedStitchGroup", "renderingUtils"], fu
                 }
                 else
                 {
-                    //var xOffsetForAngle = previousRenderInfo.getXRotationLength();
+                    var xOffsetForAngle = previousRenderInfo.getXRotationLength();
 
                     if (stitchGroup.getRowNum() % 2 != 0)
                     {
                         //to the right
-                        xPos = previousRenderInfo.getXPos() + previousStitchGroup.getWidth() + RenderingUtils.HORIZONTAL_STITCH_GROUP_SPACER;// - xOffsetForAngle;
+                        xPos = previousRenderInfo.getXPos() + previousStitchGroup.getWidth() + RenderingUtils.HORIZONTAL_STITCH_GROUP_SPACER - xOffsetForAngle;
                     }
                     else
                     {
                         //to the left
-                        xPos = previousRenderInfo.getXPos() - stitchGroup.getWidth() - RenderingUtils.HORIZONTAL_STITCH_GROUP_SPACER;// + xOffsetForAngle;
+                        xPos = previousRenderInfo.getXPos() - stitchGroup.getWidth() - RenderingUtils.HORIZONTAL_STITCH_GROUP_SPACER + xOffsetForAngle;
                     }
                 }
             }
@@ -96,16 +96,16 @@ define(["jquery", "renderedStitch", "renderedStitchGroup", "renderingUtils"], fu
                 }
                 else
                 {
-                    //var yOffsetForAngle = previousRenderInfo.getYRotationLength();
+                    var yOffsetForAngle = previousRenderInfo.getYRotationLength();
                     if (stitchGroup.getRowNum() % 2 != 0)
                     {
                         //to the right, angle up
-                        yPos = previousRenderInfo.getYPos();// + yOffsetForAngle;
+                        yPos = previousRenderInfo.getYPos() + yOffsetForAngle;
                     }
                     else
                     {
                         //to the left, angle down
-                        yPos = previousRenderInfo.getYPos();// - yOffsetForAngle;
+                        yPos = previousRenderInfo.getYPos() - yOffsetForAngle;
                     }
                 }
             }

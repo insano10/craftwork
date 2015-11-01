@@ -32,15 +32,26 @@ define(["jquery", "renderingUtils"], function ($, RenderingUtils)
             canvasContext.save();
 
             canvasContext.strokeStyle = '#000000';
-            console.log("drawing box: pos [" + renderStitchGroup.getXPos() + ", " + renderStitchGroup.getYPos() + "]," +
-                        " width [" + renderStitchGroup.getWidth() + ", " + renderStitchGroup.getHeight() + "]");
+
+            console.log("translating to [" + renderStitchGroup.getXRotationPoint() + ", " + renderStitchGroup.getYRotationPoint() + "]");
+
+            canvasContext.translate(renderStitchGroup.getXRotationPoint(), renderStitchGroup.getYRotationPoint());
+            canvasContext.rotate(renderStitchGroup.getRenderAngle() * Math.PI / 180);
+
+
+            var startX = renderStitchGroup.getXRenderPointAfterTranslation();
+            var startY = renderStitchGroup.getYRenderPointAfterTranslation() - renderStitchGroup.getRenderYOffset();
+
+            console.log("drawing box: pos [" + startX + ", " + startY + "]," +
+                        " width [" + renderStitchGroup.getWidth() + ", " + renderStitchGroup.getHeight() + "] at angle [" + renderStitchGroup.getRenderAngle() + "]");
 
             canvasContext.beginPath();
-            canvasContext.moveTo(renderStitchGroup.getXPos(), renderStitchGroup.getYPos());
-            canvasContext.lineTo(renderStitchGroup.getXPos() + renderStitchGroup.getWidth(), renderStitchGroup.getYPos());
-            canvasContext.lineTo(renderStitchGroup.getXPos() + renderStitchGroup.getWidth(), renderStitchGroup.getYPos() + renderStitchGroup.getHeight());
-            canvasContext.lineTo(renderStitchGroup.getXPos(), renderStitchGroup.getYPos() + renderStitchGroup.getHeight());
-            canvasContext.lineTo(renderStitchGroup.getXPos(), renderStitchGroup.getYPos());
+            //canvasContext.moveTo(0, 0);
+            canvasContext.moveTo(startX, startY);
+            canvasContext.lineTo(startX + renderStitchGroup.getWidth(), startY);
+            canvasContext.lineTo(startX + renderStitchGroup.getWidth(), startY + renderStitchGroup.getHeight());
+            canvasContext.lineTo(startX, startY + renderStitchGroup.getHeight());
+            canvasContext.lineTo(startX, startY);
             canvasContext.stroke();
 
             canvasContext.restore();
